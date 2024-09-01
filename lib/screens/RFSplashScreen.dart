@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/screens/RFMobileSignInScreen.dart';
+import 'package:roomie_finder/screens/RFRoleSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-
-import 'RFEmailSignInScreen.dart';
 
 class RFSplashScreen extends StatefulWidget {
   @override
@@ -23,7 +21,7 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
 
     await Future.delayed(Duration(seconds: 2));
     finish(context);
-    RFEmailSignInScreen().launch(context);
+    RFRoleSignIn().launch(context);
   }
 
   @override
@@ -43,26 +41,17 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rf_primaryColor,
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            decoration: boxDecorationWithRoundedCorners(
-                boxShape: BoxShape.circle, backgroundColor: rf_splashBgColor),
-            width: 250,
-            height: 250,
+      body: Container(
+        decoration: boxDecorationWithRoundedCorners(
+            boxShape: BoxShape.circle, backgroundColor: rf_splashBgColor),
+        width: 250,
+        height: 250,
+        child: ClipOval(
+          child: Image.asset(
+            'images/app_logo.png',
+            fit: BoxFit.cover,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("roomie finder",
-                  style: boldTextStyle(color: white, size: 20)),
-              4.height,
-              Text("Ultimate property Finder",
-                  style: primaryTextStyle(color: white)),
-            ],
-          ),
-        ],
+        ),
       ).center(),
     );
   }

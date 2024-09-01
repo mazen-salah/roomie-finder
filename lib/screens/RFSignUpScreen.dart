@@ -23,6 +23,8 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
   FocusNode passWordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
 
+  String role = "tenant";
+
   @override
   void initState() {
     super.initState();
@@ -106,6 +108,45 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                 lableText: 'Confirm Password',
                 showLableText: true,
               ),
+            ),
+            16.height,
+            Text("Choose your role", style: boldTextStyle(size: 24)),
+            16.height,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                AppButton(
+                  color: role == "tenant" ? rf_primaryColor : Colors.white,
+                  child: Column(
+                    children: [
+                      Image.asset("images/tenant.png", height: 50),
+                      Text("Tenant", style: boldTextStyle(size: 16)),
+                    ],
+                  ),
+                  text: "Tenant",
+                  onTap: () {
+                    setState(() {
+                      role = "tenant";
+                    });
+                  },
+                ),
+                16.width,
+                AppButton(
+                  color: role == "lessor" ? rf_primaryColor : Colors.white,
+                  child: Column(
+                    children: [
+                      Image.asset("images/lessor.png", height: 50),
+                      Text("Lessor", style: boldTextStyle(size: 16)),
+                    ],
+                  ),
+                  text: "Lessor",
+                  onTap: () {
+                    setState(() {
+                      role = "lessor";
+                    });
+                  },
+                ),
+              ],
             ),
             32.height,
             AppButton(
