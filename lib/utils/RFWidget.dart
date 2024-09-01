@@ -142,7 +142,7 @@ class CustomTheme extends StatelessWidget {
           ? ThemeData.dark().copyWith(
               colorScheme: ColorScheme.fromSwatch()
                   .copyWith(secondary: appColorPrimary)
-                  .copyWith(background: context.scaffoldBackgroundColor),
+                  .copyWith(surface: context.scaffoldBackgroundColor),
             )
           : ThemeData.light(),
       child: child!,
