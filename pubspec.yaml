@@ -1,0 +1,41 @@
+name: roomie_finder
+description: A new Flutter project.
+
+version: 2.0.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Base
+  nb_utils: ^6.0.4
+  google_fonts: ^5.0.0
+  cached_network_image: ^3.2.3
+  url_launcher: ^6.1.11
+
+  # STATE MANAGEMENT
+  mobx: ^2.0.3
+  flutter_mobx: ^2.0.1
+
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2
+  http: ^0.13.0
+  cached_network_image: ^3.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  mobx_codegen: ^2.0.2
+  build_runner: ^2.1.0
+  #flutter packages pub run build_runner build --delete-conflicting-outputs
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - images/roomFinding/
