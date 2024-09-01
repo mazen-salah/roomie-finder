@@ -376,6 +376,7 @@ Future<void> commonLaunchUrl(String address,
     {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
   await launchUrl(Uri.parse(address), mode: launchMode).catchError((e) {
     toast('Invalid URL: $address');
+    return false;
   });
 }
 
