@@ -86,6 +86,5 @@ class RFRecentUpdateComponent extends StatelessWidget {
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent);
-    ;
   }
 }
