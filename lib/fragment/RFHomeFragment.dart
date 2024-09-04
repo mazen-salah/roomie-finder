@@ -5,6 +5,7 @@ import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
+import 'package:roomie_finder/models/LocationModel.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFLocationViewAllScreen.dart';
 import 'package:roomie_finder/screens/RFRecentupdateViewAllScreen.dart';

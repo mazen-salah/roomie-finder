@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFNotificationListComponent.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
+import 'package:roomie_finder/models/NotficationModel.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFNotificationScreen extends StatelessWidget {
   final List<NotificationModel> notificationData = notificationList();
-  
 
   RFNotificationScreen({super.key});
 
@@ -25,7 +24,7 @@ class RFNotificationScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Today', style: boldTextStyle(size: 18)),
+                Text('All', style: boldTextStyle(size: 18)),
                 TextButton(
                     onPressed: () {},
                     child: Text('Mark all read', style: secondaryTextStyle())),
@@ -41,12 +40,11 @@ class RFNotificationScreen extends StatelessWidget {
                 NotificationModel data = notificationData[index];
                 return RFNotificationListComponent(
                   readNotification: data.unReadNotification.validate(),
-                  title: data.price.validate(),
+                  title: data.title.validate(),
                   subTitle: data.description.validate(),
                 );
               },
             ),
-            
           ],
         ),
       ),

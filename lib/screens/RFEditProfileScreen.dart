@@ -121,6 +121,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: rfInputDecoration(
                       lableText: "Phone Number",
                       showLableText: true,
+                      showPrefixText: true,
+                      prefixText: "+966",
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {

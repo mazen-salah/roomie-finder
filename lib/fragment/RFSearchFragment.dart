@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
+import 'package:roomie_finder/models/LocationModel.dart';
 import 'package:roomie_finder/screens/RFSearchDetailScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 

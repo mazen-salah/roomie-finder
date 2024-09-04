@@ -73,58 +73,6 @@ List<RoomModel> hotelList() {
   return hotelListData;
 }
 
-class LocationData {
-  final String name;
-  final String image;
-
-  LocationData({required this.name, required this.image});
-}
-
-List<LocationData> locationList() {
-  List<LocationData> locationListData = [];
-  locationListData.add(LocationData(name: "Lalitpur", image: rfLocation1));
-  locationListData.add(LocationData(name: "Imadol", image: rfLocation2));
-  locationListData.add(LocationData(name: "Kupondole", image: rfLocation3));
-  locationListData.add(LocationData(name: "Lalitpur", image: rfLocation4));
-  locationListData.add(LocationData(name: "Mahalaxmi", image: rfLocation5));
-  locationListData.add(LocationData(name: "Koteshwor", image: rfLocation6));
-
-  return locationListData;
-}
-
-
-
-class NotificationModel {
-  final String price;
-  final bool unReadNotification;
-  final String description;
-
-  NotificationModel({
-    required this.price,
-    required this.unReadNotification,
-    required this.description,
-  });
-}
-
-List<NotificationModel> notificationList() {
-  List<NotificationModel> notificationListData = [];
-  notificationListData.add(NotificationModel(
-      price: "Welcome",
-      unReadNotification: false,
-      description: "Don’t forget to complete your personal info."));
-  notificationListData.add(NotificationModel(
-      price: "There are 4 available properties, you recently selected. ",
-      unReadNotification: true,
-      description: "Click here for more details."));
-
-  return notificationListData;
-}
-
-
-
-
-
-
 List<String> applyHotelList() {
   List<String> applyHotelListData = [];
   applyHotelListData.add("Applied");
@@ -150,7 +98,8 @@ List<RoomModel> appliedHotelList() {
       rentDuration: "1.2 km from Gwarko",
       location: "Mahalaxmi Lalitpur",
       address: "Booked",
-      views: 3, description: ''));
+      views: 3,
+      description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel2,
       roomCategoryName: "Big Room",
@@ -158,7 +107,8 @@ List<RoomModel> appliedHotelList() {
       rentDuration: "1.2 km from Mahalaxmi",
       location: "Imadol",
       address: "Booked",
-      views: 4, description: ''));
+      views: 4,
+      description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel3,
       roomCategoryName: "4 Room for Student",
@@ -166,7 +116,8 @@ List<RoomModel> appliedHotelList() {
       rentDuration: "1.2 km from Imadol",
       location: "Kupondole",
       address: "Booked",
-      views: 2, description: ''));
+      views: 2,
+      description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel4,
       roomCategoryName: "Hall and Room",
@@ -174,7 +125,8 @@ List<RoomModel> appliedHotelList() {
       rentDuration: "1.2 km from Kupondole",
       location: "Koteshwor Lalitpur",
       address: "Booked",
-      views: 4, description: ''));
+      views: 4,
+      description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel5,
       roomCategoryName: "Big Room",
@@ -182,11 +134,11 @@ List<RoomModel> appliedHotelList() {
       rentDuration: "1.2 km from Koteshwor",
       location: "Imadol",
       address: "Booked",
-      views: 5, description: ''));
+      views: 5,
+      description: ''));
 
   return appliedHotelData;
 }
-
 
 List<String> hotelImageList() {
   List<String> hotelImageListData = [];

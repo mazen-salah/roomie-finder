@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
+import 'package:roomie_finder/models/LocationModel.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFLocationViewAllScreen extends StatelessWidget {
