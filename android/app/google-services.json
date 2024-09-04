@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "654162777217",
+    "project_id": "eed-app",
+    "storage_bucket": "eed-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654162777217:android:a3a785f5cc630c4f66e980",
+        "android_client_info": {
+          "package_name": "com.SummationWorks.roomie_finder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654162777217-fat2lolg7rr40dl1i07jrvfb0l4m29sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZWsgOYmIKv-1Uk57F4Tow4Ebi5iaO_Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654162777217-fat2lolg7rr40dl1i07jrvfb0l4m29sa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654162777217-7se0da7qrmh9bej3mugind23v28u7fel.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myFirstApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
