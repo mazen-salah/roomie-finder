@@ -30,24 +30,24 @@ class RFLocationComponent extends StatelessWidget {
           decoration: boxDecorationWithRoundedCorners(
               backgroundColor: black.withOpacity(0.2)),
         ),
-        const Positioned(
+         Positioned(
           bottom: 16,
           left: 16,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Row(
-              //   children: [
-              //     const Icon(Icons.location_on, color: white, size: 18),
-              //     8.width,
-              //     Text(locationData.location.validate(),
-              //         style: boldTextStyle(color: white)),
-              //   ],
-              // ),
-              // 4.height,
-              // Text(locationData.price.validate(),
-              //         style: secondaryTextStyle(color: white))
-              //     .paddingOnly(left: 4),
+              Row(
+                children: [
+                   const Icon(Icons.location_on, color: white, size: 18),
+                  8.width,
+                  Text(locationData.name.validate(),
+                      style: boldTextStyle(color: white)),
+                ],
+              ),
+              4.height,
+              Text(locationData.name.validate(),
+                      style: secondaryTextStyle(color: white))
+                  .paddingOnly(left: 4),
             ],
           ),
         ),

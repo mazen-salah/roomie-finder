@@ -54,8 +54,13 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(userModel!.profileImageUrl,
-                    fit: BoxFit.cover, width: 100, height: 100, radius: 150),
+                child: rfCommonCachedNetworkImage(
+                    userModel?.profileImageUrl ??
+                        'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png',
+                    fit: BoxFit.cover,
+                    width: 100,
+                    height: 100,
+                    radius: 150),
               ),
               Positioned(
                 bottom: 8,
@@ -139,7 +144,8 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                           },
                           onAccept: (v) {
                             RFAuthController().signOut();
-                            const RFEmailSignInScreen().launch(context);
+                            const RFEmailSignInScreen()
+                                .launch(context, isNewTask: true);
                           },
                         );
                       } else {

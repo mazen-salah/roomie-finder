@@ -41,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: userModel!.fullName);
-    selectedCity = userModel!.location ?? "Riyadh";
+    selectedCity = userModel!.location;
     _phoneController = TextEditingController(text: userModel!.phone);
     init();
   }
@@ -78,7 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       if (response['success']) {
         _showSnackBar(context, response['message']);
-        Navigator.pop(context);
+        Navigator.pop(context, true);
       } else {
         _showSnackBar(context, response['message'], isError: true);
       }

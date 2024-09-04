@@ -3,12 +3,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
-import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/LocationModel.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFLocationViewAllScreen.dart';
-import 'package:roomie_finder/screens/RFRecentupdateViewAllScreen.dart';
 import 'package:roomie_finder/screens/RFSearchDetailScreen.dart';
 import 'package:roomie_finder/screens/RFViewAllHotelListScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
@@ -27,7 +25,6 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   List<String> categoryData = categoryList();
   List<RoomModel> hotelListData = hotelList();
   List<LocationData> locationListData = locationList();
-  //List<RoomFinderModel> recentUpdateData = recentUpdateList();
 
   int selectCategoryIndex = 0;
 
@@ -179,31 +176,6 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
                 return RFLocationComponent(
                     locationData: locationListData[index]);
               }),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Recent Updates', style: boldTextStyle()),
-                TextButton(
-                  onPressed: () {
-                    RFRecentUpdateViewAllScreen().launch(context);
-                  },
-                  child: Text('See All',
-                      style: secondaryTextStyle(
-                          decoration: TextDecoration.underline)),
-                )
-              ],
-            ).paddingOnly(left: 16, right: 16, top: 16, bottom: 8),
-            ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: hotelListData.take(3).length,
-              itemBuilder: (BuildContext context, int index) {
-                RoomModel data = hotelListData[index];
-                return RFRecentUpdateComponent(recentUpdateData: data);
-              },
             ),
           ],
         ),

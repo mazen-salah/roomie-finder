@@ -95,8 +95,13 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(userModel!.profileImageUrl,
-                    fit: BoxFit.cover, width: 100, height: 100, radius: 150),
+                child: rfCommonCachedNetworkImage(
+                    userModel?.profileImageUrl ??
+                        'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png',
+                    fit: BoxFit.cover,
+                    width: 100,
+                    height: 100,
+                    radius: 150),
               ),
               Positioned(
                 bottom: 8,
@@ -153,14 +158,18 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     children: [
                       Text("Edit Profile",
                               style: boldTextStyle(color: rfPrimaryColor))
-                          .onTap(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditProfileScreen(),
-                          ),
-                        );
+                          .onTap(() async {
+                        bool? isProfileUpdated =
+                            await const EditProfileScreen().launch(context);
+
+                        if (isProfileUpdated ?? false) {
+                          // Refresh the data to reflect changes
+                          await fetchUserAppliedHotels();
+                          await fetchUserLikedHotels();
+                          setState(() {}); // Trigger UI update
+                        }
                       }),
+                        
                       8.height,
                       Text(
                         "Edit all the basic profile information associated with your profile",

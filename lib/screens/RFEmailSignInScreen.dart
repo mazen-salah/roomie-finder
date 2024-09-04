@@ -114,7 +114,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                       const RFResetPasswordScreen().launch(context);
                     }),
                   ),
-                  32.height,
+                  16.height,
                   AppButton(
                     color: rfPrimaryColor,
                     width: context.width(),
@@ -146,22 +146,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                     },
                     child: Text('Sign In', style: boldTextStyle(color: white)),
                   ),
-                  32.height,
-                  Text('Don\'t have an account?',
-                          style: primaryTextStyle(size: 16))
-                      .center(),
-                  8.height,
-                  AppButton(
-                    color: rfPrimaryColor,
-                    width: context.width(),
-                    height: 45,
-                    elevation: 0,
-                    onTap: () {
-                      const RFSignUpScreen().launch(context);
-                    },
-                    child: Text('Create Account',
-                        style: boldTextStyle(color: white)),
-                  ),
+                  
                 ],
               ),
             ),

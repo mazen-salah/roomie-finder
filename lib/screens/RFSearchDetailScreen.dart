@@ -14,7 +14,6 @@ class RFSearchDetailScreen extends StatelessWidget {
   final List<RoomModel> hotelListData = hotelList();
 
   RFSearchDetailScreen({super.key});
-  //final List<RoomFinderModel> recentUpdateData = recentUpdateList();
 
   @override
   Widget build(BuildContext context) {
