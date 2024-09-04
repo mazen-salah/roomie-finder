@@ -11,7 +11,7 @@ class RFRoleSignIn extends StatefulWidget {
   const RFRoleSignIn({super.key});
 
   @override
-  _RFRoleSignInState createState() => _RFRoleSignInState();
+  State createState() => _RFRoleSignInState();
 }
 
 class _RFRoleSignInState extends State<RFRoleSignIn> {
@@ -41,8 +41,8 @@ class _RFRoleSignInState extends State<RFRoleSignIn> {
     return SafeArea(
       child: Scaffold(
         body: RFCommonAppComponent(
-          title: RFAppName,
-          subTitle: RFAppSubTitle,
+          title: rfAppName,
+          subTitle: rfAppSubTitle,
           cardWidget: Column(
             children: [
               Text("Choose your role", style: boldTextStyle(size: 24)),

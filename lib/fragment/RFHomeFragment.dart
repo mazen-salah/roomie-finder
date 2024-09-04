@@ -52,7 +52,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RFCommonAppComponent(
-        title: RFAppName,
+        title: rfAppName,
         mainWidgetHeight: 200,
         subWidgetHeight: 130,
         cardWidget: Column(

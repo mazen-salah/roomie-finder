@@ -13,7 +13,7 @@ class RFSearchFragment extends StatefulWidget {
   const RFSearchFragment({super.key});
 
   @override
-  _RFSearchFragmentState createState() => _RFSearchFragmentState();
+State createState() => _RFSearchFragmentState();
 }
 
 class _RFSearchFragmentState extends State<RFSearchFragment> {
@@ -46,7 +46,7 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RFCommonAppComponent(
-        title: RFAppName,
+        title: rfAppName,
         mainWidgetHeight: 230,
         subWidgetHeight: 160,
         cardWidget: Column(

@@ -36,6 +36,8 @@ InputDecoration rfInputDecoration(
     Widget? prefixIcon,
     bool? showPreFixIcon,
     String? lableText,
+    String? prefixText,
+    bool? showPrefixText,
     bool showLableText = false}) {
   return InputDecoration(
       border: OutlineInputBorder(
@@ -62,6 +64,7 @@ InputDecoration rfInputDecoration(
       filled: true,
       fillColor: appStore.isDarkModeOn ? scaffoldDarkColor : white,
       suffix: suffixIcon.validate(),
+      prefixText: showPrefixText.validate() ? prefixText : null,
       prefixIcon: showPreFixIcon.validate() ? prefixIcon.validate() : null);
 }
 
@@ -329,7 +332,7 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context,
   );
 }
 
-extension strExt on String {
+extension StrExt on String {
   Widget iconImage({Color? iconColor, double size = bottomNavigationIconSize}) {
     return Image.asset(
       this,

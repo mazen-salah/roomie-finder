@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFAppliedHotelListComponent.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
-import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomFinderModel.dart';
-import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
@@ -22,7 +20,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
   final List<RoomFinderModel> settingData = settingList();
   final List<RoomFinderModel> appliedHotelData = appliedHotelList();
   final List<RoomFinderModel> applyHotelData = applyHotelList();
-  UserModel? userModel; 
 
   int selectedIndex = 0;
 
@@ -32,10 +29,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
     init();
   }
 
-  void init() async {
-    RFAuthController authController = RFAuthController();
-    userModel = await authController.getCurrentUserData();
-  }
+  void init() async {}
 
   @override
   void setState(fn) {
@@ -94,9 +88,8 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            Text(userModel!.fullName.validate(),
-                style: boldTextStyle(size: 18)).center(),
-            
+            Text(userModel!.fullName.validate(), style: boldTextStyle(size: 18))
+                .center(),
             8.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +102,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     color:
                         appStore.isDarkModeOn ? white : gray.withOpacity(0.4)),
                 8.width,
-                Text('Kathmandu', style: secondaryTextStyle()),
+                Text(userModel!.location, style: secondaryTextStyle()),
               ],
             ),
             32.height,
@@ -117,7 +110,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    launchCall("1234567890");
+                    launchCall(userModel!.phone);
                   },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: context.scaffoldBackgroundColor,
@@ -158,7 +151,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     ],
                   ),
                   onTap: () {
-                    launchMail("demo@gmail.com");
+                    launchMail(userModel!.email);
                   },
                 ).expand()
               ],
@@ -179,7 +172,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Email', style: boldTextStyle()),
-                      Text('henry11@gmail.com', style: secondaryTextStyle()),
+                      Text(userModel!.email, style: secondaryTextStyle()),
                     ],
                   ).paddingSymmetric(horizontal: 24, vertical: 16),
                   Divider(color: context.dividerColor, height: 0),

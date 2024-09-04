@@ -9,7 +9,7 @@ class RFSplashScreen extends StatefulWidget {
   const RFSplashScreen({super.key});
 
   @override
-  _RFSplashScreenState createState() => _RFSplashScreenState();
+  State createState() => _RFSplashScreenState();
 }
 
 class _RFSplashScreenState extends State<RFSplashScreen> {
@@ -24,14 +24,16 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
         statusBarIconBrightness: Brightness.light);
 
     await Future.delayed(const Duration(seconds: 2));
-    finish(context);
+    if (mounted) {
+      finish(context);
 
-    bool isUserSignedIn = RFAuthController().isSignedIn();
+      bool isUserSignedIn = RFAuthController().isSignedIn();
 
-    if (isUserSignedIn) {
-      const RFHomeScreen().launch(context);
-    } else {
-      const RFRoleSignIn().launch(context);
+      if (isUserSignedIn) {
+        const RFHomeScreen().launch(context);
+      } else {
+        const RFRoleSignIn().launch(context);
+      }
     }
   }
 

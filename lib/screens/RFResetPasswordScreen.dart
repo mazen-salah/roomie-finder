@@ -9,7 +9,7 @@ class RFResetPasswordScreen extends StatefulWidget {
   const RFResetPasswordScreen({super.key});
 
   @override
-  _RFResetPasswordScreenState createState() => _RFResetPasswordScreenState();
+  State createState() => _RFResetPasswordScreenState();
 }
 
 class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
@@ -78,11 +78,15 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
                   RFAuthController().resetPassword(emailController.text);
               response.then((value) {
                 if (value['success']) {
-                  _showSnackBar(context, value['message']);
-                  finish(context);
-                  const RFEmailSignInScreen().launch(context);
+                  if (mounted) {
+                    _showSnackBar(context, value['message']);
+                    finish(context);
+                    const RFEmailSignInScreen().launch(context);
+                  }
                 } else {
-                  _showSnackBar(context, value['message'], isError: true);
+                  if (mounted) {
+                    _showSnackBar(context, value['message'], isError: true);
+                  }
                 }
               });
             },

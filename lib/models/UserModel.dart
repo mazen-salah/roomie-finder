@@ -4,11 +4,15 @@ class UserModel {
   final String email;
   final String role; // Can be 'tenant' or 'lessor'
   final String profileImageUrl;
+  final String location;
+  final String phone;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   UserModel({
     this.id,
+    required this.location,
+    required this.phone,
     required this.fullName,
     required this.email,
     required this.role,
@@ -22,6 +26,8 @@ class UserModel {
     return UserModel(
       id: json['id'],
       fullName: json['fullName'],
+      location: json['location'],
+      phone: json['phone'],
       email: json['email'],
       role: json['role'],
       profileImageUrl: json['profileImageUrl'] ?? '',
@@ -38,7 +44,9 @@ class UserModel {
       'role': role,
       'profileImageUrl': profileImageUrl,
       'createdAt': createdAt.toIso8601String(),
+      'phone': phone,
       'updatedAt': updatedAt.toIso8601String(),
+      'location': location,
     };
   }
 }

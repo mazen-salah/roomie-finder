@@ -1,2 +1,2 @@
-const RFAppName = "Roomie Finder";
-const RFAppSubTitle = "Ultimate property Finder";
+const rfAppName = "Roomie Finder";
+const rfAppSubTitle = "Ultimate property Finder";
