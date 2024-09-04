@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
+import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/screens/RFSplashScreen.dart';
 import 'package:roomie_finder/store/AppStore.dart';
 import 'package:roomie_finder/utils/AppTheme.dart';
@@ -11,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:roomie_finder/firebase_options.dart';
 
 AppStore appStore = AppStore();
+UserModel? userModel;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +24,7 @@ void main() async {
   );
 
   appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
-
+  userModel = await RFAuthController().getCurrentUserData();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
