@@ -12,7 +12,7 @@ class RFPremiumServiceComponent extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        rf_about_us.iconImage(iconColor: rfPrimaryColor).paddingOnly(top: 4),
+        rfAboutUs2.iconImage(iconColor: rfPrimaryColor).paddingOnly(top: 4),
         16.width,
         Row(
           mainAxisSize: MainAxisSize.max,

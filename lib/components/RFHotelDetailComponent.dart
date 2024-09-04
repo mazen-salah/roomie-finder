@@ -22,7 +22,7 @@ class RFHotelDetailComponent extends StatelessWidget {
           children: [
             Row(
               children: [
-                rfCommonCachedNetworkImage(rf_user,
+                rfCommonCachedNetworkImage(rfUser,
                         width: 60, height: 60, fit: BoxFit.cover)
                     .cornerRadiusWithClipRRect(30),
                 16.width,
@@ -42,7 +42,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   width: 15,
                   height: 15,
                   elevation: 0,
-                  child: rf_call.iconImage(iconColor: white, size: 14),
+                  child: rfCall.iconImage(iconColor: white, size: 14),
                 ),
                 8.width,
                 AppButton(
@@ -53,7 +53,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   width: 15,
                   height: 15,
                   elevation: 0,
-                  child: rf_message.iconImage(iconColor: white, size: 14),
+                  child: rfMessage.iconImage(iconColor: white, size: 14),
                 ),
               ],
             ),

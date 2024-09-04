@@ -18,7 +18,7 @@ class RFCongratulatedDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          rfCommonCachedNetworkImage(rf_congratulate,
+          rfCommonCachedNetworkImage(rfCongratulate,
               height: 120, width: 120, fit: BoxFit.cover),
           16.height,
           Text('Congratulations', style: boldTextStyle(size: 22)),

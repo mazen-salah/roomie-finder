@@ -56,7 +56,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(rf_user,
+                child: rfCommonCachedNetworkImage(rfUser,
                     fit: BoxFit.cover, width: 100, height: 100, radius: 150),
               ),
               Positioned(
@@ -115,7 +115,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  rf_person
+                  rfPerson
                       .iconImage(iconColor: rfPrimaryColor)
                       .paddingOnly(top: 4),
                   16.width,

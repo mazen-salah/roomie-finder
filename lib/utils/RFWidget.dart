@@ -160,14 +160,14 @@ Widget socialLoginWidget(BuildContext context,
           Text('Or Sign Up with', style: primaryTextStyle()),
           16.height,
           socialLoginButton(context,
-                  socialImage: rf_facebook_logo,
+                  socialImage: rfFacebookLogo,
                   socialLoginName: "Continue With Facebook")
               .onTap(() {
             //
           }),
           16.height,
           socialLoginButton(context,
-                  socialImage: rf_google_logo,
+                  socialImage: rfGoogleLogo,
                   socialLoginName: "Continue With Google")
               .onTap(() {
             //

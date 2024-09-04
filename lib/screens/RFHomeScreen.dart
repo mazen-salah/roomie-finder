@@ -12,7 +12,7 @@ class RFHomeScreen extends StatefulWidget {
   const RFHomeScreen({super.key});
 
   @override
-  _RFHomeScreenState createState() => _RFHomeScreenState();
+  State createState() => _RFHomeScreenState();
 }
 
 class _RFHomeScreenState extends State<RFHomeScreen> {
@@ -41,19 +41,19 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
               Icon(Icons.home_outlined, color: rfPrimaryColor, size: 22),
         ),
         BottomNavigationBarItem(
-          icon: rf_search.iconImage(),
+          icon: rfSearch.iconImage(),
           label: 'Search',
-          activeIcon: rf_search.iconImage(iconColor: rfPrimaryColor),
+          activeIcon: rfSearch.iconImage(iconColor: rfPrimaryColor),
         ),
         BottomNavigationBarItem(
-          icon: rf_setting.iconImage(size: 22),
+          icon: rfSetting.iconImage(size: 22),
           label: 'Settings',
-          activeIcon: rf_setting.iconImage(iconColor: rfPrimaryColor, size: 22),
+          activeIcon: rfSetting.iconImage(iconColor: rfPrimaryColor, size: 22),
         ),
         BottomNavigationBarItem(
-          icon: rf_person.iconImage(),
+          icon: rfPerson.iconImage(),
           label: 'Account',
-          activeIcon: rf_person.iconImage(iconColor: rfPrimaryColor),
+          activeIcon: rfPerson.iconImage(iconColor: rfPrimaryColor),
         ),
       ],
     );

@@ -22,7 +22,7 @@ class RFAboutUsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            rfCommonCachedNetworkImage(rf_aboutUs,
+            rfCommonCachedNetworkImage(rfAboutUs,
                 fit: BoxFit.cover, height: 150, width: context.width()),
             Container(
               decoration: boxDecorationRoundedWithShadow(8,

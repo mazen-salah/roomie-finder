@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFAppliedHotelListComponent.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
@@ -20,6 +22,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
   final List<RoomFinderModel> settingData = settingList();
   final List<RoomFinderModel> appliedHotelData = appliedHotelList();
   final List<RoomFinderModel> applyHotelData = applyHotelList();
+  UserModel? userModel; 
 
   int selectedIndex = 0;
 
@@ -30,7 +33,8 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
   }
 
   void init() async {
-    //
+    RFAuthController authController = RFAuthController();
+    userModel = await authController.getCurrentUserData();
   }
 
   @override
@@ -58,7 +62,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(rf_user,
+                child: rfCommonCachedNetworkImage(rfUser,
                     fit: BoxFit.cover, width: 100, height: 100, radius: 150),
               ),
               Positioned(
@@ -90,7 +94,9 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            Text('Courtney Henry', style: boldTextStyle(size: 18)).center(),
+            Text(userModel!.fullName.validate(),
+                style: boldTextStyle(size: 18)).center(),
+            
             8.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +129,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      rf_call.iconImage(
+                      rfCall.iconImage(
                           iconColor:
                               appStore.isDarkModeOn ? white : rfPrimaryColor),
                       8.width,
@@ -145,7 +151,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      rf_message.iconImage(iconColor: whiteColor),
+                      rfMessage.iconImage(iconColor: whiteColor),
                       // rfCommonCachedNetworkImage(rf_message, color: white, height: 16, width: 16),
                       8.width,
                       Text('Message Me', style: boldTextStyle(color: white)),
