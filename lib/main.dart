@@ -7,6 +7,8 @@ import 'package:roomie_finder/utils/AppTheme.dart';
 import 'package:roomie_finder/utils/RFConstant.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:roomie_finder/firebase_options.dart';
 
 AppStore appStore = AppStore();
 
@@ -14,6 +16,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initialize();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 

@@ -20,6 +20,9 @@ dependencies:
   mobx: ^2.0.3
   flutter_mobx: ^2.0.1
   device_preview: ^1.2.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
+  firebase_auth: ^4.16.0
 
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2
