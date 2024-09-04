@@ -46,4 +46,5 @@ flutter:
 
   assets:
     - images/roomFinding/
+    - images/app/
     - images/

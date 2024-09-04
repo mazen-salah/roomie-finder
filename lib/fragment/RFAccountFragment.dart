@@ -56,7 +56,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(rfUser,
+                child: rfCommonCachedNetworkImage(userModel!.profileImageUrl,
                     fit: BoxFit.cover, width: 100, height: 100, radius: 150),
               ),
               Positioned(
@@ -180,7 +180,8 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Location', style: boldTextStyle()),
-                      Text('Kathmandu, Nepal', style: secondaryTextStyle()),
+                      Text("${userModel!.location}, Saudi Arabia",
+                       style: secondaryTextStyle()),
                     ],
                   ).paddingSymmetric(horizontal: 24, vertical: 16),
                   Divider(color: context.dividerColor, height: 0),
@@ -188,7 +189,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Phone No', style: boldTextStyle()),
-                      Text('(+977) 9125331510', style: secondaryTextStyle()),
+                      Text('(+977) ${userModel!.phone}', style: secondaryTextStyle()),
                     ],
                   ).paddingSymmetric(horizontal: 24, vertical: 16),
                 ],
