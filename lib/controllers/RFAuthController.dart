@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 
 class RFAuthController {
@@ -18,21 +17,12 @@ class RFAuthController {
       );
       final user = userCredential.user;
       userData.id = user!.uid;
-      userModel = userData;
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .set(userData.toJson());
-
-      // Save user data to secure storage
+      await _saveUserDataToFirestore(userData);
       await _saveUserDataToSecureStorage(userData);
 
-      return {
-        'success': true,
-        'message': 'Account created successfully.',
-      };
+      return _successResponse('Account created successfully.');
     } catch (e) {
-      return {'success': false, 'message': _handleAuthError(e)};
+      return _errorResponse(e);
     }
   }
 
@@ -44,25 +34,12 @@ class RFAuthController {
         password: password,
       );
       final user = userCredential.user;
-
-      // Fetch user data from Firestore
-      UserModel userData = UserModel.fromJson(
-        (await FirebaseFirestore.instance
-                .collection('users')
-                .doc(user!.uid)
-                .get())
-            .data()!,
-      );
-
-      // Save user data to secure storage
+      final userData = await _fetchUserDataFromFirestore(user!.uid);
       await _saveUserDataToSecureStorage(userData);
 
-      return {
-        'success': true,
-        'message': 'Signed in successfully.',
-      };
+      return _successResponse('Signed in successfully.');
     } catch (e) {
-      return {'success': false, 'message': _handleAuthError(e)};
+      return _errorResponse(e);
     }
   }
 
@@ -70,13 +47,10 @@ class RFAuthController {
   Future<Map<String, dynamic>> signOut() async {
     try {
       await _auth.signOut();
-
-      // Clear user data from secure storage
       await _secureStorage.deleteAll();
-
-      return {'success': true, 'message': 'Signed out successfully.'};
+      return _successResponse('Signed out successfully.');
     } catch (e) {
-      return {'success': false, 'message': _handleAuthError(e)};
+      return _errorResponse(e);
     }
   }
 
@@ -84,17 +58,16 @@ class RFAuthController {
   Future<Map<String, dynamic>> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      return {'success': true, 'message': 'Password reset email sent.'};
+      return _successResponse('Password reset email sent.');
     } catch (e) {
-      return {'success': false, 'message': _handleAuthError(e)};
+      return _errorResponse(e);
     }
   }
 
   // Get current user
-  User? getCurrentUser() {
-    return _auth.currentUser;
-  }
+  User? getCurrentUser() => _auth.currentUser;
 
+  // Get current user data
   Future<UserModel?> getCurrentUserData() async {
     if (isSignedIn()) {
       return await _readUserDataFromSecureStorage();
@@ -103,8 +76,14 @@ class RFAuthController {
   }
 
   // Check if user is signed in
-  bool isSignedIn() {
-    return _auth.currentUser != null;
+  bool isSignedIn() => _auth.currentUser != null;
+
+  // Save user data to Firestore
+  Future<void> _saveUserDataToFirestore(UserModel userData) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userData.id)
+        .set(userData.toJson());
   }
 
   // Save user data to secure storage
@@ -113,33 +92,42 @@ class RFAuthController {
     await _secureStorage.write(key: 'fullName', value: userData.fullName);
     await _secureStorage.write(key: 'email', value: userData.email);
     await _secureStorage.write(key: 'role', value: userData.role);
-    await _secureStorage.write(key: 'photoUrl', value: userData.profileImageUrl);
+    await _secureStorage.write(
+        key: 'photoUrl', value: userData.profileImageUrl);
     await _secureStorage.write(key: 'phoneNumber', value: userData.phone);
     await _secureStorage.write(key: 'location', value: userData.location);
   }
 
   // Read user data from secure storage
   Future<UserModel?> _readUserDataFromSecureStorage() async {
-    String? id = await _secureStorage.read(key: 'userId');
-    String? fullName = await _secureStorage.read(key: 'fullName');
-    String? email = await _secureStorage.read(key: 'email');
-    String? role = await _secureStorage.read(key: 'role');
-    String? photoUrl = await _secureStorage.read(key: 'photoUrl');
-    String? phoneNumber = await _secureStorage.read(key: 'phoneNumber');
-    String? location = await _secureStorage.read(key: 'location');
+    final id = await _secureStorage.read(key: 'userId');
+    final fullName = await _secureStorage.read(key: 'fullName');
+    final email = await _secureStorage.read(key: 'email');
+    final role = await _secureStorage.read(key: 'role');
+    final photoUrl = await _secureStorage.read(key: 'photoUrl');
+    final phoneNumber = await _secureStorage.read(key: 'phoneNumber');
+    final location = await _secureStorage.read(key: 'location');
 
-    if (id != null && fullName != null && email != null && role != null && location != null && phoneNumber != null  && photoUrl != null) {
+    if ([id, fullName, email, role, photoUrl, phoneNumber, location]
+        .every((element) => element != null)) {
       return UserModel(
-        id: id,
-        fullName: fullName,
-        email: email,
-        role: role,
-        profileImageUrl: photoUrl,
-        phone: phoneNumber,
-        location: location,
+        id: id!,
+        fullName: fullName!,
+        email: email!,
+        role: role!,
+        profileImageUrl: photoUrl!,
+        phone: phoneNumber!,
+        location: location!,
       );
     }
     return null;
+  }
+
+  // Fetch user data from Firestore
+  Future<UserModel> _fetchUserDataFromFirestore(String uid) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    return UserModel.fromJson(doc.data()!);
   }
 
   // Handle errors
@@ -166,5 +154,15 @@ class RFAuthController {
     } else {
       return 'An unknown error occurred.';
     }
+  }
+
+  // Success response
+  Map<String, dynamic> _successResponse(String message) {
+    return {'success': true, 'message': message};
+  }
+
+  // Error response
+  Map<String, dynamic> _errorResponse(Object e) {
+    return {'success': false, 'message': _handleAuthError(e)};
   }
 }
