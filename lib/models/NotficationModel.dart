@@ -8,6 +8,22 @@ class NotificationModel {
     required this.unReadNotification,
     required this.description,
   });
+
+  factory NotificationModel.fromMap(Map<String, dynamic> map) {
+    return NotificationModel(
+      title: map['title'] as String,
+      unReadNotification: map['unReadNotification'] as bool,
+      description: map['description'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'unReadNotification': unReadNotification,
+      'description': description,
+    };
+  }
 }
 
 List<NotificationModel> notificationList() {
