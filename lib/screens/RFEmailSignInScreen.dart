@@ -1,11 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
-import 'package:roomie_finder/components/RFConformationDialog.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/screens/RFHomeScreen.dart';
 import 'package:roomie_finder/screens/RFResetPasswordScreen.dart';
@@ -14,15 +10,10 @@ import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
-// ignore: must_be_immutable
 class RFEmailSignInScreen extends StatefulWidget {
-  bool showDialog;
-  String message;
 
   RFEmailSignInScreen({
     Key? key,
-     this.showDialog = false,
-     this.message ='',
   }) : super(key: key);
 
   @override
@@ -30,6 +21,7 @@ class RFEmailSignInScreen extends StatefulWidget {
 }
 
 class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -37,6 +29,15 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
   FocusNode passWordFocusNode = FocusNode();
 
   Timer? timer;
+
+  void _showSnackBar(BuildContext context, String message,
+      {bool isError = false}) {
+    final snackBar = SnackBar(
+      content: Text(message, style: TextStyle(color: Colors.white)),
+      backgroundColor: isError ? Colors.red : Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   void initState() {
@@ -47,28 +48,6 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
   void init() async {
     setStatusBarColor(rf_primaryColor,
         statusBarIconBrightness: Brightness.light);
-
-    widget.showDialog
-        ? Timer.run(() {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (_) {
-                Future.delayed(Duration(seconds: 1), () {
-                  Navigator.of(context).pop(true);
-                });
-                return Material(
-                    type: MaterialType.transparency,
-                    child: RFConformationDialog( message: widget.message));
-              },
-            );
-          })
-        : SizedBox();
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
   }
 
   @override
@@ -77,71 +56,109 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
       body: RFCommonAppComponent(
         title: RFAppName,
         subTitle: RFAppSubTitle,
-        mainWidgetHeight: 230,
-        subWidgetHeight: 170,
-        cardWidget: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Sign In to Continue', style: boldTextStyle(size: 18)),
-            16.height,
-            AppTextField(
-              controller: emailController,
-              focus: emailFocusNode,
-              nextFocus: passWordFocusNode,
-              textFieldType: TextFieldType.EMAIL,
-              decoration: rfInputDecoration(
-                lableText: "Email Address",
-                showLableText: true,
-                suffixIcon: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: boxDecorationWithRoundedCorners(
+        mainWidgetHeight: 250,
+        subWidgetHeight: 190,
+        cardWidget: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Sign In', style: boldTextStyle(size: 18)),
+              16.height,
+              AppTextField(
+                controller: emailController,
+                focus: emailFocusNode,
+                nextFocus: passWordFocusNode,
+                textFieldType: TextFieldType.EMAIL,
+                decoration: rfInputDecoration(
+                  lableText: "Email Address",
+                  showLableText: true,
+                  suffixIcon: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: boxDecorationWithRoundedCorners(
                       boxShape: BoxShape.circle,
-                      backgroundColor: rf_rattingBgColor),
-                  child: Icon(Icons.done, color: Colors.white, size: 14),
+                      backgroundColor: rf_rattingBgColor,
+                    ),
+                    child: Icon(Icons.done, color: Colors.white, size: 14),
+                  ),
                 ),
-              ),
-            ),
-            16.height,
-            AppTextField(
-              controller: passwordController,
-              focus: passWordFocusNode,
-              textFieldType: TextFieldType.PASSWORD,
-              decoration: rfInputDecoration(
-                lableText: 'Password',
-                showLableText: true,
-              ),
-            ),
-            32.height,
-            AppButton(
-              color: rf_primaryColor,
-              child: Text('Log In', style: boldTextStyle(color: white)),
-              width: context.width(),
-              elevation: 0,
-              onTap: () {
-                final response = RFAuthController()
-                    .signIn(emailController.text, passwordController.text);
-
-                response.then((value) {
-                  if (value['success']) {
-                    RFHomeScreen().launch(context);
-                  } else {
-                    toast(value['message']);
+                validator: (value) {
+                  if (value == null || !value.contains('@')) {
+                    return 'Please enter a valid email address.';
                   }
-                });
-              },
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                  child: Text("Reset Password?", style: primaryTextStyle()),
-                  onPressed: () {
-                    RFResetPasswordScreen().launch(context);
-                  }),
-            ),
-          ],
+                  return null;
+                },
+              ),
+              16.height,
+              AppTextField(
+                controller: passwordController,
+                focus: passWordFocusNode,
+                textFieldType: TextFieldType.PASSWORD,
+                decoration: rfInputDecoration(
+                  lableText: 'Password',
+                  showLableText: true,
+                ),
+                validator: (value) {
+                  if (value == null || value.length < 6) {
+                    return 'Password must be at least 6 characters.';
+                  }
+                  return null;
+                },
+              ),
+              16.height,
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text('Forgot Password?', style: secondaryTextStyle())
+                    .onTap(() {
+                  RFResetPasswordScreen().launch(context);
+                }),
+              ),
+              32.height,
+              AppButton(
+                color: rf_primaryColor,
+                child: Text('Sign In', style: boldTextStyle(color: white)),
+                width: context.width(),
+                height: 45,
+                elevation: 0,
+                onTap: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final response = await RFAuthController().signIn(
+                      emailController.text,
+                      passwordController.text,
+                    );
+
+                    if (response['success']) {
+                      _showSnackBar(context, response['message']);
+                      RFHomeScreen().launch(context, isNewTask: true);
+                    } else {
+                      _showSnackBar(context, response['message'],
+                          isError: true);
+                    }
+                  }
+                },
+              ),
+              32.height,
+              Text('Don\'t have an account?', style: primaryTextStyle(size: 16))
+                  .center(),
+              8.height,
+              AppButton(
+                color: rf_primaryColor,
+                child:
+                    Text('Create Account', style: boldTextStyle(color: white)),
+                width: context.width(),
+                height: 45,
+                elevation: 0,
+                onTap: () {
+                  RFSignUpScreen().launch(context);
+                },
+              ),
+            ],
+          ),
         ),
-        subWidget: socialLoginWidget(context,
-            title1: "New Member? ", title2: "Sign up Here", callBack: () {
+        subWidget: rfCommonRichText(
+                title: "Don’t have an account? ", subTitle: "Create one here")
+            .paddingAll(8)
+            .onTap(() {
           RFSignUpScreen().launch(context);
         }),
       ),

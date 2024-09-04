@@ -28,6 +28,15 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
     if (mounted) super.setState(fn);
   }
 
+  void _showSnackBar(BuildContext context, String message,
+      {bool isError = false}) {
+    final snackBar = SnackBar(
+      content: Text(message, style: TextStyle(color: Colors.white)),
+      backgroundColor: isError ? Colors.red : Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,17 +73,17 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
             width: context.width(),
             elevation: 0,
             onTap: () {
-             final response = RFAuthController().resetPassword(emailController.text);
-             response.then((value) {
-              if (value['success']) {
-                RFEmailSignInScreen(
-                  showDialog: true,
-                  message: value['message'],
-                ).launch(context);
-              } else {
-                toast(value['message']);
-              }
-             });
+              final response =
+                  RFAuthController().resetPassword(emailController.text);
+              response.then((value) {
+                if (value['success']) {
+                  _showSnackBar(context, value['message']);
+                  finish(context);
+                  RFEmailSignInScreen().launch(context);
+                } else {
+                  _showSnackBar(context, value['message'], isError: true);
+                }
+              });
             },
           ),
         ],
