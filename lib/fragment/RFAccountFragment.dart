@@ -268,7 +268,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
                 RoomModel data = likedHotelData[index];
-
                 return Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

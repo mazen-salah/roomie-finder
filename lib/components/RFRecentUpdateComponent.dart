@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/models/DefaultModel.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFHotelDescriptionScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
@@ -71,9 +70,9 @@ class RFRecentUpdateComponent extends StatelessWidget {
               2.width,
               Container(
                 decoration: boxDecorationWithRoundedCorners(
-                    boxShape: BoxShape.circle,
-                    // backgroundColor: recentUpdateData.color ?? greenColor,
-                    ),
+                  boxShape: BoxShape.circle,
+                  // backgroundColor: recentUpdateData.color ?? greenColor,
+                ),
                 padding: const EdgeInsets.all(4),
               ),
               11.width,

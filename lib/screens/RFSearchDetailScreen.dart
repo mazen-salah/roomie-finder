@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/DefaultModel.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFLocationScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/components/RFHotelListComponent.dart';
-import 'package:roomie_finder/models/DefaultModel.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';

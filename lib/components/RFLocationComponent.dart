@@ -30,7 +30,7 @@ class RFLocationComponent extends StatelessWidget {
           decoration: boxDecorationWithRoundedCorners(
               backgroundColor: black.withOpacity(0.2)),
         ),
-        Positioned(
+        const Positioned(
           bottom: 16,
           left: 16,
           child: Column(

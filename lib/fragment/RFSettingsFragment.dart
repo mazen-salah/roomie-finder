@@ -3,10 +3,9 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomModel.dart';
+import 'package:roomie_finder/models/SettingsModel.dart';
 import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSettingsFragment extends StatefulWidget {
