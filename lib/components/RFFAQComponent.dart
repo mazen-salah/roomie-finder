@@ -8,14 +8,14 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFFAQComponent extends StatelessWidget {
   final RoomFinderModel faqData;
 
-  RFFAQComponent({required this.faqData});
+  const RFFAQComponent({super.key, required this.faqData});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       width: context.width(),
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration:
           boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
       child: Row(
@@ -23,13 +23,13 @@ class RFFAQComponent extends StatelessWidget {
         children: [
           Container(
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
                 backgroundColor:
-                    appStore.isDarkModeOn ? scaffoldDarkColor : rf_faqBgColor,
+                    appStore.isDarkModeOn ? scaffoldDarkColor : rfFaqBgColor,
               ),
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child:
-                  faqData.img.validate().iconImage(iconColor: rf_primaryColor)),
+                  faqData.img.validate().iconImage(iconColor: rfPrimaryColor)),
           16.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -5,7 +5,7 @@ import 'package:roomie_finder/models/UserModel.dart';
 
 class RFAuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   // Sign up with email and password
   Future<Map<String, dynamic>> signUp(

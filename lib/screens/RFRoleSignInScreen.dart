@@ -8,6 +8,8 @@ import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFRoleSignIn extends StatefulWidget {
+  const RFRoleSignIn({super.key});
+
   @override
   _RFRoleSignInState createState() => _RFRoleSignInState();
 }
@@ -52,14 +54,14 @@ class _RFRoleSignInState extends State<RFRoleSignIn> {
                     image: "images/tenant.png",
                     text: "Tenant",
                     onTap: () {
-                      RFEmailSignInScreen().launch(context);
+                      const RFEmailSignInScreen().launch(context);
                     },
                   ),
                   _buildRoleButton(
                     image: "images/lessor.png",
                     text: "Lessor",
                     onTap: () {
-                      RFEmailSignInScreen().launch(context);
+                      const RFEmailSignInScreen().launch(context);
                     },
                   ),
                 ],
@@ -71,7 +73,7 @@ class _RFRoleSignInState extends State<RFRoleSignIn> {
             title1: "New Member? ",
             title2: "Sign up Here",
             callBack: () {
-              RFSignUpScreen().launch(context);
+              const RFSignUpScreen().launch(context);
             },
           ),
         ),
@@ -84,17 +86,17 @@ class _RFRoleSignInState extends State<RFRoleSignIn> {
     required String text,
     required VoidCallback onTap,
   }) {
-    return Container(
+    return SizedBox(
       width: context.width() * 0.35,
       child: AppButton(
+        text: text,
+        onTap: onTap,
         child: Column(
           children: [
             Image.asset(image, height: 50),
             Text(text, style: boldTextStyle(size: 16)),
           ],
         ),
-        text: text,
-        onTap: onTap,
       ),
     );
   }

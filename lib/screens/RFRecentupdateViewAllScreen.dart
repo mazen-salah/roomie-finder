@@ -8,6 +8,7 @@ import '../components/RFRecentUpdateComponent.dart';
 class RFRecentUpdateViewAllScreen extends StatelessWidget {
   final List<RoomFinderModel> hotelListData = hotelList();
 
+  RFRecentUpdateViewAllScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,8 @@ class RFRecentUpdateViewAllScreen extends StatelessWidget {
           showLeadingIcon: false,
           roundCornerShape: true),
       body: ListView.builder(
-        padding: EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 24),
+        padding:
+            const EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 24),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemCount: 15,

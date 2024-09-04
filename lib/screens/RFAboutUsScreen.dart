@@ -7,6 +7,8 @@ import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFAboutUsScreen extends StatelessWidget {
+  const RFAboutUsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +27,8 @@ class RFAboutUsScreen extends StatelessWidget {
             Container(
               decoration: boxDecorationRoundedWithShadow(8,
                   backgroundColor: context.cardColor),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -46,14 +48,15 @@ class RFAboutUsScreen extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 24),
+              margin: const EdgeInsets.only(
+                  left: 24, right: 24, top: 8, bottom: 24),
               decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: appStore.isDarkModeOn
                     ? scaffoldDarkColor
-                    : rf_selectedCategoryBgColor,
+                    : rfSelectedCategoryBgColor,
               ),
-              padding: EdgeInsets.all(16),
-              child: RFPremiumServiceComponent(),
+              padding: const EdgeInsets.all(16),
+              child: const RFPremiumServiceComponent(),
             ),
           ],
         ),

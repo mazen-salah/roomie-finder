@@ -8,7 +8,7 @@ class RFLocationViewAllScreen extends StatelessWidget {
   final List<RoomFinderModel> locationListData = locationList();
   final bool? locationWidth;
 
-  RFLocationViewAllScreen({this.locationWidth});
+  RFLocationViewAllScreen({super.key, this.locationWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,8 @@ class RFLocationViewAllScreen extends StatelessWidget {
           showLeadingIcon: false,
           roundCornerShape: true),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
         child: Wrap(
           spacing: 8,
           runSpacing: 16,

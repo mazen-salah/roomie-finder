@@ -6,6 +6,8 @@ import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFResetPasswordScreen extends StatefulWidget {
+  const RFResetPasswordScreen({super.key});
+
   @override
   _RFResetPasswordScreenState createState() => _RFResetPasswordScreenState();
 }
@@ -31,7 +33,7 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
   void _showSnackBar(BuildContext context, String message,
       {bool isError = false}) {
     final snackBar = SnackBar(
-      content: Text(message, style: TextStyle(color: Colors.white)),
+      content: Text(message, style: const TextStyle(color: Colors.white)),
       backgroundColor: isError ? Colors.red : Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -59,17 +61,16 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
               lableText: "Email Address",
               showLableText: true,
               suffixIcon: Container(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle, backgroundColor: redColor),
-                child: Icon(Icons.done, color: Colors.white, size: 14),
+                child: const Icon(Icons.done, color: Colors.white, size: 14),
               ),
             ),
           ),
           32.height,
           AppButton(
-            color: rf_primaryColor,
-            child: Text('Reset password', style: boldTextStyle(color: white)),
+            color: rfPrimaryColor,
             width: context.width(),
             elevation: 0,
             onTap: () {
@@ -79,12 +80,13 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
                 if (value['success']) {
                   _showSnackBar(context, value['message']);
                   finish(context);
-                  RFEmailSignInScreen().launch(context);
+                  const RFEmailSignInScreen().launch(context);
                 } else {
                   _showSnackBar(context, value['message'], isError: true);
                 }
               });
             },
+            child: Text('Reset password', style: boldTextStyle(color: white)),
           ),
         ],
       ).paddingAll(24),

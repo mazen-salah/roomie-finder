@@ -9,6 +9,8 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 import '../utils/RFString.dart';
 
 class RFSignUpScreen extends StatefulWidget {
+  const RFSignUpScreen({super.key});
+
   @override
   _RFSignUpScreenState createState() => _RFSignUpScreenState();
 }
@@ -30,7 +32,7 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
   void _showSnackBar(BuildContext context, String message,
       {bool isError = false}) {
     final snackBar = SnackBar(
-      content: Text(message, style: TextStyle(color: Colors.white)),
+      content: Text(message, style: const TextStyle(color: Colors.white)),
       backgroundColor: isError ? Colors.red : Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -60,12 +62,13 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                   lableText: "Full Name",
                   showLableText: true,
                   suffixIcon: Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: boxDecorationWithRoundedCorners(
                       boxShape: BoxShape.circle,
-                      backgroundColor: rf_rattingBgColor,
+                      backgroundColor: rfRattingBgColor,
                     ),
-                    child: Icon(Icons.done, color: Colors.white, size: 14),
+                    child:
+                        const Icon(Icons.done, color: Colors.white, size: 14),
                   ),
                 ),
                 validator: (value) {
@@ -85,12 +88,13 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                   lableText: "Email Address",
                   showLableText: true,
                   suffixIcon: Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: boxDecorationWithRoundedCorners(
                       boxShape: BoxShape.circle,
-                      backgroundColor: rf_rattingBgColor,
+                      backgroundColor: rfRattingBgColor,
                     ),
-                    child: Icon(Icons.done, color: Colors.white, size: 14),
+                    child:
+                        const Icon(Icons.done, color: Colors.white, size: 14),
                   ),
                 ),
                 validator: (value) {
@@ -140,7 +144,7 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AppButton(
-                    color: role == "tenant" ? rf_primaryColor : Colors.white,
+                    color: role == "tenant" ? rfPrimaryColor : Colors.white,
                     child: Column(
                       children: [
                         Image.asset("images/tenant.png", height: 50),
@@ -155,7 +159,7 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                   ),
                   16.width,
                   AppButton(
-                    color: role == "lessor" ? rf_primaryColor : Colors.white,
+                    color: role == "lessor" ? rfPrimaryColor : Colors.white,
                     child: Column(
                       children: [
                         Image.asset("images/lessor.png", height: 50),
@@ -172,9 +176,7 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
               ),
               32.height,
               AppButton(
-                color: rf_primaryColor,
-                child:
-                    Text('Create Account', style: boldTextStyle(color: white)),
+                color: rfPrimaryColor,
                 width: context.width(),
                 height: 45,
                 elevation: 0,
@@ -190,13 +192,15 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
 
                     if (response['success']) {
                       _showSnackBar(context, response['message']);
-                      RFEmailSignInScreen().launch(context);
+                      const RFEmailSignInScreen().launch(context);
                     } else {
                       _showSnackBar(context, response['message'],
                           isError: true);
                     }
                   }
                 },
+                child:
+                    Text('Create Account', style: boldTextStyle(color: white)),
               ),
             ],
           ),

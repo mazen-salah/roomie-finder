@@ -9,10 +9,10 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFHotelDescriptionScreen extends StatefulWidget {
   final RoomFinderModel? hotelData;
 
-  RFHotelDescriptionScreen({this.hotelData});
+  const RFHotelDescriptionScreen({super.key, this.hotelData});
 
   @override
-  _RFHotelDescriptionScreenState createState() =>
+  State<RFHotelDescriptionScreen> createState() =>
       _RFHotelDescriptionScreenState();
 }
 
@@ -44,38 +44,39 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: AppButton(
-        color: rf_primaryColor,
+        color: rfPrimaryColor,
         elevation: 0,
-        child: Text('Book Now', style: boldTextStyle(color: white)),
         width: context.width(),
         onTap: () {
           showInDialog(context, barrierDismissible: true, builder: (context) {
-            return RFCongratulatedDialog();
+            return const RFCongratulatedDialog();
           });
         },
+        child: Text('Book Now', style: boldTextStyle(color: white)),
       ).paddingSymmetric(horizontal: 16, vertical: 24),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
               leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios_new, color: white, size: 18),
+                icon: const Icon(Icons.arrow_back_ios_new,
+                    color: white, size: 18),
                 onPressed: () {
                   finish(context);
                 },
               ),
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16)),
               ),
-              backgroundColor: rf_primaryColor,
+              backgroundColor: rfPrimaryColor,
               pinned: true,
               elevation: 2,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.parallax,
-                titlePadding: EdgeInsets.all(10),
+                titlePadding: const EdgeInsets.all(10),
                 centerTitle: true,
                 background: Stack(
                   children: [
@@ -86,8 +87,8 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
                       height: 350,
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 32),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,

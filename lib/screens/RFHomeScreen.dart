@@ -9,6 +9,8 @@ import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFHomeScreen extends StatefulWidget {
+  const RFHomeScreen({super.key});
+
   @override
   _RFHomeScreenState createState() => _RFHomeScreenState();
 }
@@ -16,11 +18,11 @@ class RFHomeScreen extends StatefulWidget {
 class _RFHomeScreenState extends State<RFHomeScreen> {
   int _selectedIndex = 0;
 
-  var _pages = [
-    RFHomeFragment(),
-    RFSearchFragment(),
-    RFSettingsFragment(),
-    RFAccountFragment(),
+  final _pages = [
+    const RFHomeFragment(),
+    const RFSearchFragment(),
+    const RFSettingsFragment(),
+    const RFAccountFragment(),
   ];
 
   Widget _bottomTab() {
@@ -32,27 +34,26 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
       unselectedFontSize: 14,
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined, size: 22),
           label: 'Home',
           activeIcon:
-              Icon(Icons.home_outlined, color: rf_primaryColor, size: 22),
+              Icon(Icons.home_outlined, color: rfPrimaryColor, size: 22),
         ),
         BottomNavigationBarItem(
           icon: rf_search.iconImage(),
           label: 'Search',
-          activeIcon: rf_search.iconImage(iconColor: rf_primaryColor),
+          activeIcon: rf_search.iconImage(iconColor: rfPrimaryColor),
         ),
         BottomNavigationBarItem(
           icon: rf_setting.iconImage(size: 22),
           label: 'Settings',
-          activeIcon:
-              rf_setting.iconImage(iconColor: rf_primaryColor, size: 22),
+          activeIcon: rf_setting.iconImage(iconColor: rfPrimaryColor, size: 22),
         ),
         BottomNavigationBarItem(
           icon: rf_person.iconImage(),
           label: 'Account',
-          activeIcon: rf_person.iconImage(iconColor: rf_primaryColor),
+          activeIcon: rf_person.iconImage(iconColor: rfPrimaryColor),
         ),
       ],
     );
@@ -71,7 +72,7 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
   }
 
   void init() async {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
   }
 

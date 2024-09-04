@@ -7,6 +7,8 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFViewAllHotelListScreen extends StatelessWidget {
   final List<RoomFinderModel> hotelListData = hotelList();
 
+  RFViewAllHotelListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +18,8 @@ class RFViewAllHotelListScreen extends StatelessWidget {
           showLeadingIcon: false,
           roundCornerShape: true),
       body: ListView.builder(
-        padding: EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 24),
+        padding:
+            const EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 24),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemCount: 20,

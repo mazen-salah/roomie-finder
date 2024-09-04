@@ -8,15 +8,15 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFRecentUpdateComponent extends StatelessWidget {
   final RoomFinderModel recentUpdateData;
 
-  RFRecentUpdateComponent({required this.recentUpdateData});
+  const RFRecentUpdateComponent({super.key, required this.recentUpdateData});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration:
           boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
           rfCommonCachedNetworkImage(recentUpdateData.img.validate(),
@@ -32,8 +32,8 @@ class RFRecentUpdateComponent extends StatelessWidget {
               Row(
                 children: [
                   Text(recentUpdateData.price.validate(),
-                      style: boldTextStyle(color: rf_primaryColor)),
-                  Text("${recentUpdateData.rentDuration.validate()}",
+                      style: boldTextStyle(color: rfPrimaryColor)),
+                  Text(recentUpdateData.rentDuration.validate(),
                       style: secondaryTextStyle()),
                 ],
               ),
@@ -46,7 +46,8 @@ class RFRecentUpdateComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.location_on, color: rf_primaryColor, size: 16),
+                  const Icon(Icons.location_on,
+                      color: rfPrimaryColor, size: 16),
                   8.width,
                   Text(recentUpdateData.location.validate(),
                       style: secondaryTextStyle()),
@@ -71,7 +72,7 @@ class RFRecentUpdateComponent extends StatelessWidget {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     backgroundColor: recentUpdateData.color ?? greenColor),
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
               ),
               11.width,
               Text(recentUpdateData.address.validate(),

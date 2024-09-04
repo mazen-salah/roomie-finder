@@ -10,6 +10,8 @@ import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFAccountFragment extends StatefulWidget {
+  const RFAccountFragment({super.key});
+
   @override
   State<RFAccountFragment> createState() => _RFAccountFragmentState();
 }
@@ -50,7 +52,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             children: [
               Container(
                 alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.only(top: 150),
+                margin: const EdgeInsets.only(top: 150),
                 width: 100,
                 height: 100,
                 decoration: boxDecorationWithRoundedCorners(
@@ -64,7 +66,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 right: -4,
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.cardColor,
                     boxShape: BoxShape.circle,
@@ -73,11 +75,11 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                           spreadRadius: 0.4,
                           blurRadius: 3,
                           color: gray.withOpacity(0.1),
-                          offset: Offset(1, 6)),
+                          offset: const Offset(1, 6)),
                     ],
                   ),
                   child: Icon(Icons.add,
-                      color: appStore.isDarkModeOn ? white : rf_primaryColor,
+                      color: appStore.isDarkModeOn ? white : rfPrimaryColor,
                       size: 16),
                 ),
               ),
@@ -114,7 +116,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                   style: OutlinedButton.styleFrom(
                     backgroundColor: context.scaffoldBackgroundColor,
                     side: BorderSide(color: context.dividerColor, width: 1),
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
@@ -123,19 +125,19 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     children: [
                       rf_call.iconImage(
                           iconColor:
-                              appStore.isDarkModeOn ? white : rf_primaryColor),
+                              appStore.isDarkModeOn ? white : rfPrimaryColor),
                       8.width,
                       Text('Call Me',
                           style: boldTextStyle(
                               color: appStore.isDarkModeOn
                                   ? white
-                                  : rf_primaryColor)),
+                                  : rfPrimaryColor)),
                     ],
                   ),
                 ).expand(),
                 16.width,
                 AppButton(
-                  color: rf_primaryColor,
+                  color: rfPrimaryColor,
                   elevation: 0.0,
                   shapeBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
@@ -160,10 +162,10 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 border: Border.all(
                     color: appStore.isDarkModeOn
                         ? gray.withOpacity(0.3)
-                        : rf_selectedCategoryBgColor),
+                        : rfSelectedCategoryBgColor),
                 backgroundColor: context.cardColor,
               ),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -196,22 +198,23 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             16.height,
             HorizontalList(
               itemCount: applyHotelData.length,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
                 RoomFinderModel data = applyHotelData[index];
 
                 return Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: selectedIndex == index
-                        ? rf_selectedCategoryBgColor
+                        ? rfSelectedCategoryBgColor
                         : Colors.transparent,
                   ),
                   child: Text(
                     data.roomCategoryName.validate(),
                     style: boldTextStyle(
                         color: selectedIndex == index
-                            ? rf_primaryColor
+                            ? rfPrimaryColor
                             : gray.withOpacity(0.4)),
                   ),
                 ).onTap(() {
@@ -224,9 +227,9 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               },
             ),
             ListView.builder(
-              padding: EdgeInsets.only(right: 16, left: 16, top: 16),
+              padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: appliedHotelData.length,
               itemBuilder: (BuildContext context, int index) {

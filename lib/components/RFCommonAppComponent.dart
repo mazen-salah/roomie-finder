@@ -13,8 +13,9 @@ class RFCommonAppComponent extends StatefulWidget {
   final double? mainWidgetHeight;
   final double? subWidgetHeight;
 
-  RFCommonAppComponent(
-      {this.title,
+  const RFCommonAppComponent(
+      {super.key,
+      this.title,
       this.subTitle,
       this.cardWidget,
       this.subWidget,
@@ -30,8 +31,8 @@ class _RFCommonAppComponentState extends State<RFCommonAppComponent> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.only(bottom: 24),
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -39,10 +40,10 @@ class _RFCommonAppComponentState extends State<RFCommonAppComponent> {
             width: context.width(),
             height: widget.mainWidgetHeight ?? 300,
             decoration: boxDecorationWithRoundedCorners(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16)),
-              backgroundColor: rf_primaryColor,
+              backgroundColor: rfPrimaryColor,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +65,7 @@ class _RFCommonAppComponentState extends State<RFCommonAppComponent> {
                         left: 24,
                         bottom: 24,
                         right: 24),
-                    padding: EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(24),
                     decoration: appStore.isDarkModeOn
                         ? boxDecorationWithRoundedCorners(
                             backgroundColor: context.cardColor)

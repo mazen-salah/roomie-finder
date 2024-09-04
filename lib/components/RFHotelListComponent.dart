@@ -9,7 +9,7 @@ class RFHotelListComponent extends StatelessWidget {
   final RoomFinderModel? hotelData;
   final bool? showHeight;
 
-  RFHotelListComponent({this.hotelData, this.showHeight});
+  const RFHotelListComponent({super.key, this.hotelData, this.showHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class RFHotelListComponent extends StatelessWidget {
       width: context.width(),
       decoration:
           boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,7 +42,7 @@ class RFHotelListComponent extends StatelessWidget {
                       Row(
                         children: [
                           Text(hotelData!.price.validate(),
-                              style: boldTextStyle(color: rf_primaryColor)),
+                              style: boldTextStyle(color: rfPrimaryColor)),
                           Text(hotelData!.rentDuration.validate(),
                               style: secondaryTextStyle()),
                         ],
@@ -55,7 +55,7 @@ class RFHotelListComponent extends StatelessWidget {
                         decoration: boxDecorationWithRoundedCorners(
                             boxShape: BoxShape.circle,
                             backgroundColor: hotelData!.color ?? greenColor),
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                       ),
                       6.width,
                       Text(hotelData!.address.validate(),
@@ -67,7 +67,8 @@ class RFHotelListComponent extends StatelessWidget {
               showHeight.validate() ? 8.height : 24.height,
               Row(
                 children: [
-                  Icon(Icons.location_on, color: rf_primaryColor, size: 16),
+                  const Icon(Icons.location_on,
+                      color: rfPrimaryColor, size: 16),
                   6.width,
                   Text(hotelData!.location.validate(),
                       style: secondaryTextStyle()),

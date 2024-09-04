@@ -6,6 +6,8 @@ import 'package:roomie_finder/screens/RFRoleSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 
 class RFSplashScreen extends StatefulWidget {
+  const RFSplashScreen({super.key});
+
   @override
   _RFSplashScreenState createState() => _RFSplashScreenState();
 }
@@ -18,23 +20,24 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
   }
 
   Future<void> init() async {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     finish(context);
 
-    bool isUserSignedIn = await RFAuthController().isSignedIn();
+    bool isUserSignedIn = RFAuthController().isSignedIn();
 
-    if (isUserSignedIn)
-      RFHomeScreen().launch(context);
-    else
-      RFRoleSignIn().launch(context);
+    if (isUserSignedIn) {
+      const RFHomeScreen().launch(context);
+    } else {
+      const RFRoleSignIn().launch(context);
+    }
   }
 
   @override
   void dispose() {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
 
     super.dispose();
@@ -48,10 +51,10 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rf_primaryColor,
+      backgroundColor: rfPrimaryColor,
       body: Container(
         decoration: boxDecorationWithRoundedCorners(
-            boxShape: BoxShape.circle, backgroundColor: rf_splashBgColor),
+            boxShape: BoxShape.circle, backgroundColor: rfSplashBgColor),
         width: 250,
         height: 250,
         child: ClipOval(

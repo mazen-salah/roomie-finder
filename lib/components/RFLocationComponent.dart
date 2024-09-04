@@ -7,7 +7,8 @@ class RFLocationComponent extends StatelessWidget {
   final RoomFinderModel locationData;
   final bool? locationWidth;
 
-  RFLocationComponent({required this.locationData, this.locationWidth});
+  const RFLocationComponent(
+      {super.key, required this.locationData, this.locationWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class RFLocationComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.location_on, color: white, size: 18),
+                  const Icon(Icons.location_on, color: white, size: 18),
                   8.width,
                   Text(locationData.location.validate(),
                       style: boldTextStyle(color: white)),

@@ -16,7 +16,7 @@ Widget socialLoginButton(BuildContext context,
     style: OutlinedButton.styleFrom(
       backgroundColor: context.scaffoldBackgroundColor,
       side: BorderSide(color: context.dividerColor, width: 1),
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
     ),
     child: Row(
@@ -42,14 +42,14 @@ InputDecoration rfInputDecoration(
         borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: gray.withOpacity(0.4)),
       ),
-      contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       hintText: hintText,
       hintStyle: secondaryTextStyle(),
       labelStyle: secondaryTextStyle(),
       labelText: showLableText.validate() ? lableText! : null,
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: rf_primaryColor),
+        borderSide: const BorderSide(color: rfPrimaryColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -88,7 +88,7 @@ Widget rfCommonRichText(
           text: subTitle.validate(),
           style: subTitleTextStyle ??
               primaryTextStyle(
-                  color: subTitleTextColor ?? rf_primaryColor,
+                  color: subTitleTextColor ?? rfPrimaryColor,
                   size: textSize ?? 14,
                   letterSpacing: 1.5),
         ),
@@ -119,7 +119,7 @@ Widget text(
     maxLines: isLongText ? null : maxLine,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
-      fontFamily: fontFamily ?? null,
+      fontFamily: fontFamily,
       fontSize: fontSize,
       color: textColor ?? appStore.textSecondaryColor,
       height: 1.5,
@@ -133,7 +133,7 @@ Widget text(
 class CustomTheme extends StatelessWidget {
   final Widget? child;
 
-  CustomTheme({required this.child});
+  const CustomTheme({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +193,7 @@ BoxDecoration boxDecoration(
     color: bgColor ?? appStore.scaffoldBackground,
     boxShadow: showShadow
         ? defaultBoxShadow(shadowColor: shadowColorGlobal)
-        : [BoxShadow(color: Colors.transparent)],
+        : [const BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
@@ -207,7 +207,7 @@ Decoration shadowWidget(BuildContext context) {
           spreadRadius: 0.4,
           blurRadius: 3,
           color: gray.withOpacity(0.1),
-          offset: Offset(1, 6)),
+          offset: const Offset(1, 6)),
     ],
   );
 }
@@ -246,7 +246,7 @@ Widget rfCommonCachedNetworkImage(
             radius: radius);
       },
       placeholder: (_, s) {
-        if (!usePlaceholderIfUrlEmpty) return SizedBox();
+        if (!usePlaceholderIfUrlEmpty) return const SizedBox();
         return placeHolderWidget(
             height: height,
             width: width,
@@ -305,23 +305,24 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context,
     child: AppBar(
       title: Text(title!, style: boldTextStyle(color: whiteColor, size: 20)),
       systemOverlayStyle:
-          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-      backgroundColor: rf_primaryColor,
+          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      backgroundColor: rfPrimaryColor,
       centerTitle: true,
       leading: showLeadingIcon.validate()
-          ? SizedBox()
+          ? const SizedBox()
           : IconButton(
               onPressed: () {
                 finish(context);
               },
-              icon: Icon(Icons.arrow_back_ios_new, color: whiteColor, size: 18),
-              color: rf_primaryColor,
+              icon: const Icon(Icons.arrow_back_ios_new,
+                  color: whiteColor, size: 18),
+              color: rfPrimaryColor,
             ),
       elevation: 0,
       shape: roundCornerShape.validate()
-          ? RoundedRectangleBorder(
+          ? const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)))
-          : RoundedRectangleBorder(
+          : const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.zero),
             ),
     ),
@@ -382,18 +383,19 @@ Future<void> commonLaunchUrl(String address,
 
 void launchCall(String? url) {
   if (url.validate().isNotEmpty) {
-    if (isIOS)
-      commonLaunchUrl('tel://' + url!,
+    if (isIOS) {
+      commonLaunchUrl('tel://${url!}',
           launchMode: LaunchMode.externalApplication);
-    else
-      commonLaunchUrl('tel:' + url!,
+    } else {
+      commonLaunchUrl('tel:${url!}',
           launchMode: LaunchMode.externalApplication);
+    }
   }
 }
 
 void launchMail(String? url) {
   if (url.validate().isNotEmpty) {
-    commonLaunchUrl('mailto:' + url!,
+    commonLaunchUrl('mailto:${url!}',
         launchMode: LaunchMode.externalApplication);
   }
 }

@@ -11,7 +11,7 @@ class RFHotelDetailComponent extends StatelessWidget {
   final List<RoomFinderModel> hotelImageData = hotelImageList();
   final RoomFinderModel? hotelData;
 
-  RFHotelDetailComponent({this.hotelData});
+  RFHotelDetailComponent({super.key, this.hotelData});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   onTap: () {
                     launchCall("1234567890");
                   },
-                  color: rf_primaryColor,
+                  color: rfPrimaryColor,
                   width: 15,
                   height: 15,
                   elevation: 0,
@@ -49,7 +49,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   onTap: () {
                     launchMail("demo@gmail.com");
                   },
-                  color: rf_primaryColor,
+                  color: rfPrimaryColor,
                   width: 15,
                   height: 15,
                   elevation: 0,
@@ -61,7 +61,7 @@ class RFHotelDetailComponent extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.location_on, color: rf_primaryColor)
+                const Icon(Icons.location_on, color: rfPrimaryColor)
                     .paddingOnly(top: 2),
                 16.width,
                 Column(
@@ -78,7 +78,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                                 style: boldTextStyle(
                                     color: appStore.isDarkModeOn
                                         ? white
-                                        : rf_textColor))
+                                        : rfTextColor))
                             .flexible(),
                         4.width,
                         Container(
@@ -88,7 +88,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                                 style: boldTextStyle(
                                     color: appStore.isDarkModeOn
                                         ? white
-                                        : rf_textColor))
+                                        : rfTextColor))
                             .flexible(),
                       ],
                     )
@@ -101,7 +101,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(4),
                           decoration: boxDecorationWithRoundedCorners(
                               backgroundColor: hotelData!.color!,
                               boxShape: BoxShape.circle),
@@ -122,7 +122,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                     Text(
                       'View on Google Maps',
                       style: primaryTextStyle(
-                          color: appStore.isDarkModeOn ? white : rf_textColor,
+                          color: appStore.isDarkModeOn ? white : rfTextColor,
                           decoration: TextDecoration.underline),
                     ).paddingOnly(left: 2),
                   ],
@@ -132,7 +132,7 @@ class RFHotelDetailComponent extends StatelessWidget {
           ],
         ).paddingAll(24),
         HorizontalList(
-          padding: EdgeInsets.only(right: 24, left: 24),
+          padding: const EdgeInsets.only(right: 24, left: 24),
           wrapAlignment: WrapAlignment.spaceEvenly,
           itemCount: hotelImageData.length,
           itemBuilder: (_, int index) => Stack(
@@ -176,7 +176,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.done, size: 16, color: rf_primaryColor),
+                        const Icon(Icons.done, size: 16, color: rfPrimaryColor),
                         8.width,
                         Text('1 Big Hall', style: secondaryTextStyle()),
                       ],
@@ -184,7 +184,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                     4.height,
                     Row(
                       children: [
-                        Icon(Icons.done, size: 16, color: rf_primaryColor),
+                        const Icon(Icons.done, size: 16, color: rfPrimaryColor),
                         8.width,
                         Text('Bikes and Car Parking ',
                             style: secondaryTextStyle()),
@@ -197,7 +197,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.done, size: 16, color: rf_primaryColor),
+                        const Icon(Icons.done, size: 16, color: rfPrimaryColor),
                         8.width,
                         Text('Shared Toilet', style: secondaryTextStyle()),
                       ],
@@ -205,7 +205,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                     4.height,
                     Row(
                       children: [
-                        Icon(Icons.done, size: 16, color: rf_primaryColor),
+                        const Icon(Icons.done, size: 16, color: rfPrimaryColor),
                         8.width,
                         Text('24/7 Water facility',
                             style: secondaryTextStyle()),

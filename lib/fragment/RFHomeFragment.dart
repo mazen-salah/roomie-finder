@@ -16,8 +16,10 @@ import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFHomeFragment extends StatefulWidget {
+  const RFHomeFragment({super.key});
+
   @override
-  _RFHomeFragmentState createState() => _RFHomeFragmentState();
+  State<RFHomeFragment> createState() => _RFHomeFragmentState();
 }
 
 class _RFHomeFragmentState extends State<RFHomeFragment> {
@@ -37,7 +39,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   }
 
   void init() async {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
   }
 
@@ -65,19 +67,19 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
                 hintText: "Search address or near you",
                 showPreFixIcon: true,
                 showLableText: false,
-                prefixIcon:
-                    Icon(Icons.location_on, color: rf_primaryColor, size: 18),
+                prefixIcon: const Icon(Icons.location_on,
+                    color: rfPrimaryColor, size: 18),
               ),
             ),
             16.height,
             AppButton(
-              color: rf_primaryColor,
+              color: rfPrimaryColor,
               elevation: 0.0,
-              child: Text('Search Now', style: boldTextStyle(color: white)),
               width: context.width(),
               onTap: () {
                 RFSearchDetailScreen().launch(context);
               },
+              child: Text('Search Now', style: boldTextStyle(color: white)),
             ),
             TextButton(
               onPressed: () {
@@ -94,7 +96,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
         subWidget: Column(
           children: [
             HorizontalList(
-              padding: EdgeInsets.only(right: 16, left: 16),
+              padding: const EdgeInsets.only(right: 16, left: 16),
               wrapAlignment: WrapAlignment.spaceEvenly,
               itemCount: categoryData.length,
               itemBuilder: (BuildContext context, int index) {
@@ -107,20 +109,21 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
                     });
                   },
                   child: Container(
-                    margin: EdgeInsets.only(right: 8),
+                    margin: const EdgeInsets.only(right: 8),
                     decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: appStore.isDarkModeOn
                           ? scaffoldDarkColor
                           : selectCategoryIndex == index
-                              ? rf_selectedCategoryBgColor
-                              : rf_categoryBgColor,
+                              ? rfSelectedCategoryBgColor
+                              : rfCategoryBgColor,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: Text(
                       data.roomCategoryName.validate(),
                       style: boldTextStyle(
                           color: selectCategoryIndex == index
-                              ? rf_primaryColor
+                              ? rfPrimaryColor
                               : gray),
                     ),
                   ),
@@ -143,9 +146,9 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
               ],
             ).paddingOnly(left: 16, right: 16, top: 16, bottom: 8),
             ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.take(3).length,
               itemBuilder: (BuildContext context, int index) {
@@ -191,9 +194,9 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
               ],
             ).paddingOnly(left: 16, right: 16, top: 16, bottom: 8),
             ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.take(3).length,
               itemBuilder: (BuildContext context, int index) {

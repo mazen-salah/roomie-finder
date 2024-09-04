@@ -8,8 +8,10 @@ import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFLocationScreen extends StatefulWidget {
+  const RFLocationScreen({super.key});
+
   @override
-  _RFLocationScreenState createState() => _RFLocationScreenState();
+  State<RFLocationScreen> createState() => _RFLocationScreenState();
 }
 
 class _RFLocationScreenState extends State<RFLocationScreen> {
@@ -48,13 +50,13 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding:
-                  EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 32),
+              padding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 24, bottom: 32),
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(12),
                     bottomLeft: Radius.circular(12)),
-                backgroundColor: rf_primaryColor,
+                backgroundColor: rfPrimaryColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +73,8 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.search, color: rf_primaryColor, size: 16),
+                          const Icon(Icons.search,
+                              color: rfPrimaryColor, size: 16),
                           8.width,
                           Text('Imadol', style: boldTextStyle()),
                           8.width,
@@ -99,12 +102,13 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
             ).paddingSymmetric(horizontal: 16, vertical: 16),
             HorizontalList(
               itemCount: availableHotelListData.length,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
                 RoomFinderModel data = availableHotelListData[index];
 
                 return Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: selectedIndex == index
                         ? gray.withOpacity(0.1)
@@ -128,9 +132,9 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
               },
             ),
             ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.length,
               itemBuilder: (BuildContext context, int index) =>

@@ -11,6 +11,8 @@ class RFNotificationScreen extends StatelessWidget {
       yesterdayNotificationList();
   final bool yesterdayList = true;
 
+  RFNotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +35,10 @@ class RFNotificationScreen extends StatelessWidget {
               ],
             ).paddingOnly(left: 16, right: 16, top: 16),
             ListView.builder(
-              padding: EdgeInsets.only(right: 16, left: 16, bottom: 4),
+              padding: const EdgeInsets.only(right: 16, left: 16, bottom: 4),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: notificationData.length,
               itemBuilder: (BuildContext context, int index) {
                 RoomFinderModel data = notificationData[index];
@@ -51,10 +53,10 @@ class RFNotificationScreen extends StatelessWidget {
                 .paddingOnly(left: 16),
             ListView.builder(
               padding:
-                  EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 16),
+                  const EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 16),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: yesterdayNotificationData.length,
               itemBuilder: (BuildContext context, int index) {
                 RoomFinderModel data = yesterdayNotificationData[index];

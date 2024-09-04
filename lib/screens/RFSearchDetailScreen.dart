@@ -12,6 +12,8 @@ class RFSearchDetailScreen extends StatelessWidget {
   final TextEditingController addressController = TextEditingController();
 
   final List<RoomFinderModel> hotelListData = hotelList();
+
+  RFSearchDetailScreen({super.key});
   //final List<RoomFinderModel> recentUpdateData = recentUpdateList();
 
   @override
@@ -28,13 +30,13 @@ class RFSearchDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding:
-                  EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 32),
+              padding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 24, bottom: 32),
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(12),
                     bottomLeft: Radius.circular(12)),
-                backgroundColor: rf_primaryColor,
+                backgroundColor: rfPrimaryColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +53,8 @@ class RFSearchDetailScreen extends StatelessWidget {
                       prefixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.search, color: rf_primaryColor, size: 16),
+                          const Icon(Icons.search,
+                              color: rfPrimaryColor, size: 16),
                           8.width,
                           Text('Imadol', style: boldTextStyle()),
                           8.width,
@@ -66,7 +69,7 @@ class RFSearchDetailScreen extends StatelessWidget {
                       ).paddingOnly(left: 16),
                     ),
                     onFieldSubmitted: (v) {
-                      RFLocationScreen().launch(context);
+                      const RFLocationScreen().launch(context);
                     },
                   )
                 ],
@@ -82,9 +85,9 @@ class RFSearchDetailScreen extends StatelessWidget {
               ],
             ).paddingSymmetric(horizontal: 16, vertical: 16),
             ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.take(3).length,
               itemBuilder: (BuildContext context, int index) =>

@@ -7,15 +7,16 @@ import 'package:roomie_finder/models/RoomFinderModel.dart';
 class RFAppliedHotelListComponent extends StatelessWidget {
   final RoomFinderModel appliedHotelList;
 
-  RFAppliedHotelListComponent({required this.appliedHotelList});
+  const RFAppliedHotelListComponent(
+      {super.key, required this.appliedHotelList});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration:
           boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,22 +31,24 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                     decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: rf_primaryColor),
+                        backgroundColor: rfPrimaryColor),
                     child: Text(appliedHotelList.price.validate(),
                         style: boldTextStyle(color: white, size: 14)),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                     decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: rf_rattingBgColor),
+                        backgroundColor: rfRattingBgColor),
                     child: Row(
                       children: [
                         Text(appliedHotelList.views.validate(),
                             style: boldTextStyle(color: white, size: 14)),
                         4.width,
-                        Icon(Icons.star, color: white, size: 14),
+                        const Icon(Icons.star, color: white, size: 14),
                       ],
                     ),
                   )
@@ -62,7 +65,8 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.location_on, color: rf_primaryColor, size: 16),
+                      const Icon(Icons.location_on,
+                          color: rfPrimaryColor, size: 16),
                       6.width,
                       Text(appliedHotelList.rentDuration.validate(),
                               style: secondaryTextStyle())

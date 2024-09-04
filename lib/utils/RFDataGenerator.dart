@@ -160,11 +160,11 @@ List<RoomFinderModel> settingList() {
   settingListData.add(RoomFinderModel(
       img: rf_notification,
       roomCategoryName: "Notifications",
-      newScreenWidget: RFNotificationScreen()));
+      newScreenWidget:  RFNotificationScreen()));
   settingListData.add(RoomFinderModel(
       img: rf_recent_view,
       roomCategoryName: "Recent Viewed",
-      newScreenWidget: RFRecentlyViewedScreen()));
+      newScreenWidget:  RFRecentlyViewedScreen()));
   settingListData.add(RoomFinderModel(
       img: rf_faq,
       roomCategoryName: "Get Help",
@@ -172,11 +172,11 @@ List<RoomFinderModel> settingList() {
   settingListData.add(RoomFinderModel(
       img: rf_about_us,
       roomCategoryName: "About us",
-      newScreenWidget: RFAboutUsScreen()));
+      newScreenWidget: const RFAboutUsScreen()));
   settingListData.add(RoomFinderModel(
       img: rf_sign_out,
       roomCategoryName: "Sign Out",
-      newScreenWidget: SizedBox()));
+      newScreenWidget: const SizedBox()));
 
   return settingListData;
 }

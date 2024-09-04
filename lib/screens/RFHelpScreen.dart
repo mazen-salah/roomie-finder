@@ -8,6 +8,8 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFHelpScreen extends StatelessWidget {
   final List<RoomFinderModel> faqData = faqList();
 
+   RFHelpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +25,10 @@ class RFHelpScreen extends StatelessWidget {
             Text('Frequent Asked Questions', style: boldTextStyle(size: 18))
                 .paddingOnly(left: 16, top: 24),
             ListView.builder(
-              padding:
-                  EdgeInsets.only(right: 16, left: 16, bottom: 16, top: 24),
+              padding: const EdgeInsets.only(
+                  right: 16, left: 16, bottom: 16, top: 24),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: 9,
               itemBuilder: (BuildContext context, int index) {

@@ -7,6 +7,8 @@ import 'package:roomie_finder/utils/RFImages.dart';
 import '../utils/RFWidget.dart';
 
 class RFCongratulatedDialog extends StatelessWidget {
+  const RFCongratulatedDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,12 +28,12 @@ class RFCongratulatedDialog extends StatelessWidget {
               textAlign: TextAlign.center),
           30.height,
           AppButton(
-            color: rf_primaryColor,
+            color: rfPrimaryColor,
             elevation: 0,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
             text: "Done",
             onTap: () {
-              RFHomeScreen().launch(context).then((value) {
+              const RFHomeScreen().launch(context).then((value) {
                 finish(context);
               });
             },

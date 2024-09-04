@@ -10,8 +10,8 @@ class RFNotificationListComponent extends StatelessWidget {
   final String? title;
   final String? subTitle;
 
-  RFNotificationListComponent(
-      {this.readNotification, this.title, this.subTitle});
+  const RFNotificationListComponent(
+      {super.key, this.readNotification, this.title, this.subTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +20,20 @@ class RFNotificationListComponent extends StatelessWidget {
         border: Border.all(
             color: readNotification.validate()
                 ? gray.withOpacity(0.3)
-                : rf_splashBgColor.withOpacity(0.2)),
+                : rfSplashBgColor.withOpacity(0.2)),
         backgroundColor: context.cardColor,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      margin: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: boxDecorationWithRoundedCorners(
               backgroundColor: appStore.isDarkModeOn
                   ? scaffoldDarkColor
-                  : rf_notificationBgColor,
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+                  : rfNotificationBgColor,
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
             ),
             child: Stack(
               children: [

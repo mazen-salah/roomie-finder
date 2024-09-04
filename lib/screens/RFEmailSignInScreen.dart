@@ -11,10 +11,9 @@ import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFEmailSignInScreen extends StatefulWidget {
-
-  RFEmailSignInScreen({
-    Key? key,
-  }) : super(key: key);
+  const RFEmailSignInScreen({
+    super.key,
+  });
 
   @override
   _RFEmailSignInScreenState createState() => _RFEmailSignInScreenState();
@@ -33,7 +32,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
   void _showSnackBar(BuildContext context, String message,
       {bool isError = false}) {
     final snackBar = SnackBar(
-      content: Text(message, style: TextStyle(color: Colors.white)),
+      content: Text(message, style: const TextStyle(color: Colors.white)),
       backgroundColor: isError ? Colors.red : Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -46,7 +45,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
   }
 
   void init() async {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
   }
 
@@ -74,12 +73,13 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                   lableText: "Email Address",
                   showLableText: true,
                   suffixIcon: Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: boxDecorationWithRoundedCorners(
                       boxShape: BoxShape.circle,
-                      backgroundColor: rf_rattingBgColor,
+                      backgroundColor: rfRattingBgColor,
                     ),
-                    child: Icon(Icons.done, color: Colors.white, size: 14),
+                    child:
+                        const Icon(Icons.done, color: Colors.white, size: 14),
                   ),
                 ),
                 validator: (value) {
@@ -110,13 +110,12 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                 alignment: Alignment.centerRight,
                 child: Text('Forgot Password?', style: secondaryTextStyle())
                     .onTap(() {
-                  RFResetPasswordScreen().launch(context);
+                  const RFResetPasswordScreen().launch(context);
                 }),
               ),
               32.height,
               AppButton(
-                color: rf_primaryColor,
-                child: Text('Sign In', style: boldTextStyle(color: white)),
+                color: rfPrimaryColor,
                 width: context.width(),
                 height: 45,
                 elevation: 0,
@@ -129,28 +128,29 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
 
                     if (response['success']) {
                       _showSnackBar(context, response['message']);
-                      RFHomeScreen().launch(context, isNewTask: true);
+                      const RFHomeScreen().launch(context, isNewTask: true);
                     } else {
                       _showSnackBar(context, response['message'],
                           isError: true);
                     }
                   }
                 },
+                child: Text('Sign In', style: boldTextStyle(color: white)),
               ),
               32.height,
               Text('Don\'t have an account?', style: primaryTextStyle(size: 16))
                   .center(),
               8.height,
               AppButton(
-                color: rf_primaryColor,
-                child:
-                    Text('Create Account', style: boldTextStyle(color: white)),
+                color: rfPrimaryColor,
                 width: context.width(),
                 height: 45,
                 elevation: 0,
                 onTap: () {
-                  RFSignUpScreen().launch(context);
+                  const RFSignUpScreen().launch(context);
                 },
+                child:
+                    Text('Create Account', style: boldTextStyle(color: white)),
               ),
             ],
           ),
@@ -159,7 +159,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                 title: "Don’t have an account? ", subTitle: "Create one here")
             .paddingAll(8)
             .onTap(() {
-          RFSignUpScreen().launch(context);
+          const RFSignUpScreen().launch(context);
         }),
       ),
     );

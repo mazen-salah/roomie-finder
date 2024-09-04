@@ -52,7 +52,7 @@ abstract class AppStoreBase with Store {
     if (isDarkModeOn) {
       scaffoldBackground = appBackgroundColorDark;
 
-      appBarColor = rf_primaryColor;
+      appBarColor = rfPrimaryColor;
       backgroundColor = Colors.white;
       backgroundSecondaryColor = Colors.white;
       appColorPrimaryLightColor = cardBackgroundBlackDark;

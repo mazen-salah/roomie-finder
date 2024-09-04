@@ -11,6 +11,8 @@ import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSettingsFragment extends StatefulWidget {
+  const RFSettingsFragment({super.key});
+
   @override
   State<RFSettingsFragment> createState() => _RFSettingsFragmentState();
 }
@@ -25,7 +27,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
   }
 
   void init() async {
-    setStatusBarColor(rf_primaryColor,
+    setStatusBarColor(rfPrimaryColor,
         statusBarIconBrightness: Brightness.light);
   }
 
@@ -48,7 +50,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
             children: [
               Container(
                 alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.only(top: 150),
+                margin: const EdgeInsets.only(top: 150),
                 width: 100,
                 height: 100,
                 decoration: boxDecorationWithRoundedCorners(
@@ -62,7 +64,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                 right: -4,
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.cardColor,
                     boxShape: BoxShape.circle,
@@ -71,11 +73,11 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                           spreadRadius: 0.4,
                           blurRadius: 3,
                           color: gray.withOpacity(0.1),
-                          offset: Offset(1, 6)),
+                          offset: const Offset(1, 6)),
                     ],
                   ),
                   child: Icon(Icons.add,
-                      color: appStore.isDarkModeOn ? white : rf_primaryColor,
+                      color: appStore.isDarkModeOn ? white : rfPrimaryColor,
                       size: 16),
                 ),
               ),
@@ -103,25 +105,25 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
             ),
             16.height,
             Container(
-              margin: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
               decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: appStore.isDarkModeOn
                     ? scaffoldDarkColor
-                    : rf_selectedCategoryBgColor,
+                    : rfSelectedCategoryBgColor,
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   rf_person
-                      .iconImage(iconColor: rf_primaryColor)
+                      .iconImage(iconColor: rfPrimaryColor)
                       .paddingOnly(top: 4),
                   16.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Edit Profile",
-                          style: boldTextStyle(color: rf_primaryColor)),
+                          style: boldTextStyle(color: rfPrimaryColor)),
                       8.height,
                       Text(
                         "Edit all the basic profile information associated with your profile",
@@ -136,39 +138,39 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
             ),
             SettingItemWidget(
               title: "Dark Mode",
-              leading: Icon(Icons.dark_mode_outlined,
-                  size: 18, color: rf_primaryColor),
+              leading: const Icon(Icons.dark_mode_outlined,
+                  size: 18, color: rfPrimaryColor),
               titleTextStyle: primaryTextStyle(),
               trailing: Switch(
                 value: appStore.isDarkModeOn,
-                activeTrackColor: rf_primaryColor,
+                activeTrackColor: rfPrimaryColor,
                 onChanged: (bool value) {
                   appStore.toggleDarkMode(value: value);
-                  setStatusBarColor(rf_primaryColor,
+                  setStatusBarColor(rfPrimaryColor,
                       statusBarIconBrightness: Brightness.light);
                   setState(() {});
                 },
               ),
-              padding: EdgeInsets.only(left: 40, right: 16, top: 8),
+              padding: const EdgeInsets.only(left: 40, right: 16, top: 8),
               onTap: () {
                 //
               },
             ),
             ListView.builder(
-              padding: EdgeInsets.only(left: 22),
+              padding: const EdgeInsets.only(left: 22),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: settingData.length,
               itemBuilder: (BuildContext context, int index) {
                 RoomFinderModel data = settingData[index];
                 return Container(
-                  margin: EdgeInsets.only(right: 24),
+                  margin: const EdgeInsets.only(right: 24),
                   child: SettingItemWidget(
                     title: data.roomCategoryName.validate(),
                     leading: data.img
                         .validate()
-                        .iconImage(iconColor: rf_primaryColor, size: 18),
+                        .iconImage(iconColor: rfPrimaryColor, size: 18),
                     titleTextStyle: primaryTextStyle(),
                     onTap: () {
                       if (index == 4) {
@@ -176,15 +178,14 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                           context,
                           cancelable: false,
                           title: "Are you sure you want to logout?",
-                          primaryColor: rf_primaryColor,
-                          
+                          primaryColor: rfPrimaryColor,
                           dialogType: DialogType.CONFIRMATION,
                           onCancel: (v) {
                             finish(context);
                           },
                           onAccept: (v) {
                             RFAuthController().signOut();
-                            RFEmailSignInScreen().launch(v).then((value) {
+                            const RFEmailSignInScreen().launch(v).then((value) {
                               finish(context);
                             });
                           },

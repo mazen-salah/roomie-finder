@@ -12,6 +12,8 @@ class RFRecentlyViewedScreen extends StatelessWidget {
   final List<RoomFinderModel> hotelListData = hotelList();
   final bool showHeight = false;
 
+  RFRecentlyViewedScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +27,9 @@ class RFRecentlyViewedScreen extends StatelessWidget {
           children: [
             24.height,
             ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.length,
               itemBuilder: (BuildContext context, int index) {
@@ -36,13 +38,13 @@ class RFRecentlyViewedScreen extends StatelessWidget {
               },
             ),
             Container(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               decoration: boxDecorationWithRoundedCorners(
                   backgroundColor: appStore.isDarkModeOn
                       ? scaffoldDarkColor
-                      : rf_selectedCategoryBgColor),
-              padding: EdgeInsets.all(16),
-              child: RFPremiumServiceComponent(),
+                      : rfSelectedCategoryBgColor),
+              padding: const EdgeInsets.all(16),
+              child: const RFPremiumServiceComponent(),
             ),
           ],
         ),

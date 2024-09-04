@@ -10,6 +10,8 @@ import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSearchFragment extends StatefulWidget {
+  const RFSearchFragment({super.key});
+
   @override
   _RFSearchFragmentState createState() => _RFSearchFragmentState();
 }
@@ -62,8 +64,8 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
                 lableText: "Enter an address or city",
                 showLableText: true,
                 showPreFixIcon: true,
-                prefixIcon:
-                    Icon(Icons.location_on, color: rf_primaryColor, size: 16),
+                prefixIcon: const Icon(Icons.location_on,
+                    color: rfPrimaryColor, size: 16),
               ),
             ),
             8.height,
@@ -76,8 +78,8 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
                 lableText: 'Enter price range',
                 showLableText: true,
                 showPreFixIcon: true,
-                prefixIcon: Icon(Icons.currency_rupee,
-                    color: rf_primaryColor, size: 16),
+                prefixIcon: const Icon(Icons.currency_rupee,
+                    color: rfPrimaryColor, size: 16),
               ),
             ),
             8.height,
@@ -89,18 +91,19 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
                 lableText: 'Resident Type',
                 showLableText: true,
                 showPreFixIcon: true,
-                prefixIcon: Icon(Icons.menu, color: rf_primaryColor, size: 16),
+                prefixIcon:
+                    const Icon(Icons.menu, color: rfPrimaryColor, size: 16),
               ),
             ),
             16.height,
             AppButton(
-              color: rf_primaryColor,
-              child: Text('Search Now', style: boldTextStyle(color: white)),
+              color: rfPrimaryColor,
               width: context.width(),
               elevation: 0,
               onTap: () {
                 RFSearchDetailScreen().launch(context);
               },
+              child: Text('Search Now', style: boldTextStyle(color: white)),
             ),
           ],
         ),
