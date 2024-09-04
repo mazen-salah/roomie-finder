@@ -13,16 +13,17 @@ class RFNotificationScreen extends StatelessWidget {
   Future<List<NotificationModel>> fetchNotifications() async {
     List<NotificationModel> notifications = [];
 
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('notifications')
-        .get();
-        
-    for (var doc in querySnapshot.docs) {
-      notifications
-          .add(NotificationModel.fromMap(doc.data() as Map<String, dynamic>));
+    DocumentSnapshot documentSnapshot =
+        await FirebaseFirestore.instance.collection('data').doc(uid).get();
+
+    if (documentSnapshot.exists) {
+      List<dynamic> notificationList = documentSnapshot.get('notifications');
+
+      for (var notification in notificationList) {
+        notifications.add(NotificationModel.fromMap(notification));
+      }
     }
+
     return notifications;
   }
 
