@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFHotelDescriptionScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFHotelListComponent extends StatelessWidget {
-  final RoomFinderModel? hotelData;
+  final RoomModel? hotelData;
   final bool? showHeight;
 
   const RFHotelListComponent({super.key, this.hotelData, this.showHeight});
@@ -53,8 +53,9 @@ class RFHotelListComponent extends StatelessWidget {
                     children: [
                       Container(
                         decoration: boxDecorationWithRoundedCorners(
-                            boxShape: BoxShape.circle,
-                            backgroundColor: hotelData!.color ?? greenColor),
+                          boxShape: BoxShape.circle,
+                          // backgroundColor: hotelData!.color ?? greenColor,
+                        ),
                         padding: const EdgeInsets.all(4),
                       ),
                       6.width,

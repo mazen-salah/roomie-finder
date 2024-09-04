@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 
 class RFAppliedHotelListComponent extends StatelessWidget {
-  final RoomFinderModel appliedHotelList;
+  final RoomModel appliedHotelList;
 
   const RFAppliedHotelListComponent(
       {super.key, required this.appliedHotelList});
@@ -45,7 +45,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                         backgroundColor: rfRattingBgColor),
                     child: Row(
                       children: [
-                        Text(appliedHotelList.views.validate(),
+                        Text(appliedHotelList.views.toString().validate(),
                             style: boldTextStyle(color: white, size: 14)),
                         4.width,
                         const Icon(Icons.star, color: white, size: 14),

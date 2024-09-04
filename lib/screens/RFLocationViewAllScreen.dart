@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFLocationViewAllScreen extends StatelessWidget {
-  final List<RoomFinderModel> locationListData = locationList();
+  final List<LocationData> locationListData = locationList();
   final bool? locationWidth;
 
   RFLocationViewAllScreen({super.key, this.locationWidth});
@@ -28,8 +27,7 @@ class RFLocationViewAllScreen extends StatelessWidget {
             20,
             (index) {
               return RFLocationComponent(
-                  locationData:
-                      locationListData[index % locationListData.length],
+                  locationData: locationListData[index % locationListData.length],
                   locationWidth: locationWidth);
             },
           ),

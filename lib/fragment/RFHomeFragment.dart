@@ -5,7 +5,7 @@ import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFLocationViewAllScreen.dart';
 import 'package:roomie_finder/screens/RFRecentupdateViewAllScreen.dart';
 import 'package:roomie_finder/screens/RFSearchDetailScreen.dart';
@@ -23,9 +23,9 @@ class RFHomeFragment extends StatefulWidget {
 }
 
 class _RFHomeFragmentState extends State<RFHomeFragment> {
-  List<RoomFinderModel> categoryData = categoryList();
-  List<RoomFinderModel> hotelListData = hotelList();
-  List<RoomFinderModel> locationListData = locationList();
+  List<String> categoryData = categoryList();
+  List<RoomModel> hotelListData = hotelList();
+  List<LocationData> locationListData = locationList();
   //List<RoomFinderModel> recentUpdateData = recentUpdateList();
 
   int selectCategoryIndex = 0;
@@ -100,7 +100,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
               wrapAlignment: WrapAlignment.spaceEvenly,
               itemCount: categoryData.length,
               itemBuilder: (BuildContext context, int index) {
-                RoomFinderModel data = categoryData[index];
+                String data = categoryData[index];
 
                 return GestureDetector(
                   onTap: () {
@@ -120,7 +120,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: Text(
-                      data.roomCategoryName.validate(),
+                      data.validate(),
                       style: boldTextStyle(
                           color: selectCategoryIndex == index
                               ? rfPrimaryColor
@@ -152,7 +152,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.take(3).length,
               itemBuilder: (BuildContext context, int index) {
-                RoomFinderModel data = hotelListData[index];
+                RoomModel data = hotelListData[index];
                 return RFHotelListComponent(hotelData: data);
               },
             ),
@@ -200,7 +200,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
               scrollDirection: Axis.vertical,
               itemCount: hotelListData.take(3).length,
               itemBuilder: (BuildContext context, int index) {
-                RoomFinderModel data = hotelListData[index];
+                RoomModel data = hotelListData[index];
                 return RFRecentUpdateComponent(recentUpdateData: data);
               },
             ),

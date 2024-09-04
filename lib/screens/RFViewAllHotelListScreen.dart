@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/components/RFHotelListComponent.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/DefaultModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFViewAllHotelListScreen extends StatelessWidget {
-  final List<RoomFinderModel> hotelListData = hotelList();
+  final List<RoomModel> hotelListData = hotelList();
 
   RFViewAllHotelListScreen({super.key});
 
@@ -24,7 +25,7 @@ class RFViewAllHotelListScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemCount: 20,
         itemBuilder: (BuildContext context, int index) {
-          RoomFinderModel data = hotelListData[index % hotelListData.length];
+          RoomModel data = hotelListData[index % hotelListData.length];
           return RFHotelListComponent(hotelData: data);
         },
       ),

@@ -3,11 +3,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
-import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSettingsFragment extends StatefulWidget {
@@ -18,7 +17,7 @@ class RFSettingsFragment extends StatefulWidget {
 }
 
 class _RFSettingsFragmentState extends State<RFSettingsFragment> {
-  final List<RoomFinderModel> settingData = settingList();
+  final List<SettingModel> settingData = settingList();
 
   @override
   void initState() {
@@ -40,7 +39,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RFCommonAppComponent(
-        title: "Account",
+        title: "Settings",
         mainWidgetHeight: 200,
         subWidgetHeight: 100,
         accountCircleWidget: Align(
@@ -56,7 +55,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(rfUser,
+                child: rfCommonCachedNetworkImage(userModel!.profileImageUrl,
                     fit: BoxFit.cover, width: 100, height: 100, radius: 150),
               ),
               Positioned(
@@ -87,55 +86,10 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
         subWidget: Column(
           children: [
             16.height,
-            Text('Courtney Henry', style: boldTextStyle(size: 18)),
+            Text(userModel!.fullName, style: boldTextStyle(size: 18)),
             8.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('10 Applied', style: secondaryTextStyle()),
-                8.width,
-                Container(
-                    height: 10,
-                    width: 1,
-                    color:
-                        appStore.isDarkModeOn ? white : gray.withOpacity(0.4)),
-                8.width,
-                Text('Kathmandu', style: secondaryTextStyle()),
-              ],
-            ),
-            16.height,
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-              decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: appStore.isDarkModeOn
-                    ? scaffoldDarkColor
-                    : rfSelectedCategoryBgColor,
-              ),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  rfPerson
-                      .iconImage(iconColor: rfPrimaryColor)
-                      .paddingOnly(top: 4),
-                  16.width,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Edit Profile",
-                          style: boldTextStyle(color: rfPrimaryColor)),
-                      8.height,
-                      Text(
-                        "Edit all the basic profile information associated with your profile",
-                        style: secondaryTextStyle(color: gray),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ).expand(),
-                ],
-              ),
-            ),
+            Text('${userModel!.location}, Saudi Arabia', style: secondaryTextStyle()).center(),
+            
             SettingItemWidget(
               title: "Dark Mode",
               leading: const Icon(Icons.dark_mode_outlined,
@@ -163,7 +117,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
               scrollDirection: Axis.vertical,
               itemCount: settingData.length,
               itemBuilder: (BuildContext context, int index) {
-                RoomFinderModel data = settingData[index];
+                SettingModel data = settingData[index];
                 return Container(
                   margin: const EdgeInsets.only(right: 24),
                   child: SettingItemWidget(

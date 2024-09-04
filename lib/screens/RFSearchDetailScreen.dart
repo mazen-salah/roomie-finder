@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/DefaultModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFLocationScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
@@ -11,7 +12,7 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFSearchDetailScreen extends StatelessWidget {
   final TextEditingController addressController = TextEditingController();
 
-  final List<RoomFinderModel> hotelListData = hotelList();
+  final List<RoomModel> hotelListData = hotelList();
 
   RFSearchDetailScreen({super.key});
   //final List<RoomFinderModel> recentUpdateData = recentUpdateList();

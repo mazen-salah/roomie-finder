@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 import '../components/RFRecentUpdateComponent.dart';
 
 class RFRecentUpdateViewAllScreen extends StatelessWidget {
-  final List<RoomFinderModel> hotelListData = hotelList();
+  final List<RoomModel> hotelListData = hotelList();
 
   RFRecentUpdateViewAllScreen({super.key});
   @override

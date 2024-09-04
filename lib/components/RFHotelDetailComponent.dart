@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFHotelDetailComponent extends StatelessWidget {
-  final List<RoomFinderModel> hotelImageData = hotelImageList();
-  final RoomFinderModel? hotelData;
+  final List<String> hotelImageData = hotelImageList();
+  final RoomModel? hotelData;
 
   RFHotelDetailComponent({super.key, this.hotelData});
 
@@ -103,7 +103,7 @@ class RFHotelDetailComponent extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(4),
                           decoration: boxDecorationWithRoundedCorners(
-                              backgroundColor: hotelData!.color!,
+                              // backgroundColor: hotelData!.color!,
                               boxShape: BoxShape.circle),
                         ),
                         6.width,
@@ -138,7 +138,7 @@ class RFHotelDetailComponent extends StatelessWidget {
           itemBuilder: (_, int index) => Stack(
             alignment: Alignment.center,
             children: [
-              rfCommonCachedNetworkImage(hotelImageData[index].img.validate(),
+              rfCommonCachedNetworkImage(hotelImageData[index].validate(),
                   height: 70, width: 70, fit: BoxFit.cover),
               Container(
                 height: 70,

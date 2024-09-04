@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFLocationComponent extends StatelessWidget {
-  final RoomFinderModel locationData;
+  final LocationData locationData;
   final bool? locationWidth;
 
   const RFLocationComponent(
@@ -15,7 +15,7 @@ class RFLocationComponent extends StatelessWidget {
     return Stack(
       children: [
         rfCommonCachedNetworkImage(
-          locationData.img.validate(),
+          locationData.image.validate(),
           fit: BoxFit.cover,
           height: 170,
           width: locationWidth.validate()
@@ -36,18 +36,18 @@ class RFLocationComponent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Icon(Icons.location_on, color: white, size: 18),
-                  8.width,
-                  Text(locationData.location.validate(),
-                      style: boldTextStyle(color: white)),
-                ],
-              ),
-              4.height,
-              Text(locationData.price.validate(),
-                      style: secondaryTextStyle(color: white))
-                  .paddingOnly(left: 4),
+              // Row(
+              //   children: [
+              //     const Icon(Icons.location_on, color: white, size: 18),
+              //     8.width,
+              //     Text(locationData.location.validate(),
+              //         style: boldTextStyle(color: white)),
+              //   ],
+              // ),
+              // 4.height,
+              // Text(locationData.price.validate(),
+              //         style: secondaryTextStyle(color: white))
+              //     .paddingOnly(left: 4),
             ],
           ),
         ),

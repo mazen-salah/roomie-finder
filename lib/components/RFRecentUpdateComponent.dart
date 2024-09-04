@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/DefaultModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFHotelDescriptionScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFRecentUpdateComponent extends StatelessWidget {
-  final RoomFinderModel recentUpdateData;
+  final RoomModel recentUpdateData;
 
   const RFRecentUpdateComponent({super.key, required this.recentUpdateData});
 
@@ -57,7 +58,7 @@ class RFRecentUpdateComponent extends StatelessWidget {
                 children: [
                   Text(recentUpdateData.description.validate(),
                       style: secondaryTextStyle()),
-                  Text(recentUpdateData.views.validate(),
+                  Text(recentUpdateData.views.toString().validate(),
                       style: secondaryTextStyle()),
                 ],
               ),
@@ -71,7 +72,8 @@ class RFRecentUpdateComponent extends StatelessWidget {
               Container(
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
-                    backgroundColor: recentUpdateData.color ?? greenColor),
+                    // backgroundColor: recentUpdateData.color ?? greenColor,
+                    ),
                 padding: const EdgeInsets.all(4),
               ),
               11.width,

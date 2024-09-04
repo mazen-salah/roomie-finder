@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCongratulatedDialog.dart';
 import 'package:roomie_finder/components/RFHotelDetailComponent.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFHotelDescriptionScreen extends StatefulWidget {
-  final RoomFinderModel? hotelData;
+  final RoomModel? hotelData;
 
   const RFHotelDescriptionScreen({super.key, this.hotelData});
 

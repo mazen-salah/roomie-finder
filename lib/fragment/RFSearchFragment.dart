@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/screens/RFSearchDetailScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
@@ -25,7 +25,7 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
   FocusNode priceFocusNode = FocusNode();
   FocusNode residentFocusNode = FocusNode();
 
-  List<RoomFinderModel> locationListData = locationList();
+  List<LocationData> locationListData = locationList();
 
   @override
   void initState() {

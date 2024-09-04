@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
@@ -17,8 +17,8 @@ class RFLocationScreen extends StatefulWidget {
 class _RFLocationScreenState extends State<RFLocationScreen> {
   TextEditingController addressController = TextEditingController();
 
-  List<RoomFinderModel> hotelListData = hotelList();
-  List<RoomFinderModel> availableHotelListData = availableHotelList();
+  List<RoomModel> hotelListData = hotelList();
+  List<String> availableHotelListData = availableHotelList();
 
   int selectedIndex = 0;
 
@@ -104,7 +104,7 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
               itemCount: availableHotelListData.length,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
-                RoomFinderModel data = availableHotelListData[index];
+                String data = availableHotelListData[index];
 
                 return Container(
                   padding:
@@ -115,7 +115,7 @@ class _RFLocationScreenState extends State<RFLocationScreen> {
                         : Colors.transparent,
                   ),
                   child: Text(
-                    data.roomCategoryName.validate(),
+                    data.validate(),
                     style: boldTextStyle(
                         color: selectedIndex == index
                             ? appStore.isDarkModeOn

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:roomie_finder/components/RFAppliedHotelListComponent.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/models/RoomFinderModel.dart';
+import 'package:roomie_finder/models/RoomModel.dart';
+import 'package:roomie_finder/screens/RFEditProfileScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
@@ -17,9 +18,8 @@ class RFAccountFragment extends StatefulWidget {
 }
 
 class _RFAccountFragmentState extends State<RFAccountFragment> {
-  final List<RoomFinderModel> settingData = settingList();
-  final List<RoomFinderModel> appliedHotelData = appliedHotelList();
-  final List<RoomFinderModel> applyHotelData = applyHotelList();
+  List<RoomModel> appliedHotelData = [];
+  List<RoomModel> likedHotelData = [];
 
   int selectedIndex = 0;
 
@@ -29,7 +29,46 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
     init();
   }
 
-  void init() async {}
+  void init() async {
+    await fetchUserAppliedHotels();
+    await fetchUserLikedHotels();
+  }
+
+  Future<void> fetchUserAppliedHotels() async {
+    try {
+      final uid = userModel!.id;
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('applied')
+          .where('uid', isEqualTo: uid)
+          .get();
+
+      setState(() {
+        appliedHotelData = querySnapshot.docs
+            .map((doc) => RoomModel.fromJson(doc.data()))
+            .toList();
+      });
+    } catch (e) {
+      log('Error fetching applied hotels: $e');
+    }
+  }
+
+  Future<void> fetchUserLikedHotels() async {
+    try {
+      final uid = userModel!.id;
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('liked')
+          .where('uid', isEqualTo: uid)
+          .get();
+
+      setState(() {
+        likedHotelData = querySnapshot.docs
+            .map((doc) => RoomModel.fromJson(doc.data()))
+            .toList();
+      });
+    } catch (e) {
+      log('Error fetching liked hotels: $e');
+    }
+  }
 
   @override
   void setState(fn) {
@@ -91,21 +130,49 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             Text(userModel!.fullName.validate(), style: boldTextStyle(size: 18))
                 .center(),
             8.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('10 Applied', style: secondaryTextStyle()),
-                8.width,
-                Container(
-                    height: 10,
-                    width: 1,
-                    color:
-                        appStore.isDarkModeOn ? white : gray.withOpacity(0.4)),
-                8.width,
-                Text(userModel!.location, style: secondaryTextStyle()),
-              ],
+            Text("${userModel!.location}, Saudi Arabia",
+                    style: secondaryTextStyle())
+                .center(),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: appStore.isDarkModeOn
+                    ? scaffoldDarkColor
+                    : rfSelectedCategoryBgColor,
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  rfPerson
+                      .iconImage(iconColor: rfPrimaryColor)
+                      .paddingOnly(top: 4),
+                  16.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Edit Profile",
+                              style: boldTextStyle(color: rfPrimaryColor))
+                          .onTap(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfileScreen(),
+                          ),
+                        );
+                      }),
+                      8.height,
+                      Text(
+                        "Edit all the basic profile information associated with your profile",
+                        style: secondaryTextStyle(color: gray),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ).expand(),
+                ],
+              ),
             ),
-            32.height,
             Row(
               children: [
                 OutlinedButton(
@@ -145,7 +212,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       rfMessage.iconImage(iconColor: whiteColor),
-                      // rfCommonCachedNetworkImage(rf_message, color: white, height: 16, width: 16),
                       8.width,
                       Text('Message Me', style: boldTextStyle(color: white)),
                     ],
@@ -181,7 +247,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     children: [
                       Text('Location', style: boldTextStyle()),
                       Text("${userModel!.location}, Saudi Arabia",
-                       style: secondaryTextStyle()),
+                          style: secondaryTextStyle()),
                     ],
                   ).paddingSymmetric(horizontal: 24, vertical: 16),
                   Divider(color: context.dividerColor, height: 0),
@@ -189,7 +255,8 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Phone No', style: boldTextStyle()),
-                      Text('(+977) ${userModel!.phone}', style: secondaryTextStyle()),
+                      Text('(+977) ${userModel!.phone}',
+                          style: secondaryTextStyle()),
                     ],
                   ).paddingSymmetric(horizontal: 24, vertical: 16),
                 ],
@@ -197,10 +264,10 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             ),
             16.height,
             HorizontalList(
-              itemCount: applyHotelData.length,
+              itemCount: likedHotelData.length,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
-                RoomFinderModel data = applyHotelData[index];
+                RoomModel data = likedHotelData[index];
 
                 return Container(
                   padding:
@@ -233,7 +300,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               scrollDirection: Axis.vertical,
               itemCount: appliedHotelData.length,
               itemBuilder: (BuildContext context, int index) {
-                RoomFinderModel data = appliedHotelData[index];
+                RoomModel data = appliedHotelData[index];
                 return RFAppliedHotelListComponent(appliedHotelList: data);
               },
             ),

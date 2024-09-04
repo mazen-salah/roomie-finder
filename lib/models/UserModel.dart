@@ -1,13 +1,13 @@
 class UserModel {
   String? id;
-  final String fullName; // Should be at least two words
-  final String email;
-  final String role; // Can be 'tenant' or 'lessor'
-  final String profileImageUrl;
-  final String location;
-  final String phone;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  String fullName; // Should be at least two words
+  String email;
+  String role; // Can be 'tenant' or 'lessor'
+  String profileImageUrl;
+  String location;
+  String phone;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   UserModel({
     this.id,

@@ -78,12 +78,24 @@ class RFAuthController {
   // Check if user is signed in
   bool isSignedIn() => _auth.currentUser != null;
 
+  // Update user data in Firestore and secure storage
+  Future<Map<String, dynamic>> updateUserData(UserModel updatedUserData) async {
+    try {
+      await _saveUserDataToFirestore(updatedUserData);
+      await _saveUserDataToSecureStorage(updatedUserData);
+
+      return _successResponse('User data updated successfully.');
+    } catch (e) {
+      return _errorResponse(e);
+    }
+  }
+
   // Save user data to Firestore
   Future<void> _saveUserDataToFirestore(UserModel userData) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userData.id)
-        .set(userData.toJson());
+        .set(userData.toJson(), SetOptions(merge: true)); // Use merge to update
   }
 
   // Save user data to secure storage
