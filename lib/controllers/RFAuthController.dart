@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 
 class RFAuthController {
@@ -17,6 +18,7 @@ class RFAuthController {
       );
       final user = userCredential.user;
       userData.id = user!.uid;
+      userModel = userData;
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -111,6 +113,9 @@ class RFAuthController {
     await _secureStorage.write(key: 'fullName', value: userData.fullName);
     await _secureStorage.write(key: 'email', value: userData.email);
     await _secureStorage.write(key: 'role', value: userData.role);
+    await _secureStorage.write(key: 'photoUrl', value: userData.profileImageUrl);
+    await _secureStorage.write(key: 'phoneNumber', value: userData.phone);
+    await _secureStorage.write(key: 'location', value: userData.location);
   }
 
   // Read user data from secure storage
@@ -119,13 +124,19 @@ class RFAuthController {
     String? fullName = await _secureStorage.read(key: 'fullName');
     String? email = await _secureStorage.read(key: 'email');
     String? role = await _secureStorage.read(key: 'role');
+    String? photoUrl = await _secureStorage.read(key: 'photoUrl');
+    String? phoneNumber = await _secureStorage.read(key: 'phoneNumber');
+    String? location = await _secureStorage.read(key: 'location');
 
-    if (id != null && fullName != null && email != null && role != null) {
+    if (id != null && fullName != null && email != null && role != null && location != null && phoneNumber != null  && photoUrl != null) {
       return UserModel(
         id: id,
         fullName: fullName,
         email: email,
         role: role,
+        profileImageUrl: photoUrl,
+        phone: phoneNumber,
+        location: location,
       );
     }
     return null;
