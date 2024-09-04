@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomFinderModel.dart';
 import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
@@ -175,11 +176,14 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                           context,
                           cancelable: false,
                           title: "Are you sure you want to logout?",
+                          primaryColor: rf_primaryColor,
+                          
                           dialogType: DialogType.CONFIRMATION,
                           onCancel: (v) {
                             finish(context);
                           },
                           onAccept: (v) {
+                            RFAuthController().signOut();
                             RFEmailSignInScreen().launch(v).then((value) {
                               finish(context);
                             });

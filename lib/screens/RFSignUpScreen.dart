@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
+import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
-
 import '../utils/RFString.dart';
 
 class RFSignUpScreen extends StatefulWidget {
@@ -24,21 +25,6 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
   FocusNode confirmPasswordFocusNode = FocusNode();
 
   String role = "tenant";
-
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  void init() async {
-    //
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +55,12 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                   child: Icon(Icons.done, color: Colors.white, size: 14),
                 ),
               ),
+              validator: (value) {
+                if (value == null || value.split(' ').length < 2) {
+                  return 'Please enter at least 2 words.';
+                }
+                return null;
+              },
             ),
             16.height,
             AppTextField(
@@ -87,6 +79,12 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                   child: Icon(Icons.done, color: Colors.white, size: 14),
                 ),
               ),
+              validator: (value) {
+                if (value == null || !value.contains('@')) {
+                  return 'Please enter a valid email address.';
+                }
+                return null;
+              },
             ),
             16.height,
             AppTextField(
@@ -98,6 +96,12 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                 lableText: 'Password',
                 showLableText: true,
               ),
+              validator: (value) {
+                if (value == null || value.length < 6) {
+                  return 'Password must be at least 6 characters.';
+                }
+                return null;
+              },
             ),
             16.height,
             AppTextField(
@@ -108,6 +112,12 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                 lableText: 'Confirm Password',
                 showLableText: true,
               ),
+              validator: (value) {
+                if (value != passwordController.text) {
+                  return 'Passwords do not match.';
+                }
+                return null;
+              },
             ),
             16.height,
             Text("Choose your role", style: boldTextStyle(size: 24)),
@@ -155,8 +165,36 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
               width: context.width(),
               height: 45,
               elevation: 0,
-              onTap: () {
-                RFEmailSignInScreen(showDialog: true).launch(context);
+              onTap: () async {
+                if (fullNameController.text.split(' ').length < 2) {
+                  toast('Full Name should be at least 2 words.');
+                  return;
+                }
+                if (passwordController.text != confirmPasswordController.text) {
+                  toast('Passwords do not match.');
+                  return;
+                }
+
+                final response = RFAuthController().signUp(
+                  UserModel(
+                      fullName: fullNameController.text,
+                      email: emailController.text,
+                      role: role),
+                  passwordController.text,
+                );
+
+                response.then(
+                  (value) {
+                    if (value['success']) {
+                      RFEmailSignInScreen(
+                        showDialog: true,
+                        message: value['message'],
+                      ).launch(context);
+                    } else {
+                      toast(value['message']);
+                    }
+                  },
+                );
               },
             ),
           ],

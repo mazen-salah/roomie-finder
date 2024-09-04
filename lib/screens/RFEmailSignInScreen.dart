@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/components/RFConformationDialog.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/screens/RFHomeScreen.dart';
 import 'package:roomie_finder/screens/RFResetPasswordScreen.dart';
 import 'package:roomie_finder/screens/RFSignUpScreen.dart';
@@ -14,8 +17,13 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 // ignore: must_be_immutable
 class RFEmailSignInScreen extends StatefulWidget {
   bool showDialog;
+  String message;
 
-  RFEmailSignInScreen({this.showDialog = false});
+  RFEmailSignInScreen({
+    Key? key,
+     this.showDialog = false,
+     this.message ='',
+  }) : super(key: key);
 
   @override
   _RFEmailSignInScreenState createState() => _RFEmailSignInScreenState();
@@ -51,7 +59,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
                 });
                 return Material(
                     type: MaterialType.transparency,
-                    child: RFConformationDialog());
+                    child: RFConformationDialog( message: widget.message));
               },
             );
           })
@@ -110,7 +118,16 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
               width: context.width(),
               elevation: 0,
               onTap: () {
-                RFHomeScreen().launch(context);
+                final response = RFAuthController()
+                    .signIn(emailController.text, passwordController.text);
+
+                response.then((value) {
+                  if (value['success']) {
+                    RFHomeScreen().launch(context);
+                  } else {
+                    toast(value['message']);
+                  }
+                });
               },
             ),
             Align(

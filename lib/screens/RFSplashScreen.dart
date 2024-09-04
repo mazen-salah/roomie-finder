@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
+import 'package:roomie_finder/screens/RFHomeScreen.dart';
 import 'package:roomie_finder/screens/RFRoleSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 
@@ -21,7 +23,13 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
 
     await Future.delayed(Duration(seconds: 2));
     finish(context);
-    RFRoleSignIn().launch(context);
+
+    bool isUserSignedIn = await RFAuthController().isSignedIn();
+
+    if (isUserSignedIn)
+      RFHomeScreen().launch(context);
+    else
+      RFRoleSignIn().launch(context);
   }
 
   @override

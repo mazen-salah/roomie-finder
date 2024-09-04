@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
@@ -63,7 +64,17 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
             width: context.width(),
             elevation: 0,
             onTap: () {
-              RFEmailSignInScreen().launch(context);
+             final response = RFAuthController().resetPassword(emailController.text);
+             response.then((value) {
+              if (value['success']) {
+                RFEmailSignInScreen(
+                  showDialog: true,
+                  message: value['message'],
+                ).launch(context);
+              } else {
+                toast(value['message']);
+              }
+             });
             },
           ),
         ],
