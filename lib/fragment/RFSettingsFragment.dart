@@ -87,8 +87,9 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
             16.height,
             Text(userModel!.fullName, style: boldTextStyle(size: 18)),
             8.height,
-            Text('${userModel!.location}, Saudi Arabia', style: secondaryTextStyle()).center(),
-            
+            Text('${userModel!.location}, Saudi Arabia',
+                    style: secondaryTextStyle())
+                .center(),
             SettingItemWidget(
               title: "Dark Mode",
               leading: const Icon(Icons.dark_mode_outlined,
@@ -120,13 +121,13 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                 return Container(
                   margin: const EdgeInsets.only(right: 24),
                   child: SettingItemWidget(
-                    title: data.roomCategoryName.validate(),
+                    title: data.settingName.validate(),
                     leading: data.img
                         .validate()
                         .iconImage(iconColor: rfPrimaryColor, size: 18),
                     titleTextStyle: primaryTextStyle(),
                     onTap: () {
-                      if (index == 4) {
+                      if (data.settingName == "Sign Out") {
                         showConfirmDialogCustom(
                           context,
                           cancelable: false,
@@ -138,9 +139,7 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
                           },
                           onAccept: (v) {
                             RFAuthController().signOut();
-                            const RFEmailSignInScreen().launch(v).then((value) {
-                              finish(context);
-                            });
+                            const RFEmailSignInScreen().launch(context);
                           },
                         );
                       } else {

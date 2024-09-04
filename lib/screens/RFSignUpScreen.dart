@@ -291,17 +291,11 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
                         });
 
                         if (response['success']) {
-                          if (mounted) {
                             _showSnackBar(context, response['message']);
-                          }
-                          if (mounted) {
                             const RFEmailSignInScreen().launch(context);
-                          }
                         } else {
-                          if (mounted) {
                             _showSnackBar(context, response['message'],
                                 isError: true);
-                          }
                         }
                       }
                     },

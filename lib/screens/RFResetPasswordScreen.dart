@@ -78,15 +78,11 @@ class _RFResetPasswordScreenState extends State<RFResetPasswordScreen> {
                   RFAuthController().resetPassword(emailController.text);
               response.then((value) {
                 if (value['success']) {
-                  if (mounted) {
                     _showSnackBar(context, value['message']);
                     finish(context);
                     const RFEmailSignInScreen().launch(context);
-                  }
                 } else {
-                  if (mounted) {
                     _showSnackBar(context, value['message'], isError: true);
-                  }
                 }
               });
             },

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 
 class RFAuthController {
@@ -18,6 +19,7 @@ class RFAuthController {
       final user = userCredential.user;
       userData.id = user!.uid;
       await _saveUserDataToFirestore(userData);
+      await _createData(user.uid);
       await _saveUserDataToSecureStorage(userData);
 
       return _successResponse('Account created successfully.');
@@ -34,7 +36,7 @@ class RFAuthController {
         password: password,
       );
       final user = userCredential.user;
-      final userData = await _fetchUserDataFromFirestore(user!.uid);
+      final userData = await fetchUserDataFromFirestore(user!.uid);
       await _saveUserDataToSecureStorage(userData);
 
       return _successResponse('Signed in successfully.');
@@ -48,10 +50,15 @@ class RFAuthController {
     try {
       await _auth.signOut();
       await _secureStorage.deleteAll();
+      log('Signed out successfully.');
       return _successResponse('Signed out successfully.');
     } catch (e) {
       return _errorResponse(e);
     }
+  }
+
+  Future<String> getUid() async {
+    return _auth.currentUser!.uid;
   }
 
   // Reset password
@@ -90,12 +97,34 @@ class RFAuthController {
     }
   }
 
-  // Save user data to Firestore
+  // Save user data to Firestore and create an empty notifications array
   Future<void> _saveUserDataToFirestore(UserModel userData) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userData.id)
-        .set(userData.toJson(), SetOptions(merge: true)); // Use merge to update
+        .set(userData.toJson(), SetOptions(merge: true));
+  }
+
+  // Create an empty notifications array in the user document
+  Future<void> _createData(String uid) async {
+    await FirebaseFirestore.instance.collection('data').doc(uid).set({
+      'notifications': [
+        {
+          'title': 'Welcome',
+          'unReadNotification': true,
+          'description': 'Your account has been created successfully.',
+        }
+      ]
+    }, SetOptions(merge: true));
+  }
+
+  // Update notifications in Firestore
+  Future<void> updateNotification(
+      String uid, List<dynamic> notifications) async {
+    await FirebaseFirestore.instance
+        .collection('data')
+        .doc(uid)
+        .set({'notifications': notifications}, SetOptions(merge: true));
   }
 
   // Save user data to secure storage
@@ -127,7 +156,7 @@ class RFAuthController {
         fullName: fullName!,
         email: email!,
         role: role!,
-        profileImageUrl: photoUrl!,
+        profileImageUrl: photoUrl??'',
         phone: phoneNumber!,
         location: location!,
       );
@@ -136,7 +165,7 @@ class RFAuthController {
   }
 
   // Fetch user data from Firestore
-  Future<UserModel> _fetchUserDataFromFirestore(String uid) async {
+  Future<UserModel> fetchUserDataFromFirestore(String uid) async {
     final doc =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
     return UserModel.fromJson(doc.data()!);

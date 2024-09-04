@@ -24,7 +24,6 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
         statusBarIconBrightness: Brightness.light);
 
     await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
       finish(context);
 
       bool isUserSignedIn = RFAuthController().isSignedIn();
@@ -34,7 +33,7 @@ class _RFSplashScreenState extends State<RFSplashScreen> {
       } else {
         const RFRoleSignIn().launch(context);
       }
-    }
+    
   }
 
   @override

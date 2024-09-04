@@ -1,17 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/screens/RFAboutUsScreen.dart';
+import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
 import 'package:roomie_finder/screens/RFNotificationScreen.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 
 class SettingModel {
   final String img;
-  final String roomCategoryName;
+  final String settingName;
   final Widget newScreenWidget;
 
   SettingModel({
     required this.img,
-    required this.roomCategoryName,
+    required this.settingName,
     required this.newScreenWidget,
   });
 }
@@ -21,20 +24,26 @@ List<SettingModel> settingList() {
   settingListData.add(
     SettingModel(
       img: rfNotification,
-      roomCategoryName: "Notifications",
+      settingName: "Notifications",
       newScreenWidget: RFNotificationScreen(
         uid: userModel!.id!,
       ),
     ),
   );
-  settingListData.add(SettingModel(
+  settingListData.add(
+    SettingModel(
       img: rfAboutUs2,
-      roomCategoryName: "About us",
-      newScreenWidget: const RFAboutUsScreen()));
-  settingListData.add(SettingModel(
+      settingName: "About us",
+      newScreenWidget: const RFAboutUsScreen(),
+    ),
+  );
+  settingListData.add(
+    SettingModel(
       img: rfSignOut,
-      roomCategoryName: "Sign Out",
-      newScreenWidget: const SizedBox()));
+      settingName: "Sign Out",
+      newScreenWidget: const SizedBox(),
+    ),
+  );
 
   return settingListData;
 }

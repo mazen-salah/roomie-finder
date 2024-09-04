@@ -5,16 +5,21 @@ import 'package:roomie_finder/components/RFNotificationListComponent.dart';
 import 'package:roomie_finder/models/NotficationModel.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
-class RFNotificationScreen extends StatelessWidget {
+class RFNotificationScreen extends StatefulWidget {
   final String uid;
 
   const RFNotificationScreen({super.key, required this.uid});
 
+  @override
+  State<RFNotificationScreen> createState() => _RFNotificationScreenState();
+}
+
+class _RFNotificationScreenState extends State<RFNotificationScreen> {
   Future<List<NotificationModel>> fetchNotifications() async {
     List<NotificationModel> notifications = [];
 
     DocumentSnapshot documentSnapshot =
-        await FirebaseFirestore.instance.collection('data').doc(uid).get();
+        await FirebaseFirestore.instance.collection('data').doc(widget.uid).get();
 
     if (documentSnapshot.exists) {
       List<dynamic> notificationList = documentSnapshot.get('notifications');
@@ -25,6 +30,24 @@ class RFNotificationScreen extends StatelessWidget {
     }
 
     return notifications;
+  }
+
+  Future<void> markAllRead() async {
+    DocumentSnapshot documentSnapshot =
+        await FirebaseFirestore.instance.collection('data').doc(widget.uid).get();
+
+    if (documentSnapshot.exists) {
+      List<dynamic> notificationList = documentSnapshot.get('notifications');
+
+      for (var notification in notificationList) {
+        notification['unReadNotification'] = false;
+      }
+
+      await FirebaseFirestore.instance
+          .collection('data')
+          .doc(widget.uid)
+          .update({'notifications': notificationList});
+    }
   }
 
   @override
@@ -57,7 +80,10 @@ class RFNotificationScreen extends StatelessWidget {
                     children: [
                       Text('All', style: boldTextStyle(size: 18)),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await markAllRead();
+                            setState(() {});
+                          },
                           child: Text('Mark all read',
                               style: secondaryTextStyle())),
                     ],
@@ -74,7 +100,7 @@ class RFNotificationScreen extends StatelessWidget {
                       return RFNotificationListComponent(
                         readNotification: data.unReadNotification,
                         title: data.title,
-                        subTitle: data.description,
+                        subTitle: ' ${data.description}',
                       );
                     },
                   ),

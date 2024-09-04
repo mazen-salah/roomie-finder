@@ -24,7 +24,10 @@ void main() async {
   );
 
   appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
-  userModel = await RFAuthController().getCurrentUserData();
+  if (RFAuthController().isSignedIn()) {
+    String uid = await RFAuthController().getUid();
+    userModel = await RFAuthController().fetchUserDataFromFirestore(uid);
+  }
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,

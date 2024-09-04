@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/components/RFPremiumServiceComponent.dart';
-import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
@@ -32,32 +29,22 @@ class RFAboutUsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('About the Company', style: boldTextStyle()),
+                  Text('About RoomieFinder', style: boldTextStyle()),
                   8.height,
                   Text(
-                      'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.',
+                      'RoomieFinder is your go-to platform for finding the perfect house and housemates. Our app uses advanced AI technology to match you with compatible living spaces and like-minded roommates, making your rental experience smoother and more enjoyable.',
                       style: secondaryTextStyle()),
                   16.height,
-                  Text('About the Members', style: boldTextStyle()),
+                  Text('Our Team', style: boldTextStyle()),
                   8.height,
                   Text(
-                    'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.\nLorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. Lorem ipsum is placeholder text commonly used in the graphic, print.',
+                    'We are a group of passionate developers, designers, and real estate enthusiasts dedicated to revolutionizing the rental market. With a focus on innovation and user experience, we strive to make finding your next home a hassle-free process.',
                     style: secondaryTextStyle(),
                   ),
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                  left: 24, right: 24, top: 8, bottom: 24),
-              decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: appStore.isDarkModeOn
-                    ? scaffoldDarkColor
-                    : rfSelectedCategoryBgColor,
-              ),
-              padding: const EdgeInsets.all(16),
-              child: const RFPremiumServiceComponent(),
-            ),
+            
           ],
         ),
       ),

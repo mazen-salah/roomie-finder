@@ -17,16 +17,31 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _locationController;
   late TextEditingController _phoneController;
 
-  bool _isLoading = false; // Add this variable
+  String selectedCity = "Riyadh"; // Default city
+  final List<String> cities = [
+    "Riyadh",
+    "Jeddah",
+    "Dammam",
+    "Khobar",
+    "Mecca",
+    "Medina",
+    "Abha",
+    "Tabuk",
+    "Hail",
+    "Jizan",
+    "Najran",
+    "Buraidah"
+  ];
+
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: userModel!.fullName);
-    _locationController = TextEditingController(text: userModel!.location);
+    selectedCity = userModel!.location ?? "Riyadh";
     _phoneController = TextEditingController(text: userModel!.phone);
     init();
   }
@@ -52,7 +67,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       });
 
       userModel!.fullName = _nameController.text;
-      userModel!.location = _locationController.text;
+      userModel!.location = selectedCity;
       userModel!.phone = _phoneController.text;
 
       final response = await RFAuthController().updateUserData(userModel!);
@@ -100,16 +115,44 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     },
                   ),
                   16.height,
-                  AppTextField(
-                    controller: _locationController,
-                    textFieldType: TextFieldType.OTHER,
-                    decoration: rfInputDecoration(
-                      lableText: "Location",
-                      showLableText: true,
+                  DropdownButtonFormField<String>(
+                    value: selectedCity,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedCity = newValue!;
+                      });
+                    },
+                    items: cities.map((city) {
+                      return DropdownMenuItem<String>(
+                        value: city,
+                        child: Text(city),
+                      );
+                    }).toList(),
+                    decoration: const InputDecoration(
+                      labelText: 'Select City',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your location';
+                      if (value == null) {
+                        return 'Please select a city.';
                       }
                       return null;
                     },
