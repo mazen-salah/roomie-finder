@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/models/UserModel.dart';
-import 'package:roomie_finder/screens/RFSplashScreen.dart';
+import 'package:roomie_finder/views/Static/RFSplashScreen.dart';
 import 'package:roomie_finder/store/AppStore.dart';
 import 'package:roomie_finder/utils/AppTheme.dart';
 import 'package:roomie_finder/utils/RFConstant.dart';

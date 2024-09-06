@@ -5,7 +5,7 @@ import 'package:roomie_finder/components/RFAppliedHotelListComponent.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
-import 'package:roomie_finder/screens/RFEditProfileScreen.dart';
+import 'package:roomie_finder/views/Profile/RFEditProfileScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
@@ -42,11 +42,21 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
           .where('uid', isEqualTo: uid)
           .get();
 
-      setState(() {
-        appliedHotelData = querySnapshot.docs
-            .map((doc) => RoomModel.fromJson(doc.data()))
-            .toList();
-      });
+      List<String> roomIds =
+          querySnapshot.docs.map((doc) => doc['roomid'] as String).toList();
+
+      if (roomIds.isNotEmpty) {
+        final roomQuerySnapshot = await FirebaseFirestore.instance
+            .collection('rooms')
+            .where(FieldPath.documentId, whereIn: roomIds)
+            .get();
+
+        setState(() {
+          appliedHotelData = roomQuerySnapshot.docs
+              .map((doc) => RoomModel.fromJson(doc.data()))
+              .toList();
+        });
+      }
     } catch (e) {
       log('Error fetching applied hotels: $e');
     }
@@ -60,19 +70,24 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
           .where('uid', isEqualTo: uid)
           .get();
 
-      setState(() {
-        likedHotelData = querySnapshot.docs
-            .map((doc) => RoomModel.fromJson(doc.data()))
-            .toList();
-      });
+      List<String> roomIds =
+          querySnapshot.docs.map((doc) => doc['roomid'] as String).toList();
+
+      if (roomIds.isNotEmpty) {
+        final roomQuerySnapshot = await FirebaseFirestore.instance
+            .collection('rooms')
+            .where(FieldPath.documentId, whereIn: roomIds)
+            .get();
+
+        setState(() {
+          likedHotelData = roomQuerySnapshot.docs
+              .map((doc) => RoomModel.fromJson(doc.data()))
+              .toList();
+        });
+      }
     } catch (e) {
       log('Error fetching liked hotels: $e');
     }
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
   }
 
   @override
@@ -169,7 +184,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                           setState(() {}); // Trigger UI update
                         }
                       }),
-                        
                       8.height,
                       Text(
                         "Edit all the basic profile information associated with your profile",
@@ -273,10 +287,12 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             ),
             16.height,
             HorizontalList(
-              itemCount: likedHotelData.length,
+              itemCount: 2,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
-                RoomModel data = likedHotelData[index];
+
+                List<String> categories = ["Applied", "Liked"];
+                String data = categories[index];
                 return Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -286,7 +302,7 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                         : Colors.transparent,
                   ),
                   child: Text(
-                    data.roomCategoryName.validate(),
+                    data.validate(),
                     style: boldTextStyle(
                         color: selectedIndex == index
                             ? rfPrimaryColor
@@ -306,9 +322,13 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              itemCount: appliedHotelData.length,
+              itemCount: selectedIndex == 0
+                  ? appliedHotelData.length
+                  : likedHotelData.length,
               itemBuilder: (BuildContext context, int index) {
-                RoomModel data = appliedHotelData[index];
+                RoomModel data = selectedIndex == 0
+                    ? appliedHotelData[index]
+                    : likedHotelData[index];
                 return RFAppliedHotelListComponent(appliedHotelList: data);
               },
             ),

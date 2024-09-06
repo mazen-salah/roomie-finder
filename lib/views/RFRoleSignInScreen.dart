@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
-import 'package:roomie_finder/screens/RFSignUpScreen.dart';
+import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
+import 'package:roomie_finder/views/Auth/RFSignUpScreen.dart';
 import 'package:roomie_finder/utils/RFString.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 

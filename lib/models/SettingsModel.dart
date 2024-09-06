@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/screens/RFAboutUsScreen.dart';
-import 'package:roomie_finder/screens/RFNotificationScreen.dart';
+import 'package:roomie_finder/views/Static/RFAboutUsScreen.dart';
+import 'package:roomie_finder/views/RFNotificationScreen.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 
 class SettingModel {

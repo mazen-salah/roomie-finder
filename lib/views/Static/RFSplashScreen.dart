@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
-import 'package:roomie_finder/screens/RFHomeScreen.dart';
-import 'package:roomie_finder/screens/RFRoleSignInScreen.dart';
+import 'package:roomie_finder/views/RFHomeScreen.dart';
+import 'package:roomie_finder/views/RFRoleSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 
 class RFSplashScreen extends StatefulWidget {

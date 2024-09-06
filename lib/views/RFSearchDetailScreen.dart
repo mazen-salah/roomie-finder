@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
-import 'package:roomie_finder/screens/RFLocationScreen.dart';
+import 'package:roomie_finder/views/RFLocationScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';

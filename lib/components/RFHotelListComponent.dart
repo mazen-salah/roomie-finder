@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
-import 'package:roomie_finder/screens/RFHotelDescriptionScreen.dart';
+import 'package:roomie_finder/views/RFHotelDescriptionScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 

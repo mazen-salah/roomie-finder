@@ -20,8 +20,15 @@ class RFAppliedHotelListComponent extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          rfCommonCachedNetworkImage(appliedHotelList.img.validate(),
-              height: 90, width: 90, fit: BoxFit.cover, radius: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8), // Add rounded corners
+            child: rfCommonCachedNetworkImage(
+              appliedHotelList.img.validate(),
+              height: 90,
+              width: 90,
+              fit: BoxFit.cover,
+            ),
+          ),
           16.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

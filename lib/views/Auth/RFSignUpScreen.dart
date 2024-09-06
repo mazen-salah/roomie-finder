@@ -3,10 +3,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
 import 'package:roomie_finder/models/UserModel.dart';
-import 'package:roomie_finder/screens/RFEmailSignInScreen.dart';
+import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
-import '../utils/RFString.dart';
+import '../../utils/RFString.dart';
 
 class RFSignUpScreen extends StatefulWidget {
   const RFSignUpScreen({super.key});
