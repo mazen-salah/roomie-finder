@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 
 class RFAuthController {
@@ -37,6 +38,7 @@ class RFAuthController {
       );
       final user = userCredential.user;
       final userData = await fetchUserDataFromFirestore(user!.uid);
+      userModel = userData;
       await _saveUserDataToSecureStorage(userData);
 
       return _successResponse('Signed in successfully.');
@@ -156,7 +158,7 @@ class RFAuthController {
         fullName: fullName!,
         email: email!,
         role: role!,
-        profileImageUrl: photoUrl??'',
+        profileImageUrl: photoUrl ?? '',
         phone: phoneNumber!,
         location: location!,
       );
