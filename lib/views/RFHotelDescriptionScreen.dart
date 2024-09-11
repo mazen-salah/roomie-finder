@@ -93,7 +93,7 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.hotelData!.roomCategoryName.validate(),
+                          Text(widget.hotelData!.name.validate(),
                               style: boldTextStyle(color: white, size: 18)),
                           8.height,
                           Row(

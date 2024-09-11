@@ -52,7 +52,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                         backgroundColor: rfRattingBgColor),
                     child: Row(
                       children: [
-                        Text(appliedHotelList.views.toString().validate(),
+                        Text(appliedHotelList.reviews.toString().validate(),
                             style: boldTextStyle(color: white, size: 14)),
                         4.width,
                         const Icon(Icons.star, color: white, size: 14),
@@ -62,7 +62,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                 ],
               ),
               16.height,
-              Text(appliedHotelList.roomCategoryName.validate(),
+              Text(appliedHotelList.name.validate(),
                   style: boldTextStyle(size: 18)),
               4.height,
               Text(appliedHotelList.location.validate(),

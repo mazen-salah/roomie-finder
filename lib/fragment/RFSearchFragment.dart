@@ -12,7 +12,7 @@ class RFSearchFragment extends StatefulWidget {
   const RFSearchFragment({super.key});
 
   @override
-State createState() => _RFSearchFragmentState();
+  State createState() => _RFSearchFragmentState();
 }
 
 class _RFSearchFragmentState extends State<RFSearchFragment> {
@@ -24,7 +24,7 @@ class _RFSearchFragmentState extends State<RFSearchFragment> {
   FocusNode priceFocusNode = FocusNode();
   FocusNode residentFocusNode = FocusNode();
 
-  List<LocationData> locationListData = locationList();
+  List<LocationModel> locationListData = locationList();
 
   @override
   void initState() {

@@ -26,6 +26,8 @@ dependencies:
   flutter_secure_storage: ^9.2.2
 
   collection: any
+  firebase_storage: ^11.6.5
+  image_picker: ^1.1.2
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2
   http: ^0.13.0

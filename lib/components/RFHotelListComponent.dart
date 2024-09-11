@@ -36,8 +36,7 @@ class RFHotelListComponent extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(hotelData!.roomCategoryName.validate(),
-                          style: boldTextStyle()),
+                      Text(hotelData!.name.validate(), style: boldTextStyle()),
                       8.height,
                       Row(
                         children: [

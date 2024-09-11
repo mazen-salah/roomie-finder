@@ -17,58 +17,58 @@ List<RoomModel> hotelList() {
   List<RoomModel> hotelListData = [];
   hotelListData.add(RoomModel(
       img: rfHotel1,
-      roomCategoryName: "1 BHK at Lalitpur",
+      name: "1 BHK at Lalitpur",
       price: "RS. 8000 / ",
       rentDuration: "per month",
       location: "Mahalaxmi Lalitpur",
       address: "Available",
       description: "9 Applied | ",
-      views: 20));
+      reviews: "3.5"));
   hotelListData.add(RoomModel(
       img: rfHotel2,
-      roomCategoryName: "Big Room",
+      name: "Big Room",
       price: "RS. 5000 / ",
       rentDuration: "per day",
       location: "Imadol",
       address: "Unavailable",
       description: "5 Applied | ",
-      views: 10));
+      reviews: "3.5"));
   hotelListData.add(RoomModel(
       img: rfHotel3,
-      roomCategoryName: "4 Room for Student",
+      name: "4 Room for Student",
       price: "RS. 6000 / ",
       rentDuration: "per week",
       location: "Kupondole",
       address: "Available",
       description: "10 Applied | ",
-      views: 6));
+      reviews: "3.5"));
   hotelListData.add(RoomModel(
       img: rfHotel4,
-      roomCategoryName: "Hall and Room",
+      name: "Hall and Room",
       price: "RS. 5000 / ",
       rentDuration: "per month",
       location: "Koteshwor Lalitpur",
       address: "Unavailable",
       description: "16 Applied | ",
-      views: 12));
+      reviews: "3.5"));
   hotelListData.add(RoomModel(
       img: rfHotel5,
-      roomCategoryName: "Big Room",
+      name: "Big Room",
       price: "RS. 2000 / ",
       rentDuration: "per day",
       location: "Imadol",
       address: "Available",
       description: "9 Applied | ",
-      views: 25));
+      reviews: "3.5"));
   hotelListData.add(RoomModel(
       img: rfHotel2,
-      roomCategoryName: "Big Room",
+      name: "Big Room",
       price: "RS. 5000 / ",
       rentDuration: "per day",
       location: "Imadol",
       address: "Unavailable",
       description: "5 Applied | ",
-      views: 10));
+      reviews: "3.5"));
 
   return hotelListData;
 }
@@ -93,48 +93,48 @@ List<RoomModel> appliedHotelList() {
   List<RoomModel> appliedHotelData = [];
   appliedHotelData.add(RoomModel(
       img: rfHotel1,
-      roomCategoryName: "1 BHK at Lalitpur",
+      name: "1 BHK at Lalitpur",
       price: "RS 8000 ",
       rentDuration: "1.2 km from Gwarko",
       location: "Mahalaxmi Lalitpur",
       address: "Booked",
-      views: 3,
+      reviews: "3",
       description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel2,
-      roomCategoryName: "Big Room",
+      name: "Big Room",
       price: "RS 5000 ",
       rentDuration: "1.2 km from Mahalaxmi",
       location: "Imadol",
       address: "Booked",
-      views: 4,
+      reviews: "4",
       description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel3,
-      roomCategoryName: "4 Room for Student",
+      name: "4 Room for Student",
       price: "RS 6000 ",
       rentDuration: "1.2 km from Imadol",
       location: "Kupondole",
       address: "Booked",
-      views: 2,
+      reviews: "2",
       description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel4,
-      roomCategoryName: "Hall and Room",
+      name: "Hall and Room",
       price: "RS 5000 ",
       rentDuration: "1.2 km from Kupondole",
       location: "Koteshwor Lalitpur",
       address: "Booked",
-      views: 4,
+      reviews: "4",
       description: ''));
   appliedHotelData.add(RoomModel(
       img: rfHotel5,
-      roomCategoryName: "Big Room",
+      name: "Big Room",
       price: "RS 2000 ",
       rentDuration: "1.2 km from Koteshwor",
       location: "Imadol",
       address: "Booked",
-      views: 5,
+      reviews: "5",
       description: ''));
 
   return appliedHotelData;

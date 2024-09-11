@@ -26,8 +26,7 @@ class RFRecentUpdateComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(recentUpdateData.roomCategoryName.validate(),
-                      style: boldTextStyle())
+              Text(recentUpdateData.name.validate(), style: boldTextStyle())
                   .paddingOnly(left: 4),
               Row(
                 children: [
@@ -57,7 +56,7 @@ class RFRecentUpdateComponent extends StatelessWidget {
                 children: [
                   Text(recentUpdateData.description.validate(),
                       style: secondaryTextStyle()),
-                  Text(recentUpdateData.views.toString().validate(),
+                  Text(recentUpdateData.reviews.toString().validate(),
                       style: secondaryTextStyle()),
                 ],
               ),
