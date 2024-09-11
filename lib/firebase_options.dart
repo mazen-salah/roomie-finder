@@ -23,10 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -66,4 +63,14 @@ class DefaultFirebaseOptions {
     projectId: 'eed-app',
     storageBucket: 'eed-app.appspot.com',
   );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyB8SBg4A0KjYU-LxnR1z6Gobk0XNg6fS1E',
+    appId: '1:654162777217:ios:7cdecef4ed42f17866e980',
+    messagingSenderId: '654162777217',
+    projectId: 'eed-app',
+    storageBucket: 'eed-app.appspot.com',
+    iosBundleId: 'com.example.roomFinderFlutter',
+  );
+
 }
