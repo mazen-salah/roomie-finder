@@ -1,4 +1,5 @@
 class RoomModel {
+  String? id ;
   String? img;
   String? name;
   String? description;

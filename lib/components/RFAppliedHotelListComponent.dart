@@ -42,7 +42,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                         const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                     decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: rfPrimaryColor),
-                    child: Text(appliedHotelList.price.validate(),
+                    child: Text("${appliedHotelList.price.validate()} SAR",
                         style: boldTextStyle(color: white, size: 14)),
                   ),
                   Container(
@@ -62,10 +62,11 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                 ],
               ),
               16.height,
-              Text(appliedHotelList.name.validate(),
+              Text(
+                  "${appliedHotelList.name.validate()} - ${appliedHotelList.rentDuration.validate()}",
                   style: boldTextStyle(size: 18)),
               4.height,
-              Text(appliedHotelList.location.validate(),
+              Text(appliedHotelList.address.validate(),
                   style: primaryTextStyle()),
               16.height,
               Row(
@@ -75,7 +76,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                       const Icon(Icons.location_on,
                           color: rfPrimaryColor, size: 16),
                       6.width,
-                      Text(appliedHotelList.rentDuration.validate(),
+                      Text(appliedHotelList.location.validate(),
                               style: secondaryTextStyle())
                           .flexible(),
                     ],

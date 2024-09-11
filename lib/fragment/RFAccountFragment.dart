@@ -110,13 +110,15 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                 decoration: boxDecorationWithRoundedCorners(
                     boxShape: BoxShape.circle,
                     border: Border.all(color: white, width: 4)),
-                child: rfCommonCachedNetworkImage(
-                    userModel?.profileImageUrl ??
-                        'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png',
-                    fit: BoxFit.cover,
-                    width: 100,
-                    height: 100,
-                    radius: 150),
+                child: ClipOval(
+                  child: rfCommonCachedNetworkImage(
+                      userModel?.profileImageUrl ??
+                          'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png',
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                      radius: 150),
+                ),
               ),
               Positioned(
                 bottom: 8,

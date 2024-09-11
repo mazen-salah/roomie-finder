@@ -40,8 +40,9 @@ class RFHotelListComponent extends StatelessWidget {
                       8.height,
                       Row(
                         children: [
-                          Text(hotelData!.price.validate(),
+                          Text("${hotelData!.price.validate()} SAR",
                               style: boldTextStyle(color: rfPrimaryColor)),
+                          4.width,
                           Text(hotelData!.rentDuration.validate(),
                               style: secondaryTextStyle()),
                         ],
@@ -79,7 +80,7 @@ class RFHotelListComponent extends StatelessWidget {
         ],
       ),
     ).onTap(() {
-      RFHotelDescriptionScreen(hotelData: hotelData).launch(context);
+      RFHotelDescriptionScreen(hotelData: hotelData,).launch(context);
     },
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,

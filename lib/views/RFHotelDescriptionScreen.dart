@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCongratulatedDialog.dart';
 import 'package:roomie_finder/components/RFHotelDetailComponent.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
@@ -9,7 +11,10 @@ import 'package:roomie_finder/utils/RFWidget.dart';
 class RFHotelDescriptionScreen extends StatefulWidget {
   final RoomModel? hotelData;
 
-  const RFHotelDescriptionScreen({super.key, this.hotelData});
+  const RFHotelDescriptionScreen({
+    super.key,
+    this.hotelData,
+  });
 
   @override
   State<RFHotelDescriptionScreen> createState() =>
@@ -47,7 +52,12 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
         color: rfPrimaryColor,
         elevation: 0,
         width: context.width(),
-        onTap: () {
+        onTap: () async {
+          await FirebaseFirestore.instance.collection('applied').add({
+            'uid': userModel!.id,
+            'roomid': widget.hotelData!.id,
+          });
+
           showInDialog(context, barrierDismissible: true, builder: (context) {
             return const RFCongratulatedDialog();
           });
@@ -98,8 +108,9 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
                           8.height,
                           Row(
                             children: [
-                              Text("${widget.hotelData!.price.validate()} ",
+                              Text("${widget.hotelData!.price.validate()} SAR",
                                   style: boldTextStyle(color: white)),
+                              4.width,
                               Text(widget.hotelData!.rentDuration.validate(),
                                   style: secondaryTextStyle(color: white)),
                             ],

@@ -48,7 +48,7 @@ android {
 
     defaultConfig {
         applicationId "com.SummationWorks.roomie_finder"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
         versionCode 2
         versionName '2.0.0'
