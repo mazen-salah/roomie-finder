@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
 
   # Base
-  nb_utils: ^6.0.4
-  google_fonts: ^5.0.0
+  nb_utils: ^7.0.4
+  google_fonts: ^6.2.1
   cached_network_image: ^3.2.3
   url_launcher: ^6.1.11
 
@@ -20,13 +20,13 @@ dependencies:
   mobx: ^2.0.3
   flutter_mobx: ^2.0.1
   device_preview: ^1.2.0
-  firebase_core: ^2.24.2
-  cloud_firestore: ^4.14.0
-  firebase_auth: ^4.16.0
+  firebase_core: ^3.4.1
+  cloud_firestore: ^5.4.1
+  firebase_auth: ^5.2.1
   flutter_secure_storage: ^9.2.2
 
   collection: any
-  firebase_storage: ^11.6.5
+  firebase_storage: ^12.3.0
   image_picker: ^1.1.2
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2
