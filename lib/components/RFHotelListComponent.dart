@@ -19,6 +19,7 @@ class RFHotelListComponent extends StatefulWidget {
 
 class _RFHotelListComponentState extends State<RFHotelListComponent> {
   double? compatibilityPercentage;
+  String? compatibilityMessage;
 
   @override
   void initState() {
@@ -34,7 +35,13 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
       // Call your function to get the compatibility percentage
       double percentage = await getCompatibilityPercentage(roomId, userId!);
       setState(() {
-        compatibilityPercentage = percentage;
+        if (percentage == -1) {
+          compatibilityMessage = "You are the only resident";
+        } else if (percentage == -2) {
+          compatibilityMessage = "The property is empty";
+        } else {
+          compatibilityPercentage = percentage;
+        }
       });
     } catch (e) {
       log('Error fetching compatibility: $e');
@@ -45,11 +52,18 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
     final FirebaseFirestore db = FirebaseFirestore.instance;
 
     DocumentSnapshot userDoc = await db.collection('questionnaires').doc(userId).get();
-    List<String> roommates = (await db.collection('applied').where('roomid', isEqualTo: roomId).get())
+    List<String> roommates = (await db
+            .collection('applied')
+            .where('roomid', isEqualTo: roomId)
+            .get())
         .docs
         .map((e) => e['uid'] as String)
         .where((uid) => uid != userId) // Avoid comparing the user with themselves
         .toList();
+
+    if (roommates.isEmpty) {
+      return -2; // The property is empty
+    }
 
     double totalCompatibility = 0;
     for (String roommateId in roommates) {
@@ -61,11 +75,12 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
       totalCompatibility += compatibility;
     }
 
-    return roommates.isNotEmpty ? totalCompatibility / roommates.length : 0; // Average compatibility
+    return roommates.isNotEmpty
+        ? totalCompatibility / roommates.length
+        : -1; // You are the only resident
   }
 
-  double calculateSimilarity(
-      Map<String, dynamic> user1, Map<String, dynamic> user2) {
+  double calculateSimilarity(Map<String, dynamic> user1, Map<String, dynamic> user2) {
     const fieldWeights = {
       'age': 0.05,
       'gender': 0.05,
@@ -137,7 +152,8 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      decoration: boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
+      decoration:
+          boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -197,7 +213,12 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
                 ],
               ),
               8.height,
-              if (compatibilityPercentage != null)
+              if (compatibilityMessage != null)
+                Text(
+                  compatibilityMessage!,
+                  style: boldTextStyle(color: rfPrimaryColor),
+                )
+              else if (compatibilityPercentage != null)
                 Text(
                   "Compatibility: ${compatibilityPercentage!.toStringAsFixed(2)}%",
                   style: boldTextStyle(color: rfPrimaryColor),
