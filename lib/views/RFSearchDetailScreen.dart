@@ -96,7 +96,9 @@ class RFSearchDetailScreen extends StatelessWidget {
                       ).paddingOnly(left: 16),
                     ),
                     onFieldSubmitted: (v) {
-                      const RFLocationScreen().launch(context);
+                      RFSearchDetailScreen(
+                        searchQuery: addressController.text,
+                      ).launch(context);
                     },
                   )
                 ],

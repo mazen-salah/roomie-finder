@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
+import 'package:roomie_finder/views/RFHomeScreen.dart';
 
 class QuestionnaireScreen extends StatefulWidget {
   const QuestionnaireScreen({super.key});
@@ -164,7 +165,7 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
 
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Form submitted')));
-        const RFEmailSignInScreen().launch(context);
+        const RFHomeScreen().launch(context, isNewTask: true);
       } catch (e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Error: $e')));
