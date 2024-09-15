@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
-import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/views/Auth/RFQuestionnaire.dart';
-import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 import 'package:roomie_finder/views/RFHomeScreen.dart';
@@ -322,18 +320,19 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
             _isLoading = false;
           });
 
-            if (response['success']) {
+          if (response['success']) {
             _showSnackBar(context, response['message']);
-            await RFAuthController().signIn(emailController.text, passwordController.text);
-
+            var response2 = await RFAuthController()
+                .signIn(emailController.text, passwordController.text);
+            _showSnackBar(context, response2['message']);
             if (role == "tenant") {
               const QuestionnaireScreen().launch(context, isNewTask: true);
             } else if (role == "lessor") {
               const RFHomeScreen().launch(context);
             }
-            } else {
+          } else {
             _showSnackBar(context, response['message'], isError: true);
-            }
+          }
         }
       },
       child: Text('Create Account', style: boldTextStyle(color: white)),
