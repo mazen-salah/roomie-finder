@@ -83,7 +83,7 @@ class RFSearchDetailScreen extends StatelessWidget {
                           const Icon(Icons.search,
                               color: rfPrimaryColor, size: 16),
                           8.width,
-                          Text('Imadol', style: boldTextStyle()),
+                          Text('Saudi', style: boldTextStyle()),
                           8.width,
                           Container(
                               width: 1,
