@@ -26,7 +26,7 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
   FocusNode passWordFocusNode = FocusNode();
 
   Timer? timer;
-  bool _isLoading = false; // Add this variable
+  bool _isLoading = false;
 
   void _showSnackBar(BuildContext context, String message,
       {bool isError = false}) {
@@ -60,103 +60,105 @@ class _RFEmailSignInScreenState extends State<RFEmailSignInScreen> {
             subWidgetHeight: 190,
             cardWidget: Form(
               key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Sign In', style: boldTextStyle(size: 18)),
-                  16.height,
-                  AppTextField(
-                    controller: emailController,
-                    focus: emailFocusNode,
-                    nextFocus: passWordFocusNode,
-                    textFieldType: TextFieldType.EMAIL,
-                    decoration: rfInputDecoration(
-                      lableText: "Email Address",
-                      showLableText: true,
-                      suffixIcon: Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: boxDecorationWithRoundedCorners(
-                          boxShape: BoxShape.circle,
-                          backgroundColor: rfRattingBgColor,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Sign In', style: boldTextStyle(size: 24)),
+                    16.height,
+                    AppTextField(
+                      controller: emailController,
+                      focus: emailFocusNode,
+                      nextFocus: passWordFocusNode,
+                      textFieldType: TextFieldType.EMAIL,
+                      decoration: rfInputDecoration(
+                        lableText: "Email Address",
+                        showLableText: true,
+                        suffixIcon: Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: boxDecorationWithRoundedCorners(
+                            boxShape: BoxShape.circle,
+                            backgroundColor: rfRattingBgColor,
+                          ),
+                          child: const Icon(Icons.done,
+                              color: Colors.white, size: 14),
                         ),
-                        child: const Icon(Icons.done,
-                            color: Colors.white, size: 14),
                       ),
-                    ),
-                    validator: (value) {
-                      if (value == null || !value.contains('@')) {
-                        return 'Please enter a valid email address.';
-                      }
-                      return null;
-                    },
-                  ),
-                  16.height,
-                  AppTextField(
-                    controller: passwordController,
-                    focus: passWordFocusNode,
-                    textFieldType: TextFieldType.PASSWORD,
-                    decoration: rfInputDecoration(
-                      lableText: 'Password',
-                      showLableText: true,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.length < 6) {
-                        return 'Password must be at least 6 characters.';
-                      }
-                      return null;
-                    },
-                  ),
-                  16.height,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text('Forgot Password?', style: secondaryTextStyle())
-                        .onTap(() {
-                      const RFResetPasswordScreen().launch(context);
-                    }),
-                  ),
-                  16.height,
-                  AppButton(
-                    color: rfPrimaryColor,
-                    width: context.width(),
-                    height: 45,
-                    elevation: 0,
-                    onTap: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _isLoading = true; // Start loading
-                        });
-
-                        final response = await RFAuthController().signIn(
-                          emailController.text,
-                          passwordController.text,
-                        );
-
-                        setState(() {
-                          _isLoading = false; // Stop loading
-                        });
-
-                        if (response['success']) {
-                          _showSnackBar(context, response['message']);
-                          const RFHomeScreen().launch(context, isNewTask: true);
-                        } else {
-                          _showSnackBar(context, response['message'],
-                              isError: true);
+                      validator: (value) {
+                        if (value == null || !value.contains('@')) {
+                          return 'Please enter a valid email address.';
                         }
-                      }
-                    },
-                    child: Text('Sign In', style: boldTextStyle(color: white)),
-                  ),
-                  
-                ],
+                        return null;
+                      },
+                    ),
+                    16.height,
+                    AppTextField(
+                      controller: passwordController,
+                      focus: passWordFocusNode,
+                      textFieldType: TextFieldType.PASSWORD,
+                      decoration: rfInputDecoration(
+                        lableText: 'Password',
+                        showLableText: true,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.length < 6) {
+                          return 'Password must be at least 6 characters.';
+                        }
+                        return null;
+                      },
+                    ),
+                    16.height,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text('Forgot Password?', style: secondaryTextStyle())
+                          .onTap(() {
+                        const RFResetPasswordScreen().launch(context);
+                      }),
+                    ),
+                    16.height,
+                    AppButton(
+                      color: rfPrimaryColor,
+                      width: context.width(),
+                      height: 45,
+                      elevation: 0,
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            _isLoading = true;
+                          });
+
+                          final response = await RFAuthController().signIn(
+                            emailController.text,
+                            passwordController.text,
+                          );
+
+                          setState(() {
+                            _isLoading = false;
+                          });
+
+                          if (response['success']) {
+                            _showSnackBar(context, response['message']);
+                            const RFHomeScreen().launch(context, isNewTask: true);
+                          } else {
+                            _showSnackBar(context, response['message'],
+                                isError: true);
+                          }
+                        }
+                      },
+                      child: Text('Sign In', style: boldTextStyle(color: white)),
+                    ),
+                    16.height,
+                    rfCommonRichText(
+                      title: "Don’t have an account? ",
+                      subTitle: "Create one here",
+                    ).onTap(() {
+                      const RFSignUpScreen().launch(context);
+                    }),
+                  ],
+                ),
               ),
             ),
-            subWidget: rfCommonRichText(
-                    title: "Don’t have an account? ",
-                    subTitle: "Create one here")
-                .paddingAll(8)
-                .onTap(() {
-              const RFSignUpScreen().launch(context);
-            }),
           ),
           if (_isLoading)
             const Center(
