@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/fragment/RFAccountFragment.dart';
 import 'package:roomie_finder/fragment/RFHomeFragment.dart';
-import 'package:roomie_finder/fragment/RFSearchFragment.dart';
 import 'package:roomie_finder/fragment/RFSettingsFragment.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
+import 'package:roomie_finder/views/RFSearchDetailScreen.dart';
 
 class RFHomeScreen extends StatefulWidget {
   const RFHomeScreen({super.key});
@@ -20,7 +20,7 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
 
   final _pages = [
     const RFHomeFragment(),
-    const RFSearchFragment(),
+     RFSearchDetailScreen(),
     const RFSettingsFragment(),
     const RFAccountFragment(),
   ];
