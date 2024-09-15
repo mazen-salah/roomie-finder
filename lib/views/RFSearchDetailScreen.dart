@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
@@ -9,14 +10,41 @@ import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSearchDetailScreen extends StatelessWidget {
-  final TextEditingController addressController = TextEditingController();
+  String searchQuery;
 
-  final List<RoomModel> hotelListData = hotelList();
+  RFSearchDetailScreen({super.key, this.searchQuery = ''});
 
-  RFSearchDetailScreen({super.key});
+  Future<List<RoomModel>> _fetchRooms() async {
+    final firestore = FirebaseFirestore.instance;
+    final query = firestore
+        .collection('rooms')
+        .where('name', isGreaterThanOrEqualTo: searchQuery)
+        .where('name', isLessThanOrEqualTo: '$searchQuery\uf8ff')
+        .limit(3);
+
+    // Extend the query for other fields
+    final results = await query.get();
+    return results.docs.map((doc) {
+      final data = doc.data();
+      return RoomModel(
+        address: data['address'],
+        description: data['description'],
+        img: data['img'],
+        location: data['location'],
+        name: data['name'],
+        owner: data['owner'],
+        price: data['price'],
+        rentDuration: data['rentDuration'],
+        reviews: data['reviews'],
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController addressController =
+        TextEditingController(text: searchQuery);
+
     return Scaffold(
       appBar: commonAppBarWidget(
         context,
@@ -74,25 +102,48 @@ class RFSearchDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Showing Results', style: boldTextStyle()),
-                Text('${hotelListData.take(3).length} Results',
-                    style: secondaryTextStyle()),
-              ],
-            ).paddingSymmetric(horizontal: 16, vertical: 16),
-            ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: hotelListData.take(3).length,
-              itemBuilder: (BuildContext context, int index) =>
-                  RFRecentUpdateComponent(
-                      recentUpdateData: hotelListData[index]),
-            ),
+            if (searchQuery.isNotEmpty)
+              FutureBuilder<List<RoomModel>>(
+                future: _fetchRooms(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: const Text('No results found.'));
+                  }
+
+                  final rooms = snapshot.data!;
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Showing Results', style: boldTextStyle()),
+                          Text('${rooms.length} Results',
+                              style: secondaryTextStyle()),
+                        ],
+                      ).paddingSymmetric(horizontal: 16, vertical: 16),
+                      ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: rooms.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            RFRecentUpdateComponent(
+                                recentUpdateData: rooms[index]),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            if (searchQuery.isEmpty)
+              Center(
+                child: Text('Search for properties', style: boldTextStyle()),
+              ),
           ],
         ),
       ),

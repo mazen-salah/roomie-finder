@@ -9,6 +9,7 @@ import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 import 'package:roomie_finder/views/RFAddProperty.dart';
+import 'package:roomie_finder/views/RFSearchDetailScreen.dart';
 
 class RFHomeFragment extends StatefulWidget {
   const RFHomeFragment({super.key});
@@ -71,6 +72,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   }
 
   Column buildSearchSection(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -78,9 +80,10 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
         Text('Find a property anywhere', style: boldTextStyle(size: 18)),
         16.height,
         AppTextField(
-          textFieldType: TextFieldType.EMAIL,
+          textFieldType: TextFieldType.OTHER,
+          controller: searchController,
           decoration: rfInputDecoration(
-            hintText: "Search address or near you",
+            hintText: "Search property",
             showPreFixIcon: true,
             showLableText: false,
             prefixIcon:
@@ -93,7 +96,9 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
           elevation: 0.0,
           width: context.width(),
           onTap: () {
-            // Navigate to search
+            RFSearchDetailScreen(
+              searchQuery: searchController.text,
+            ).launch(context);
           },
           child: Text('Search Now', style: boldTextStyle(color: white)),
         ),
@@ -150,11 +155,11 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: boldTextStyle()),
-        TextButton(
-          onPressed: onPressed,
-          child: Text('View All',
-              style: secondaryTextStyle(decoration: TextDecoration.underline)),
-        )
+        // TextButton(
+        //   onPressed: onPressed,
+        //   child: Text('View All',
+        //       style: secondaryTextStyle(decoration: TextDecoration.underline)),
+        // )
       ],
     ).paddingOnly(left: 16, right: 16, top: 16, bottom: 8);
   }
