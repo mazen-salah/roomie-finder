@@ -41,12 +41,12 @@ class RoomModel {
   Map<String, dynamic> toJson() {
     return {
       'img': img,
-      'name': name,
-      'description': description,
-      'address': address,
-      'price': price,
-      'rentDuration': rentDuration,
-      'location': location,
+      'name': name!.toLowerCase(),
+      'description': description!.toLowerCase(),
+      'address': address!.toLowerCase(),
+      'price': price!.toLowerCase(),
+      'rentDuration': rentDuration!.toLowerCase(),
+      'location': location!.toLowerCase(),
       'reviews': reviews,
       'owner': owner,
     };
