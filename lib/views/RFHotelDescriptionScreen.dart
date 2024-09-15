@@ -53,14 +53,27 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
         elevation: 0,
         width: context.width(),
         onTap: () async {
-          await FirebaseFirestore.instance.collection('applied').add({
-            'uid': userModel!.id,
-            'roomid': widget.hotelData!.id,
-          });
+          var existingApplication = await FirebaseFirestore.instance
+              .collection('applied')
+              .where('uid', isEqualTo: userModel!.id)
+              .where('roomid', isEqualTo: widget.hotelData!.id)
+              .get();
 
-          showInDialog(context, barrierDismissible: true, builder: (context) {
-            return const RFCongratulatedDialog();
-          });
+          if (existingApplication.docs.isEmpty) {
+            await FirebaseFirestore.instance.collection('applied').add({
+              'uid': userModel!.id,
+              'roomid': widget.hotelData!.id,
+            });
+            showInDialog(
+              context,
+              barrierDismissible: true,
+              builder: (context) {
+                return const RFCongratulatedDialog();
+              },
+            );
+          } else {
+            toast('You have already applied for this room.');
+          }
         },
         child: Text('Book Now', style: boldTextStyle(color: white)),
       ).paddingSymmetric(horizontal: 16, vertical: 24),
