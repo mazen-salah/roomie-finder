@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/views/Auth/RFQuestionnaire.dart';
 import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
+import 'package:roomie_finder/views/RFHomeScreen.dart';
 import '../../utils/RFString.dart';
 
 class RFSignUpScreen extends StatefulWidget {
@@ -21,7 +23,8 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final FocusNode fullNameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
@@ -48,7 +51,8 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
     "Buraidah"
   ];
 
-  void _showSnackBar(BuildContext context, String message, {bool isError = false}) {
+  void _showSnackBar(BuildContext context, String message,
+      {bool isError = false}) {
     final snackBar = SnackBar(
       content: Text(message, style: const TextStyle(color: Colors.white)),
       backgroundColor: isError ? Colors.red : Colors.green,
@@ -318,15 +322,18 @@ class _RFSignUpScreenState extends State<RFSignUpScreen> {
             _isLoading = false;
           });
 
-          if (response['success'] && role == "tenant") {
+            if (response['success']) {
             _showSnackBar(context, response['message']);
-            const QuestionnaireScreen().launch(context, isNewTask: true);
-          } else if (response['success'] && role == "lessor") {
-            _showSnackBar(context, response['message']);
-            const RFEmailSignInScreen().launch(context);
-          } else {
+            await RFAuthController().signIn(emailController.text, passwordController.text);
+
+            if (role == "tenant") {
+              const QuestionnaireScreen().launch(context, isNewTask: true);
+            } else if (role == "lessor") {
+              const RFHomeScreen().launch(context);
+            }
+            } else {
             _showSnackBar(context, response['message'], isError: true);
-          }
+            }
         }
       },
       child: Text('Create Account', style: boldTextStyle(color: white)),
