@@ -2,15 +2,25 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/models/LocationModel.dart';
+import 'package:roomie_finder/models/UserModel.dart';
 
 class RFHomeController {
   final picker = ImagePicker();
 
   Future<List<RoomModel>> fetchRoomData() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('rooms').get();
+    QuerySnapshot snapshot;
+    
+    if (userModel!.role == "lessor") {
+      snapshot = await FirebaseFirestore.instance
+          .collection('rooms')
+          .where('owner', isEqualTo: userModel!.id)
+          .get();
+    } else {
+      snapshot = await FirebaseFirestore.instance.collection('rooms').get();
+    }
 
     List<RoomModel> roomList = snapshot.docs.map((doc) {
       RoomModel room = RoomModel.fromJson(doc.data() as Map<String, dynamic>);

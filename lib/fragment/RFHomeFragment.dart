@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roomie_finder/controllers/rf_home_controller.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/models/LocationModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
@@ -54,11 +55,13 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addNewProperty,
-        backgroundColor: rfPrimaryColor,
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: userModel!.role == "lessor"
+          ? FloatingActionButton(
+              onPressed: _addNewProperty,
+              backgroundColor: rfPrimaryColor,
+              child: const Icon(Icons.add),
+            )
+          : null,
       body: RFCommonAppComponent(
         title: 'RoomieFinder',
         mainWidgetHeight: 200,
@@ -131,7 +134,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: hotelListData.take(3).length,
+          itemCount: hotelListData.length,
           itemBuilder: (BuildContext context, int index) {
             return RFHotelListComponent(hotelData: hotelListData[index]);
           },
