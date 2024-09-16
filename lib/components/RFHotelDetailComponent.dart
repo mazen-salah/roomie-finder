@@ -87,7 +87,7 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
               children: [
                 Text(ownerData!.fullName.validate(), style: boldTextStyle()),
                 4.height,
-                Text('Landlord', style: secondaryTextStyle()),
+                Text('Lessor', style: secondaryTextStyle()),
               ],
             ).expand(),
             AppButton(
