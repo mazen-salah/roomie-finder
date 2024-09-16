@@ -20,7 +20,7 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
 
   final List<Widget> _pages = [
     const RFHomeFragment(),
-    RFSearchDetailScreen(),
+    const RFSearchDetailScreen(),
     const RFSettingsFragment(),
     const RFAccountFragment(),
   ];

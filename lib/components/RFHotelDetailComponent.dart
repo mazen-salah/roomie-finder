@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
@@ -29,6 +30,111 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
     fetchUserData();
   }
 
+  Future<double> getCompatibilityPercentage(
+      String roomId, String userId) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+
+    DocumentSnapshot userDoc =
+        await db.collection('questionnaires').doc(userId).get();
+    List<String> allRoomMembers = (await db
+            .collection('applied')
+            .where('roomid', isEqualTo: roomId)
+            .get())
+        .docs
+        .map((e) => e['uid'] as String)
+        .toList();
+    List<String> roommates =
+        allRoomMembers.where((id) => id != userId).toList();
+
+    if (allRoomMembers.isEmpty) {
+      return -2; // The property is empty
+    }
+
+    double totalCompatibility = 0;
+    for (String roommateId in roommates) {
+      DocumentSnapshot roommateDoc =
+          await db.collection('questionnaires').doc(roommateId).get();
+      double compatibility = calculateSimilarity(
+        userDoc.data() as Map<String, dynamic>,
+        roommateDoc.data() as Map<String, dynamic>,
+      );
+      totalCompatibility += compatibility;
+    }
+
+    return roommates.isNotEmpty
+        ? totalCompatibility / roommates.length
+        : -1; // You are the only resident
+  }
+
+  double calculateSimilarity(
+      Map<String, dynamic> user1, Map<String, dynamic> user2) {
+    const fieldWeights = {
+      'age': 0.05,
+      'gender': 0.05,
+      'nationality': 0.05,
+      'languagesSpoken': 0.05,
+      'jobTitle': 0.05,
+      'cleanlinessLevel': 0.1,
+      'introvertExtrovert': 0.1,
+      'nightOwlOrEarlyBird': 0.05,
+      'exerciseRoutine': 0.05,
+      'dietaryPreferences': 0.05,
+      'smoking': 0.05,
+      'alcoholConsumption': 0.05,
+      'noiseTolerance': 0.05,
+      'preferredLocation': 0.05,
+      'roomTemperature': 0.05,
+      'roommateAgeRange': 0.05,
+      'roommateCleanliness': 0.05,
+      'roommateGender': 0.05,
+      'roommateNationality': 0.05,
+      'roommateOccupation': 0.05,
+      'sharingFoodUtilities': 0.05,
+      'socialInteraction': 0.05,
+      'weekendActivities': 0.05,
+      'workFromHomeFrequency': 0.05,
+      'workSchedule': 0.05,
+    };
+
+    double totalScore = 0.0;
+    double maxScore = 0.0;
+
+    fieldWeights.forEach((field, weight) {
+      if (user1.containsKey(field) && user2.containsKey(field)) {
+        var value1 = user1[field];
+        var value2 = user2[field];
+
+        if (value1 == null || value2 == null) {
+          return;
+        }
+
+        if (field == 'cleanlinessLevel' ||
+            field == 'introvertExtrovert' ||
+            field == 'noiseTolerance' ||
+            field == 'roommateCleanliness') {
+          double diff = (value1 - value2).abs();
+          totalScore +=
+              weight * (1 - (diff / 5.0)); // Range is 0-5 for these fields
+        } else if (value1 is String && value2 is String) {
+          if (value1 == value2) {
+            totalScore += weight;
+          }
+        } else if (value1 is bool && value2 is bool) {
+          if (value1 == value2) {
+            totalScore += weight;
+          }
+        } else if (value1 is int && value2 is int) {
+          double diff = (value1 - value2).abs() as double;
+          totalScore +=
+              weight * (1 - (diff / 100.0)); // Assuming age range is 0-100
+        }
+      }
+      maxScore += weight;
+    });
+
+    return (totalScore / maxScore) * 100;
+  }
+
   Future<void> fetchUserData() async {
     try {
       UserModel? fetchedOwnerData = await RFAuthController()
@@ -36,13 +142,13 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
 
       // Fetch the current user ID
       String userId =
-          'currentUserId'; // Replace with actual method to get current user ID
+          userModel!.id!; // Replace with actual method to get current user ID
 
       // Fetch the user's review if it exists
       final reviewQuery = await FirebaseFirestore.instance
           .collection('reviews')
           .where('roomid', isEqualTo: widget.hotelData!.id)
-          .where('uid', isEqualTo: userId)
+          .where('uid', isEqualTo: userModel!.id)
           .get();
 
       double? fetchedUserReview;
@@ -70,7 +176,7 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
 
     // Fetch the current user ID
     String userId =
-        'currentUserId'; // Replace with actual method to get current user ID
+        userModel!.id!; // Replace with actual method to get current user ID
 
     try {
       // Check if the user has already reviewed this room
@@ -167,6 +273,8 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
           buildDescriptionSection(),
           const SizedBox(height: 24),
           buildFacilitiesSection(),
+          const SizedBox(height: 24),
+          buildResidentsButton(),
         ],
       ),
     );
@@ -258,6 +366,55 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
           Text('${widget.hotelData!.location}, Saudi Arabia',
               style: primaryTextStyle(size: 14)),
           const SizedBox(height: 16),
+            FutureBuilder<double>(
+            future: getCompatibilityPercentage(widget.hotelData!.id!, userModel!.id!),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+              } else {
+              double compatibility = snapshot.data ?? -1;
+              String compatibilityText;
+              Color compatibilityColor;
+
+              if (compatibility == -2) {
+                compatibilityText = 'The property is empty';
+                compatibilityColor = Colors.grey;
+              } else if (compatibility == -1) {
+                compatibilityText = 'You are the only resident';
+                compatibilityColor = Colors.blue;
+              } else {
+                compatibilityText = 'Compatibility: ${compatibility.toStringAsFixed(1)}%';
+                compatibilityColor = compatibility >= 75
+                  ? Colors.green
+                  : (compatibility >= 50 ? Colors.orange : Colors.red);
+              }
+
+              return Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                color: compatibilityColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: compatibilityColor, width: 1),
+                ),
+                child: Row(
+                children: [
+                  Icon(Icons.verified_user, color: compatibilityColor),
+                  const SizedBox(width: 8),
+                  Expanded(
+                  child: Text(
+                    compatibilityText,
+                    style: primaryTextStyle(size: 14, color: compatibilityColor),
+                  ),
+                  ),
+                ],
+                ),
+              );
+              }
+            },
+            ),
+          const SizedBox(height: 16),
           buildReviewSection(),
         ],
       ),
@@ -319,5 +476,97 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
       backgroundColor: rfPrimaryColor.withOpacity(0.1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
+  }
+
+  Widget buildResidentsButton() {
+    return AppButton(
+      text: 'View Residents',
+      color: rfPrimaryColor,
+      textStyle: boldTextStyle(color: white),
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Current Residents', style: boldTextStyle(size: 18)),
+          content: FutureBuilder<List<Map<String, dynamic>>>(
+            future: fetchResidentsData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Text('No residents found');
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final resident = snapshot.data![index];
+                    return ListTile(
+                      title: Text(resident['name'],
+                          style: boldTextStyle(size: 16)),
+                      subtitle:
+                          Text('Compatibility: ${resident['compatibility']}%'),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.rate_review,
+                            color: rfPrimaryColor),
+                        onPressed: () => reviewResident(resident['id']),
+                      ),
+                    );
+                  },
+                );
+              }
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> fetchResidentsData() async {
+    List<Map<String, dynamic>> residentsData = [];
+    try {
+      String roomId = widget.hotelData!.id.validate();
+      String? userId = userModel!.id;
+
+      List<String> allRoomMembers = (await FirebaseFirestore.instance
+              .collection('applied')
+              .where('roomid', isEqualTo: roomId)
+              .get())
+          .docs
+          .map((e) => e['uid'] as String)
+          .toList();
+
+      for (String residentId in allRoomMembers) {
+        if (residentId == userId) continue;
+
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(residentId)
+            .get();
+        double compatibility =
+            await getCompatibilityPercentage(roomId, residentId);
+
+        residentsData.add({
+          'id': residentId,
+          'name': userDoc['fullName'],
+          'compatibility': compatibility.toStringAsFixed(1),
+        });
+      }
+    } catch (e) {
+      log('Error fetching residents data: $e');
+    }
+    return residentsData;
+  }
+
+  void reviewResident(String residentId) {
+    // Implement the logic to review a resident
+    toast('Reviewing resident: $residentId');
   }
 }

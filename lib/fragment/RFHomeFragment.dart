@@ -120,22 +120,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
   Column buildPropertyAndLocationSection(BuildContext context) {
     return Column(
       children: [
-        HorizontalList(
-          padding: const EdgeInsets.only(right: 16, left: 16),
-          itemCount: categoryData.length,
-          itemBuilder: (BuildContext context, int index) {
-            String data = categoryData[index];
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectCategoryIndex = index;
-                });
-              },
-              child: buildCategoryCard(data, index),
-            );
-          },
-        ),
-        buildSectionHeader('Recently Added Properties', () {
+        buildSectionHeader('All Properties', () {
           // Navigate to view all
         }),
         ListView.builder(
@@ -166,27 +151,7 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: boldTextStyle()),
-        // TextButton(
-        //   onPressed: onPressed,
-        //   child: Text('View All',
-        //       style: secondaryTextStyle(decoration: TextDecoration.underline)),
-        // )
       ],
     ).paddingOnly(left: 16, right: 16, top: 16, bottom: 8);
-  }
-
-  Container buildCategoryCard(String data, int index) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      decoration: boxDecorationWithRoundedCorners(
-        backgroundColor: selectCategoryIndex == index
-            ? rfSelectedCategoryBgColor
-            : rfCategoryBgColor,
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Text(data.validate(),
-          style: boldTextStyle(
-              color: selectCategoryIndex == index ? rfPrimaryColor : gray)),
-    );
   }
 }

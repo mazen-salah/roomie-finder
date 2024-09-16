@@ -48,30 +48,27 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
     }
   }
 
-  Future<double> getCompatibilityPercentage(
-      String roomId, String userId) async {
+  Future<double> getCompatibilityPercentage(String roomId, String userId) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
 
-    DocumentSnapshot userDoc =
-        await db.collection('questionnaires').doc(userId).get();
-    List<String> roommates = (await db
+    DocumentSnapshot userDoc = await db.collection('questionnaires').doc(userId).get();
+     List<String> allRoomMembers = (await db
             .collection('applied')
             .where('roomid', isEqualTo: roomId)
             .get())
         .docs
         .map((e) => e['uid'] as String)
-        .where(
-            (uid) => uid != userId) // Avoid comparing the user with themselves
         .toList();
+    List<String> roommates =
+        allRoomMembers.where((id) => id != userId).toList();
 
-    if (roommates.isEmpty) {
+    if (allRoomMembers.isEmpty) {
       return -2; // The property is empty
     }
 
     double totalCompatibility = 0;
     for (String roommateId in roommates) {
-      DocumentSnapshot roommateDoc =
-          await db.collection('questionnaires').doc(roommateId).get();
+      DocumentSnapshot roommateDoc = await db.collection('questionnaires').doc(roommateId).get();
       double compatibility = calculateSimilarity(
         userDoc.data() as Map<String, dynamic>,
         roommateDoc.data() as Map<String, dynamic>,
@@ -84,8 +81,7 @@ class _RFHotelListComponentState extends State<RFHotelListComponent> {
         : -1; // You are the only resident
   }
 
-  double calculateSimilarity(
-      Map<String, dynamic> user1, Map<String, dynamic> user2) {
+  double calculateSimilarity(Map<String, dynamic> user1, Map<String, dynamic> user2) {
     const fieldWeights = {
       'age': 0.05,
       'gender': 0.05,
