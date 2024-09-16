@@ -28,6 +28,7 @@ class RoomModel {
 
   // Create a RoomModel from a Firestore document
   factory RoomModel.fromJson(Map<String, dynamic> map) {
+    
     return RoomModel(
       img: map['img'] ?? '',
       name: map['name'] ?? '',
@@ -36,7 +37,9 @@ class RoomModel {
       price: map['price'] ?? '',
       rentDuration: map['rentDuration'] ?? '',
       location: map['location'] ?? '',
-      reviews: List<double>.from(map['reviews']),
+      reviews: map['reviews'] != null
+          ? List<double>.from(map['reviews'].map((review) => review is int ? review.toDouble() : review))
+          : [],
       owner: map['owner'] ?? '',
       images: List<String>.from(map['images']) ,
       facilities: List<String>.from(map['facilities']),

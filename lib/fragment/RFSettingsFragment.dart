@@ -97,26 +97,26 @@ class _RFSettingsFragmentState extends State<RFSettingsFragment> {
             Text('${userModel!.location}, Saudi Arabia',
                     style: secondaryTextStyle())
                 .center(),
-            SettingItemWidget(
-              title: "Dark Mode",
-              leading: const Icon(Icons.dark_mode_outlined,
-                  size: 18, color: rfPrimaryColor),
-              titleTextStyle: primaryTextStyle(),
-              trailing: Switch(
-                value: appStore.isDarkModeOn,
-                activeTrackColor: rfPrimaryColor,
-                onChanged: (bool value) {
-                  appStore.toggleDarkMode(value: value);
-                  setStatusBarColor(rfPrimaryColor,
-                      statusBarIconBrightness: Brightness.light);
-                  setState(() {});
-                },
-              ),
-              padding: const EdgeInsets.only(left: 40, right: 16, top: 8),
-              onTap: () {
-                //
-              },
-            ),
+            // SettingItemWidget(
+            //   title: "Dark Mode",
+            //   leading: const Icon(Icons.dark_mode_outlined,
+            //       size: 18, color: rfPrimaryColor),
+            //   titleTextStyle: primaryTextStyle(),
+            //   trailing: Switch(
+            //     value: appStore.isDarkModeOn,
+            //     activeTrackColor: rfPrimaryColor,
+            //     onChanged: (bool value) {
+            //       appStore.toggleDarkMode(value: value);
+            //       setStatusBarColor(rfPrimaryColor,
+            //           statusBarIconBrightness: Brightness.light);
+            //       setState(() {});
+            //     },
+            //   ),
+            //   padding: const EdgeInsets.only(left: 40, right: 16, top: 8),
+            //   onTap: () {
+            //     //
+            //   },
+            // ),
             ListView.builder(
               padding: const EdgeInsets.only(left: 22),
               shrinkWrap: true,
