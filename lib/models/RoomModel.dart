@@ -9,6 +9,8 @@ class RoomModel {
   String? location;
   String? reviews;
   String? owner;
+  List<String>? images;
+  List<String>? facilities;
 
   RoomModel({
     this.img = '',
@@ -20,6 +22,8 @@ class RoomModel {
     this.location = 'No Location',
     this.reviews = 'No reviews',
     this.owner = 'No Owner',
+    this.images,
+    this.facilities,
   });
 
   // Create a RoomModel from a Firestore document
@@ -34,6 +38,8 @@ class RoomModel {
       location: map['location'] ?? '',
       reviews: map['reviews'] ?? '',
       owner: map['owner'] ?? '',
+      images: List<String>.from(map['images']),
+      facilities: List<String>.from(map['facilities']),
     );
   }
 
@@ -49,11 +55,13 @@ class RoomModel {
       'location': location!.toLowerCase(),
       'reviews': reviews,
       'owner': owner,
+      'images': images,
+      'facilities': facilities,
     };
   }
 
   @override
   String toString() {
-    return 'RoomModel(img: $img, name: $name, description: $description, address: $address, price: $price, rentDuration: $rentDuration, location: $location, reviews: $reviews, owner: $owner)';
+    return 'RoomModel(img: $img, name: $name, description: $description, address: $address, price: $price, rentDuration: $rentDuration, location: $location, reviews: $reviews, owner: $owner, images: $images, facilities: $facilities)';
   }
 }
