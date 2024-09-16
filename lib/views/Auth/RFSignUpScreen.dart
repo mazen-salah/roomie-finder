@@ -6,7 +6,7 @@ import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/views/Auth/RFQuestionnaire.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
-import 'package:roomie_finder/views/RFHomeScreen.dart';
+import 'package:roomie_finder/views/Home/RFHomeScreen.dart';
 import '../../utils/RFString.dart';
 
 class RFSignUpScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:roomie_finder/views/RFHomeScreen.dart';
+import 'package:roomie_finder/views/Home/RFHomeScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 

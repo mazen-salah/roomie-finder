@@ -9,7 +9,7 @@ import 'package:roomie_finder/components/RFCommonAppComponent.dart';
 import 'package:roomie_finder/components/RFHotelListComponent.dart';
 import 'package:roomie_finder/components/RFLocationComponent.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
-import 'package:roomie_finder/views/RFAddProperty.dart';
+import 'package:roomie_finder/views/Home/RFAddProperty.dart';
 import 'package:roomie_finder/views/RFSearchDetailScreen.dart';
 
 class RFHomeFragment extends StatefulWidget {
