@@ -4,7 +4,6 @@ import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/models/UserModel.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFImages.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 import 'package:roomie_finder/controllers/RFAuthController.dart';
@@ -19,7 +18,6 @@ class RFHotelDetailComponent extends StatefulWidget {
 }
 
 class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
-  final List<String> hotelImageData = hotelImageList();
   UserModel? ownerData;
   bool isLoadingOwner = true; // Add a loading flag for owner data
 
@@ -136,7 +134,7 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Add other relevant fields here, such as reviews
-                Text(widget.hotelData!.reviews.validate(),
+                Text(widget.hotelData!.reviews.validate().toString(),
                     style: boldTextStyle(
                         color: appStore.isDarkModeOn ? white : rfTextColor))
               ],
