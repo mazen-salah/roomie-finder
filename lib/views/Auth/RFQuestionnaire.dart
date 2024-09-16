@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:roomie_finder/main.dart';
-import 'package:roomie_finder/views/Auth/RFSignInScreen.dart';
 import 'package:roomie_finder/views/RFHomeScreen.dart';
 
 class QuestionnaireScreen extends StatefulWidget {

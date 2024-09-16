@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
 import 'package:roomie_finder/models/LocationModel.dart';
-import 'package:roomie_finder/models/UserModel.dart';
 
 class RFHomeController {
   final picker = ImagePicker();
