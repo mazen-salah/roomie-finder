@@ -12,6 +12,13 @@ class RFAppliedHotelListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double averageReview = appliedHotelList.reviews!.isNotEmpty
+        ? appliedHotelList.reviews!.reduce((a, b) => a + b) /
+            appliedHotelList.reviews!.length
+        : 0.0;
+    String reviewText = appliedHotelList.reviews!.isNotEmpty
+        ? averageReview.toStringAsFixed(1)
+        : "No reviews";
     return Container(
       decoration:
           boxDecorationRoundedWithShadow(8, backgroundColor: context.cardColor),
@@ -52,7 +59,7 @@ class RFAppliedHotelListComponent extends StatelessWidget {
                         backgroundColor: rfRattingBgColor),
                     child: Row(
                       children: [
-                        Text(appliedHotelList.reviews.toString().validate(),
+                        Text(reviewText,
                             style: boldTextStyle(color: white, size: 14)),
                         4.width,
                         const Icon(Icons.star, color: white, size: 14),

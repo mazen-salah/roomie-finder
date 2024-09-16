@@ -19,7 +19,6 @@ class RFAccountFragment extends StatefulWidget {
 
 class _RFAccountFragmentState extends State<RFAccountFragment> {
   List<RoomModel> appliedHotelData = [];
-  List<RoomModel> likedHotelData = [];
 
   int selectedIndex = 0;
 
@@ -31,7 +30,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
 
   void init() async {
     await fetchUserAppliedHotels();
-    await fetchUserLikedHotels();
   }
 
   Future<void> fetchUserAppliedHotels() async {
@@ -59,34 +57,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
       }
     } catch (e) {
       log('Error fetching applied hotels: $e');
-    }
-  }
-
-  Future<void> fetchUserLikedHotels() async {
-    try {
-      final uid = userModel!.id;
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('liked')
-          .where('uid', isEqualTo: uid)
-          .get();
-
-      List<String> roomIds =
-          querySnapshot.docs.map((doc) => doc['roomid'] as String).toList();
-
-      if (roomIds.isNotEmpty) {
-        final roomQuerySnapshot = await FirebaseFirestore.instance
-            .collection('rooms')
-            .where(FieldPath.documentId, whereIn: roomIds)
-            .get();
-
-        setState(() {
-          likedHotelData = roomQuerySnapshot.docs
-              .map((doc) => RoomModel.fromJson(doc.data()))
-              .toList();
-        });
-      }
-    } catch (e) {
-      log('Error fetching liked hotels: $e');
     }
   }
 
@@ -182,7 +152,6 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
                         if (isProfileUpdated ?? false) {
                           // Refresh the data to reflect changes
                           await fetchUserAppliedHotels();
-                          await fetchUserLikedHotels();
                           setState(() {}); // Trigger UI update
                         }
                       }),
@@ -289,11 +258,10 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
             ),
             16.height,
             HorizontalList(
-              itemCount: 2,
+              itemCount: 1,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemBuilder: (_, index) {
-
-                List<String> categories = ["Applied", "Liked"];
+                List<String> categories = ["Applied"];
                 String data = categories[index];
                 return Container(
                   padding:
@@ -324,13 +292,9 @@ class _RFAccountFragmentState extends State<RFAccountFragment> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              itemCount: selectedIndex == 0
-                  ? appliedHotelData.length
-                  : likedHotelData.length,
+              itemCount: appliedHotelData.length,
               itemBuilder: (BuildContext context, int index) {
-                RoomModel data = selectedIndex == 0
-                    ? appliedHotelData[index]
-                    : likedHotelData[index];
+                RoomModel data = appliedHotelData[index];
                 return RFAppliedHotelListComponent(appliedHotelList: data);
               },
             ),
