@@ -128,7 +128,7 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
             .collection('rooms')
             .add(roomModel.toJson());
 
-        Navigator.pop(context);
+        Navigator.pop(context, true);
       } catch (e) {
         log("Error adding property: $e");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -156,10 +156,8 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
     final pickedFiles = await picker.pickMultiImage();
 
     setState(() {
-      if (pickedFiles != null) {
-        galleryImages = pickedFiles.map((file) => File(file.path)).toList();
-      }
-    });
+      galleryImages = pickedFiles.map((file) => File(file.path)).toList();
+        });
   }
 
   @override

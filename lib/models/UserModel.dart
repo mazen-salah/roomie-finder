@@ -6,6 +6,7 @@ class UserModel {
   String profileImageUrl;
   String location;
   String phone;
+  List<double> reviews;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -17,6 +18,7 @@ class UserModel {
     required this.email,
     required this.role,
     this.profileImageUrl = '',
+    this.reviews = const [],
     DateTime? createdAt,
     DateTime? updatedAt,
   })  : createdAt = createdAt ?? DateTime.now(),
@@ -30,7 +32,8 @@ class UserModel {
       phone: json['phone'],
       email: json['email'],
       role: json['role'],
-      profileImageUrl: json['profileImageUrl'] ?? '',
+      reviews: json['reviews'] != null ? List<double>.from(json['reviews']) : [],
+      profileImageUrl: json['profileImageUrl'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
     );
@@ -47,6 +50,7 @@ class UserModel {
       'phone': phone,
       'updatedAt': updatedAt.toIso8601String(),
       'location': location,
+      'reviews': reviews,
     };
   }
 }

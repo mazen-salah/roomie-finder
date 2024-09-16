@@ -43,13 +43,21 @@ class _RFHomeFragmentState extends State<RFHomeFragment> {
     });
   }
 
-  void _addNewProperty() {
-    showDialog(
+  Future<void> _addNewProperty() async {
+    final result = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return const AddPropertyDialog();
       },
     );
+
+    if (result == true) {
+      // Assuming that the dialog returns true if a new property was added
+      setState(() {
+        isLoading = true;
+      });
+      init();
+    }
   }
 
   @override

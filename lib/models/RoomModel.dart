@@ -7,7 +7,7 @@ class RoomModel {
   String? price;
   String? rentDuration;
   String? location;
-  String? reviews;
+  List<double>? reviews;
   String? owner;
   List<String>? images;
   List<String>? facilities;
@@ -20,7 +20,7 @@ class RoomModel {
     this.price = 'No Price',
     this.rentDuration = 'No Rent Duration',
     this.location = 'No Location',
-    this.reviews = 'No reviews',
+    this.reviews,
     this.owner = 'No Owner',
     this.images,
     this.facilities,
@@ -36,7 +36,7 @@ class RoomModel {
       price: map['price'] ?? '',
       rentDuration: map['rentDuration'] ?? '',
       location: map['location'] ?? '',
-      reviews: map['reviews'] ?? '',
+      reviews: List<double>.from(map['reviews']),
       owner: map['owner'] ?? '',
       images: List<String>.from(map['images']) ,
       facilities: List<String>.from(map['facilities']),
