@@ -23,7 +23,7 @@ class RFCongratulatedDialog extends StatelessWidget {
           16.height,
           Text('Congratulations', style: boldTextStyle(size: 22)),
           8.height,
-          Text('Your booking has been successfully done.',
+          Text('Your Request has been successfully done.',
               style: secondaryTextStyle(height: 1.5),
               textAlign: TextAlign.center),
           30.height,

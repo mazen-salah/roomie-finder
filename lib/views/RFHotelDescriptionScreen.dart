@@ -75,7 +75,7 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
             toast('You have already applied for this room.');
           }
         },
-        child: Text('Book Now', style: boldTextStyle(color: white)),
+        child: Text('Request', style: boldTextStyle(color: white)),
       ).paddingSymmetric(horizontal: 16, vertical: 24),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
