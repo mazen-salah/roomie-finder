@@ -34,11 +34,6 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
   }
 
   @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  @override
   void dispose() {
     setStatusBarColor(Colors.transparent,
         statusBarIconBrightness: Brightness.light);
@@ -97,52 +92,69 @@ class _RFHotelDescriptionScreenState extends State<RFHotelDescriptionScreen> {
               pinned: true,
               elevation: 2,
               expandedHeight: 300,
-              flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.parallax,
-                titlePadding: const EdgeInsets.all(10),
-                centerTitle: true,
-                background: Stack(
-                  children: [
-                    rfCommonCachedNetworkImage(
-                      widget.hotelData!.img.validate(),
-                      fit: BoxFit.cover,
-                      width: context.width(),
-                      height: 350,
-                    ),
-                    Container(
+              flexibleSpace: Stack(
+                children: [
+                  PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.hotelData!.images?.length ?? 1,
+                    itemBuilder: (context, index) {
+                      return rfCommonCachedNetworkImage(
+                        widget.hotelData!.images?[index] ??
+                            widget.hotelData!.img.validate(),
+                        fit: BoxFit.cover,
+                        width: context.width(),
+                        height: 350,
+                      );
+                    },
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 32),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(widget.hotelData!.name.validate(),
-                              style: boldTextStyle(color: white, size: 18)),
+                              style: boldTextStyle(color: white, size: 20)),
                           8.height,
                           Row(
                             children: [
                               Text("${widget.hotelData!.price.validate()} SAR",
                                   style: boldTextStyle(color: white)),
-                              4.width,
+                              8.width,
                               Text(widget.hotelData!.rentDuration.validate(),
                                   style: secondaryTextStyle(color: white)),
                             ],
                           ),
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ];
         },
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               RFHotelDetailComponent(hotelData: widget.hotelData),
             ],
-          ),
+          )
         ),
       ),
     );
