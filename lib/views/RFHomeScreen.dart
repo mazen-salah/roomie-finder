@@ -18,45 +18,21 @@ class RFHomeScreen extends StatefulWidget {
 class _RFHomeScreenState extends State<RFHomeScreen> {
   int _selectedIndex = 0;
 
-  final _pages = [
+  final List<Widget> _pages = [
     const RFHomeFragment(),
-     RFSearchDetailScreen(),
+    RFSearchDetailScreen(),
     const RFSettingsFragment(),
     const RFAccountFragment(),
   ];
 
-  Widget _bottomTab() {
-    return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
-      selectedLabelStyle: boldTextStyle(size: 14),
-      selectedFontSize: 14,
-      unselectedFontSize: 14,
-      type: BottomNavigationBarType.fixed,
-      items: <BottomNavigationBarItem>[
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined, size: 22),
-          label: 'Home',
-          activeIcon:
-              Icon(Icons.home_outlined, color: rfPrimaryColor, size: 22),
-        ),
-        BottomNavigationBarItem(
-          icon: rfSearch.iconImage(),
-          label: 'Search',
-          activeIcon: rfSearch.iconImage(iconColor: rfPrimaryColor),
-        ),
-        BottomNavigationBarItem(
-          icon: rfSetting.iconImage(size: 22),
-          label: 'Settings',
-          activeIcon: rfSetting.iconImage(iconColor: rfPrimaryColor, size: 22),
-        ),
-        BottomNavigationBarItem(
-          icon: rfPerson.iconImage(),
-          label: 'Account',
-          activeIcon: rfPerson.iconImage(iconColor: rfPrimaryColor),
-        ),
-      ],
-    );
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  void _init() async {
+    setStatusBarColor(rfPrimaryColor, statusBarIconBrightness: Brightness.light);
   }
 
   void _onItemTapped(int index) {
@@ -65,27 +41,56 @@ class _RFHomeScreenState extends State<RFHomeScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    init();
+  BottomNavigationBarItem _buildBottomNavigationBarItem({
+    required Widget icon,
+    required String label,
+    required Widget activeIcon,
+  }) {
+    return BottomNavigationBarItem(
+      icon: icon,
+      label: label,
+      activeIcon: activeIcon,
+    );
   }
 
-  void init() async {
-    setStatusBarColor(rfPrimaryColor,
-        statusBarIconBrightness: Brightness.light);
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      selectedLabelStyle: boldTextStyle(size: 14),
+      selectedFontSize: 14,
+      unselectedFontSize: 14,
+      type: BottomNavigationBarType.fixed,
+      items: [
+        _buildBottomNavigationBarItem(
+          icon: const Icon(Icons.home_outlined, size: 22),
+          label: 'Home',
+          activeIcon: const Icon(Icons.home_outlined, color: rfPrimaryColor, size: 22),
+        ),
+        _buildBottomNavigationBarItem(
+          icon: rfSearch.iconImage(),
+          label: 'Search',
+          activeIcon: rfSearch.iconImage(iconColor: rfPrimaryColor),
+        ),
+        _buildBottomNavigationBarItem(
+          icon: rfSetting.iconImage(size: 22),
+          label: 'Settings',
+          activeIcon: rfSetting.iconImage(iconColor: rfPrimaryColor, size: 22),
+        ),
+        _buildBottomNavigationBarItem(
+          icon: rfPerson.iconImage(),
+          label: 'Account',
+          activeIcon: rfPerson.iconImage(iconColor: rfPrimaryColor),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _bottomTab(),
-      body: Center(child: _pages.elementAt(_selectedIndex)),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+      body: Center(child: _pages[_selectedIndex]),
     );
   }
 }
