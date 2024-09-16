@@ -140,10 +140,6 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
       UserModel? fetchedOwnerData = await RFAuthController()
           .fetchUserDataFromFirestore(widget.hotelData!.owner!);
 
-      // Fetch the current user ID
-      String userId =
-          userModel!.id!; // Replace with actual method to get current user ID
-
       // Fetch the user's review if it exists
       final reviewQuery = await FirebaseFirestore.instance
           .collection('reviews')
@@ -366,54 +362,57 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
           Text('${widget.hotelData!.location}, Saudi Arabia',
               style: primaryTextStyle(size: 14)),
           const SizedBox(height: 16),
-            FutureBuilder<double>(
-            future: getCompatibilityPercentage(widget.hotelData!.id!, userModel!.id!),
+          FutureBuilder<double>(
+            future: getCompatibilityPercentage(
+                widget.hotelData!.id!, userModel!.id!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+                return Text('Error: ${snapshot.error}');
               } else {
-              double compatibility = snapshot.data ?? -1;
-              String compatibilityText;
-              Color compatibilityColor;
+                double compatibility = snapshot.data ?? -1;
+                String compatibilityText;
+                Color compatibilityColor;
 
-              if (compatibility == -2) {
-                compatibilityText = 'The property is empty';
-                compatibilityColor = Colors.grey;
-              } else if (compatibility == -1) {
-                compatibilityText = 'You are the only resident';
-                compatibilityColor = Colors.blue;
-              } else {
-                compatibilityText = 'Compatibility: ${compatibility.toStringAsFixed(1)}%';
-                compatibilityColor = compatibility >= 75
-                  ? Colors.green
-                  : (compatibility >= 50 ? Colors.orange : Colors.red);
-              }
+                if (compatibility == -2) {
+                  compatibilityText = 'The property is empty';
+                  compatibilityColor = Colors.grey;
+                } else if (compatibility == -1) {
+                  compatibilityText = 'You are the only resident';
+                  compatibilityColor = Colors.blue;
+                } else {
+                  compatibilityText =
+                      'Compatibility: ${compatibility.toStringAsFixed(1)}%';
+                  compatibilityColor = compatibility >= 75
+                      ? Colors.green
+                      : (compatibility >= 50 ? Colors.orange : Colors.red);
+                }
 
-              return Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                color: compatibilityColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: compatibilityColor, width: 1),
-                ),
-                child: Row(
-                children: [
-                  Icon(Icons.verified_user, color: compatibilityColor),
-                  const SizedBox(width: 8),
-                  Expanded(
-                  child: Text(
-                    compatibilityText,
-                    style: primaryTextStyle(size: 14, color: compatibilityColor),
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: compatibilityColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: compatibilityColor, width: 1),
                   ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.verified_user, color: compatibilityColor),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          compatibilityText,
+                          style: primaryTextStyle(
+                              size: 14, color: compatibilityColor),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-                ),
-              );
+                );
               }
             },
-            ),
+          ),
           const SizedBox(height: 16),
           buildReviewSection(),
         ],
@@ -485,47 +484,105 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
       textStyle: boldTextStyle(color: white),
       onTap: () => showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Current Residents', style: boldTextStyle(size: 18)),
-          content: FutureBuilder<List<Map<String, dynamic>>>(
-            future: fetchResidentsData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No residents found');
-              } else {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final resident = snapshot.data![index];
-                    return ListTile(
-                      title: Text(resident['name'],
-                          style: boldTextStyle(size: 16)),
-                      subtitle:
-                          Text('Compatibility: ${resident['compatibility']}%'),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.rate_review,
-                            color: rfPrimaryColor),
-                        onPressed: () => reviewResident(resident['id']),
+        builder: (context) => SimpleDialog(
+          title: Text('Residents', style: boldTextStyle(size: 18)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          children: [
+            SizedBox(
+              width: double.maxFinite,
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: fetchResidentsData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No residents found');
+                  } else {
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Total residents: ${snapshot.data!.length}',
+                              style: boldTextStyle(size: 16),
+                            ),
+                          ),
+                          ...snapshot.data!
+                              .map((resident) => buildResidentTile(resident)),
+                        ],
                       ),
                     );
-                  },
-                );
-              }
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+                  }
+                },
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildResidentTile(Map<String, dynamic> resident) {
+    return FutureBuilder<bool>(
+      future: hasReviewedResident(resident['id']),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          bool hasReviewed = snapshot.data ?? false;
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: context.cardColor,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: defaultBoxShadow(),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(resident['name'], style: boldTextStyle(size: 16)),
+                      Text(
+                        'Compatibility: ${resident['compatibility']}%',
+                        style: secondaryTextStyle(size: 14),
+                      ),
+                    ],
+                  ),
+                  if (!hasReviewed)
+                    RatingBar.builder(
+                      itemSize: 20,
+                      initialRating: 0,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) =>
+                          const Icon(Icons.star, color: Colors.amber),
+                      onRatingUpdate: (rating) =>
+                          reviewResident(resident['id'], rating),
+                    )
+                  else
+                    Text('You have already reviewed this resident',
+                        style: secondaryTextStyle(size: 14)),
+                ],
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -552,7 +609,6 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
             .get();
         double compatibility =
             await getCompatibilityPercentage(roomId, residentId);
-
         residentsData.add({
           'id': residentId,
           'name': userDoc['fullName'],
@@ -565,8 +621,45 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
     return residentsData;
   }
 
-  void reviewResident(String residentId) {
-    // Implement the logic to review a resident
-    toast('Reviewing resident: $residentId');
+  Future<void> reviewResident(String residentId, double review) async {
+    String? userId = userModel!.id;
+
+    // Check if the user has already reviewed this resident
+    bool hasReviewed = await hasReviewedResident(residentId);
+    if (hasReviewed) {
+      toast('You have already reviewed this resident');
+      return;
+    }
+
+    // Save the review
+    await FirebaseFirestore.instance.collection('reviews').add({
+      'uid': userId,
+      'roommateid': residentId,
+      'review': review,
+    });
+
+    // Update the resident's average rating
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(residentId)
+        .get();
+    List<dynamic> reviews = userDoc['reviews'] ?? [];
+    reviews.add(review);
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(residentId)
+        .update({'reviews': reviews});
+  }
+
+  Future<bool> hasReviewedResident(String residentId) async {
+    String? userId = userModel!.id;
+
+    QuerySnapshot reviewDocs = await FirebaseFirestore.instance
+        .collection('reviews')
+        .where('uid', isEqualTo: userId)
+        .where('roommateid', isEqualTo: residentId)
+        .get();
+
+    return reviewDocs.docs.isNotEmpty;
   }
 }
