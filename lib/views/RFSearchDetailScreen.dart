@@ -4,15 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:roomie_finder/components/RFRecentUpdateComponent.dart';
 import 'package:roomie_finder/main.dart';
 import 'package:roomie_finder/models/RoomModel.dart';
-import 'package:roomie_finder/views/RFLocationScreen.dart';
 import 'package:roomie_finder/utils/RFColors.dart';
-import 'package:roomie_finder/utils/RFDataGenerator.dart';
 import 'package:roomie_finder/utils/RFWidget.dart';
 
 class RFSearchDetailScreen extends StatelessWidget {
-  String searchQuery;
+  final String searchQuery;
 
-  RFSearchDetailScreen({super.key, this.searchQuery = ''});
+  const RFSearchDetailScreen({super.key, this.searchQuery = ''});
 
   Future<List<RoomModel>> _fetchRooms() async {
     final firestore = FirebaseFirestore.instance;
@@ -113,7 +111,7 @@ class RFSearchDetailScreen extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: const Text('No results found.'));
+                    return const Center(child: Text('No results found.'));
                   }
 
                   final rooms = snapshot.data!;
