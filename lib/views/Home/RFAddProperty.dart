@@ -23,11 +23,14 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
   final _priceController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _addressController = TextEditingController();
+  final _facilitiesController =
+      TextEditingController(); // New controller for facilities
   late String rentDuration;
   late String selectedCity;
-  File? imageFile;
-  bool _isLoading = false; // For loading indicator
-  double _uploadProgress = 0.0; // For upload progress percentage
+  File? mainImageFile;
+  List<File> galleryImages = []; // New for gallery images
+  bool _isLoading = false;
+  double _uploadProgress = 0.0;
 
   final picker = ImagePicker();
   final List<String> cities = [
@@ -59,14 +62,12 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
     rentDuration = rentDurations.first;
   }
 
-  Future<String> _uploadImage() async {
-    if (imageFile == null) return '';
-
+  Future<String> _uploadImage(File imageFile) async {
     try {
       final storageRef = FirebaseStorage.instance.ref();
       final imageRef =
           storageRef.child('property_images/${DateTime.now()}.jpg');
-      final uploadTask = imageRef.putFile(imageFile!);
+      final uploadTask = imageRef.putFile(imageFile);
 
       uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
         setState(() {
@@ -74,8 +75,7 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
         });
       });
 
-      await uploadTask; // Wait until the file is uploaded
-
+      await uploadTask;
       return await imageRef.getDownloadURL();
     } catch (e) {
       log("Error uploading image: $e");
@@ -86,43 +86,55 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
     }
   }
 
+  Future<List<String>> _uploadGalleryImages() async {
+    List<String> uploadedImageUrls = [];
+    for (File image in galleryImages) {
+      String imageUrl = await _uploadImage(image);
+      if (imageUrl.isNotEmpty) {
+        uploadedImageUrls.add(imageUrl);
+      }
+    }
+    return uploadedImageUrls;
+  }
+
   Future<void> _addProperty() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true; // Start loading
+        _isLoading = true;
       });
 
       try {
-        // Upload image and handle error
-        final imageUrl = await _uploadImage();
+        final mainImageUrl = await _uploadImage(mainImageFile!);
+        final galleryImageUrls = await _uploadGalleryImages();
 
-        // Create RoomModel instance
+        // Parse facilities input
+        List<String> facilities =
+            _facilitiesController.text.split(',').map((e) => e.trim()).toList();
+
         RoomModel roomModel = RoomModel(
           name: _nameController.text,
           price: _priceController.text,
           description: _descriptionController.text,
           location: selectedCity,
-          img: imageUrl,
+          img: mainImageUrl,
+          images: galleryImageUrls,
+          facilities: facilities,
           address: _addressController.text,
           rentDuration: rentDuration,
           owner: FirebaseAuth.instance.currentUser!.uid,
         );
 
-        // Try to add to Firestore
         await FirebaseFirestore.instance
             .collection('rooms')
             .add(roomModel.toJson());
 
-        // Successfully added, close dialog
         Navigator.pop(context);
       } catch (e) {
-        // Print error to console and show a Snackbar with the error
         log("Error adding property: $e");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: $e'),
         ));
       } finally {
-        // Stop loading in any case
         setState(() {
           _isLoading = false;
         });
@@ -130,12 +142,22 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
     }
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _pickMainImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
-        imageFile = File(pickedFile.path);
+        mainImageFile = File(pickedFile.path);
+      }
+    });
+  }
+
+  Future<void> _pickGalleryImages() async {
+    final pickedFiles = await picker.pickMultiImage();
+
+    setState(() {
+      if (pickedFiles != null) {
+        galleryImages = pickedFiles.map((file) => File(file.path)).toList();
       }
     });
   }
@@ -301,11 +323,32 @@ class _AddPropertyDialogState extends State<AddPropertyDialog> {
                     },
                   ),
                   16.height,
+                  AppTextField(
+                    controller: _facilitiesController,
+                    textFieldType: TextFieldType.NAME,
+                    decoration: rfInputDecoration(
+                      lableText: "Facilities (Comma separated)",
+                      showLableText: true,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter the facilities';
+                      }
+                      return null;
+                    },
+                  ),
+                  16.height,
                   ElevatedButton.icon(
-                    onPressed: _pickImage,
+                    onPressed: _pickMainImage,
+                    icon: const Icon(Icons.upload_file),
+                    label: Text( 
+                        mainImageFile == null ? 'Upload Main Image' : 'Image Selected'),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: _pickGalleryImages,
                     icon: const Icon(Icons.upload_file),
                     label: Text(
-                        imageFile == null ? 'Upload Image' : 'Image Selected'),
+                        galleryImages.isEmpty ? 'Upload Gallery Images' : 'Images Selected'),
                   ),
                   if (_uploadProgress > 0)
                     Padding(

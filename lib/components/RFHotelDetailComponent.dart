@@ -184,30 +184,15 @@ class _RFHotelDetailComponentState extends State<RFHotelDetailComponent> {
       children: [
         Text('Facilities', style: boldTextStyle()),
         16.height,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildFacilityItem('1 Big Hall'),
-                4.height,
-                buildFacilityItem('Bikes and Car Parking'),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildFacilityItem('Shared Toilet'),
-                4.height,
-                buildFacilityItem('24/7 Water facility'),
-              ],
-            )
-          ],
-        ),
+        buildFacilitiesList(widget.hotelData!.facilities),
       ],
     ).paddingOnly(left: 24, right: 24);
+  }
+
+  Widget buildFacilitiesList(List<String>? facilities) {
+    return Column(
+      children: facilities!.map((facility) => buildFacilityItem(facility)).toList(),
+    );
   }
 
   Widget buildFacilityItem(String facility) {

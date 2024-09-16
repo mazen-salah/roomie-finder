@@ -38,7 +38,7 @@ class RoomModel {
       location: map['location'] ?? '',
       reviews: map['reviews'] ?? '',
       owner: map['owner'] ?? '',
-      images: List<String>.from(map['images']),
+      images: List<String>.from(map['images']) ,
       facilities: List<String>.from(map['facilities']),
     );
   }
